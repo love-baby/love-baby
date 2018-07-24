@@ -3,9 +3,9 @@ package com.love.baby.web.service;
 import com.love.baby.web.api.UserRpcService;
 import com.love.baby.web.dto.UserDto;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Flux;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  *
@@ -18,7 +18,7 @@ public class UserService {
     @Resource
     private UserRpcService userRpcService;
 
-    public Flux<UserDto> findAll() {
+    public List<UserDto> findAll() {
         return userRpcService.listAll();
     }
 }

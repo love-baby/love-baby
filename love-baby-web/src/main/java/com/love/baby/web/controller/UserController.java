@@ -61,9 +61,9 @@ public class UserController {
     public UserDto create(@RequestBody UserDto userDto, @RequestHeader(value = "token") String token) {
         logger.info("创建用户 userDto = {}", JSON.toJSONString(userDto));
         userSessionCommon.assertSessionAndGetUid(token);
-        userDto = userService.findByName(userDto.getName());
-        logger.info("userDto = {}",JSON.toJSONString(userDto));
-        if (userDto != null) {
+        UserDto userDtoOld = userService.findByName(userDto.getName());
+        logger.info("userDtoOld = {}",JSON.toJSONString(userDtoOld));
+        if (userDtoOld != null) {
             throw new SystemException(500, "用户名已存在");
         }
         String id = UUID.randomUUID().toString().replaceAll("-", "");

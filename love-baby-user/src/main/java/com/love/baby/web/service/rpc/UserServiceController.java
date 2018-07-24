@@ -1,10 +1,12 @@
 package com.love.baby.web.service.rpc;
 
 import com.love.baby.web.api.UserRpcService;
+import com.love.baby.web.bean.User;
 import com.love.baby.web.dto.UserDto;
 import com.love.baby.web.service.UserService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,8 +27,34 @@ public class UserServiceController implements UserRpcService {
     @Override
     @GetMapping(value = "/listAll", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public List<UserDto> listAll() {
-        List<UserDto> list =new ArrayList<>();
+        List<UserDto> list = new ArrayList<>();
         userService.findAll().forEach(user -> list.add(new UserDto(user)));
         return list;
+    }
+
+    @Override
+    @GetMapping(value = "/findByName", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public UserDto findByName(String name) {
+        User user = userService.findByName(name);
+        if (user == null) {
+            return null;
+        }
+        return new UserDto(user);
+    }
+
+    @Override
+    @PutMapping(value = "/create", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public void create(UserDto userDto) {
+        userService.save(new User(userDto));
+    }
+
+    @Override
+    @GetMapping(value = "/findById", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public UserDto findById(String id) {
+        User user = userService.findById(id);
+        if (user == null) {
+            return null;
+        }
+        return new UserDto(user);
     }
 }

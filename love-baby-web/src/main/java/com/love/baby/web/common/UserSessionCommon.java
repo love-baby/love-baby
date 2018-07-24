@@ -1,7 +1,7 @@
 package com.love.baby.web.common;
 
 import com.google.common.collect.Maps;
-import com.love.baby.web.bean.User;
+import com.love.baby.web.dto.UserDto;
 import com.love.baby.web.exception.SystemException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.HashOperations;
@@ -52,10 +52,9 @@ public class UserSessionCommon {
      *
      * @param user
      */
-    public Map saveUserToken(User user) {
+    public Map saveUserToken(UserDto user) {
         final SetOperations<String, String> setOperations = stringRedisTemplate.opsForSet();
         final Set<String> members = setOperations.members(user.getId());
-
 
         String token = UUID.randomUUID().toString();
         Map data = Maps.newHashMap();

@@ -8,7 +8,6 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- *
  * @author liangbc
  * @date 2018/6/28
  */
@@ -21,5 +20,18 @@ public class UserService {
     public List<UserDto> findAll() {
         return userRpcService.listAll();
     }
+
+    public UserDto findByName(String name) {
+        return userRpcService.findByName(name);
+    }
+
+    public void create(UserDto userDto) {
+        userRpcService.create(userDto);
+    }
+
+    public UserDto findById(String id) {
+        return userRpcService.findById(id);
+    }
+
 }
 

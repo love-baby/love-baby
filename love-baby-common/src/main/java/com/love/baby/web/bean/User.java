@@ -1,5 +1,6 @@
 package com.love.baby.web.bean;
 
+import com.love.baby.web.dto.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -55,4 +56,17 @@ public class User {
         public static Integer normal = 1;
         public static Integer disabled = 2;
     }
+
+    public User(UserDto userDto) {
+        this.id = userDto.getId();
+        this.name = userDto.getName();
+        this.pwd = userDto.getPwd();
+        this.sex = userDto.getSex();
+        this.avatar = userDto.getAvatar();
+        this.resourcesPath = userDto.getResourcesPath();
+        this.status = userDto.getStatus();
+        this.createTime = userDto.getCreateTime();
+    }
+
+
 }

@@ -4,10 +4,14 @@ import com.love.baby.web.service.UserService;
 import com.love.baby.web.vo.UserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.*;
-import reactor.core.publisher.Flux;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author liangbc
@@ -28,10 +32,9 @@ public class UserController {
      * @return
      */
     @GetMapping("/listAll")
-    public Flux<UserVo> listAll(@RequestHeader(value = "token") String token) {
-        return Flux.create(userFluxSink -> {
-            userService.findAll().forEach(user -> userFluxSink.next(new UserVo(user)));
-            userFluxSink.complete();
-        });
+    public List<UserVo> listAll(@RequestHeader(value = "token") String token) {
+        List<UserVo> list = new ArrayList<>();
+        userService.findAll().forEach(user -> list.add(new UserVo(user)));
+        return list;
     }
 }

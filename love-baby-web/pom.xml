@@ -171,7 +171,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <jvmArguments>-Dfile.encoding=UTF-8</jvmArguments>
-                    <mainClass>com.love.baby.user.WebApplication</mainClass>
+                    <mainClass>com.love.baby.web.WebApplication</mainClass>
                     <layout>JAR</layout>
                 </configuration>
                 <executions>

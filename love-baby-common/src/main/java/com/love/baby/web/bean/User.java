@@ -4,7 +4,6 @@ import com.love.baby.web.dto.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
@@ -15,7 +14,6 @@ import java.util.Date;
  * @date 2018/6/27
  */
 @Data
-@NoArgsConstructor(force = true)
 @AllArgsConstructor
 @Builder
 public class User {

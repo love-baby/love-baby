@@ -5,6 +5,8 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @author liangbc
  * @date 2018/6/27
@@ -20,6 +22,10 @@ public class UserDao extends BaseDao<User> {
     public User findByName(String name) {
         String sql = "select * from user where name = ?";
         RowMapper<User> rowMapper = BeanPropertyRowMapper.newInstance(entityClass);
-        return jdbcTemplate.queryForObject(sql, rowMapper, name);
+        List<User> list = jdbcTemplate.query(sql, rowMapper, name);
+        if (list.size() > 0) {
+            return list.get(0);
+        }
+        return null;
     }
 }

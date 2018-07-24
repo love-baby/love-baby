@@ -30,7 +30,7 @@ public class UserController {
     @GetMapping("/listAll")
     public Flux<UserVo> listAll(@RequestHeader(value = "token") String token) {
         return Flux.create(userFluxSink -> {
-            userService.findAll().toStream().forEach(user -> userFluxSink.next(new UserVo(user)));
+            userService.findAll().forEach(user -> userFluxSink.next(new UserVo(user)));
             userFluxSink.complete();
         });
     }

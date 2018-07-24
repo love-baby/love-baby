@@ -5,10 +5,7 @@ import com.love.baby.web.bean.User;
 import com.love.baby.web.dto.UserDto;
 import com.love.baby.web.service.UserService;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -34,7 +31,7 @@ public class UserServiceController implements UserRpcService {
 
     @Override
     @GetMapping(value = "/findByName", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public UserDto findByName(String name) {
+    public UserDto findByName(@RequestParam(value = "name") String name) {
         User user = userService.findByName(name);
         if (user == null) {
             return null;
@@ -44,13 +41,13 @@ public class UserServiceController implements UserRpcService {
 
     @Override
     @PutMapping(value = "/create", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public void create(UserDto userDto) {
+    public void create(@RequestBody UserDto userDto) {
         userService.save(new User(userDto));
     }
 
     @Override
     @GetMapping(value = "/findById", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public UserDto findById(String id) {
+    public UserDto findById(@RequestParam(value = "id") String id) {
         User user = userService.findById(id);
         if (user == null) {
             return null;

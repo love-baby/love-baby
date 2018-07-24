@@ -62,6 +62,7 @@ public class UserController {
         logger.info("创建用户 userDto = {}", JSON.toJSONString(userDto));
         userSessionCommon.assertSessionAndGetUid(token);
         userDto = userService.findByName(userDto.getName());
+        logger.info("userDto = {}",JSON.toJSONString(userDto));
         if (userDto != null) {
             throw new SystemException(500, "用户名已存在");
         }

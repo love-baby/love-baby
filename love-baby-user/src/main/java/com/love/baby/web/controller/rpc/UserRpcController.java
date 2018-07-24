@@ -7,9 +7,10 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import reactor.core.publisher.Flux;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by liangbc on 2018/7/24.
@@ -23,11 +24,9 @@ public class UserRpcController implements UserRpcService {
 
     @Override
     @GetMapping(value = "/listAll", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public Flux<UserDto> listAll() {
-        return Flux.create(userFluxSink -> {
-            userService.findAll().forEach(user -> userFluxSink.next(new UserDto(user)));
-            userFluxSink.complete();
-        });
-
+    public List<UserDto> listAll() {
+        List<UserDto> listDto = new ArrayList<>();
+        userService.findAll().forEach(user -> listDto.add(new UserDto(user)));
+        return listDto;
     }
 }

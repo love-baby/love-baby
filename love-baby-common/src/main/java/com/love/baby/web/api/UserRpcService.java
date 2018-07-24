@@ -4,7 +4,8 @@ import com.love.baby.web.dto.UserDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
-import reactor.core.publisher.Flux;
+
+import java.util.List;
 
 /**
  *
@@ -15,5 +16,5 @@ import reactor.core.publisher.Flux;
 public interface UserRpcService {
 
     @GetMapping(value = "/listAll", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    Flux<UserDto> listAll();
+    List<UserDto> listAll();
 }

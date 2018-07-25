@@ -9,7 +9,7 @@ import org.springframework.cloud.netflix.hystrix.EnableHystrix;
  * @author 23770
  */
 @EnableEurekaClient
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages={"com.love.baby.common.common"})
 @EnableHystrix
 public class UserApplication {
     public static void main(String[] args) {

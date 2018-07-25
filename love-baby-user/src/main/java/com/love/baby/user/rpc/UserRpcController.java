@@ -12,7 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by liangbc on 2018/7/24.
+ *
+ * @author liangbc
+ * @date 2018/7/24
  */
 @RestController
 @RequestMapping(value = "/user/rpc", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

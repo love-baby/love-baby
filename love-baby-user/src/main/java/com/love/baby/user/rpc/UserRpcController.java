@@ -1,4 +1,4 @@
-package com.love.baby.user.service.rpc;
+package com.love.baby.user.rpc;
 
 import com.love.baby.common.api.UserRpcService;
 import com.love.baby.common.bean.User;
@@ -16,7 +16,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "/user/rpc", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-public class UserServiceController implements UserRpcService {
+public class UserRpcController implements UserRpcService {
 
     @Resource
     private UserService userService;

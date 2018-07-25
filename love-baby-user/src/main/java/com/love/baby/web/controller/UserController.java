@@ -1,6 +1,5 @@
 package com.love.baby.web.controller;
 
-import com.love.baby.web.common.UserSessionCommon;
 import com.love.baby.web.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,10 +20,4 @@ public class UserController {
 
     @Resource
     private UserService userService;
-
-    @Resource
-    private UserSessionCommon userSessionCommon;
-
-
-
 }

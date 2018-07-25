@@ -61,7 +61,7 @@ public class UserController {
         logger.info("创建用户 userDto = {}", JSON.toJSONString(userDto));
         userSessionCommon.assertSessionAndGetUid(token);
         UserDto userDtoOld = userService.findByName(userDto.getName());
-        logger.info("userDtoOld = {}",JSON.toJSONString(userDtoOld));
+        logger.info("userDtoOld = {}", JSON.toJSONString(userDtoOld));
         if (userDtoOld != null) {
             throw new com.love.baby.web.exception.SystemException(500, "用户名已存在");
         }

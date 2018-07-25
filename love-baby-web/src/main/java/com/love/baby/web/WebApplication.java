@@ -10,9 +10,9 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @author 23770
  */
 @EnableEurekaClient
-@SpringBootApplication(scanBasePackages={"com.love.baby.common.common"})
 @EnableHystrix
-@EnableFeignClients
+@SpringBootApplication(scanBasePackages={"com.love.baby"})
+@EnableFeignClients(basePackages = "com.love.baby.common.api")
 public class WebApplication {
     public static void main(String[] args) {
         SpringApplication.run(WebApplication.class, args);

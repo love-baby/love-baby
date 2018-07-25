@@ -1,6 +1,6 @@
 package com.love.baby.web.dao;
 
-import com.love.baby.web.bean.Music;
+import com.love.baby.common.bean.Music;
 import org.springframework.stereotype.Repository;
 
 /**

@@ -1,11 +1,10 @@
 package com.love.baby.web.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.love.baby.web.bean.User;
-import com.love.baby.web.common.UserSessionCommon;
+import com.love.baby.common.bean.User;
+import com.love.baby.common.common.UserSessionCommon;
 import com.love.baby.web.config.SystemConfig;
-import com.love.baby.web.dto.UserDto;
-import com.love.baby.web.exception.SystemException;
+import com.love.baby.common.dto.UserDto;
 import com.love.baby.web.service.UserService;
 import com.love.baby.web.vo.UserVo;
 import org.apache.commons.lang3.StringUtils;
@@ -64,7 +63,7 @@ public class UserController {
         UserDto userDtoOld = userService.findByName(userDto.getName());
         logger.info("userDtoOld = {}",JSON.toJSONString(userDtoOld));
         if (userDtoOld != null) {
-            throw new SystemException(500, "用户名已存在");
+            throw new com.love.baby.web.exception.SystemException(500, "用户名已存在");
         }
         String id = UUID.randomUUID().toString().replaceAll("-", "");
         userDto.setId(id);
@@ -88,10 +87,10 @@ public class UserController {
         logger.info("登录 name = {},pwd = {}", name, pwd);
         UserDto userDto = userService.findByName(name);
         if (userDto == null) {
-            throw new SystemException(500, "登录失败,用户不存在");
+            throw new com.love.baby.web.exception.SystemException(500, "登录失败,用户不存在");
         }
         if (!StringUtils.equals(userDto.getPwd(), pwd)) {
-            throw new SystemException(500, "登录失败,密码错误");
+            throw new com.love.baby.web.exception.SystemException(500, "登录失败,密码错误");
         }
         //存缓存
         return userSessionCommon.saveUserToken(userDto);

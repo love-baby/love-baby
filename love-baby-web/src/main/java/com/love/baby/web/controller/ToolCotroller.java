@@ -1,8 +1,8 @@
 package com.love.baby.web.controller;
 
-import com.love.baby.web.bean.Music;
-import com.love.baby.web.bean.UploadFile;
-import com.love.baby.web.common.UserSessionCommon;
+import com.love.baby.common.bean.Music;
+import com.love.baby.common.bean.UploadFile;
+import com.love.baby.common.common.UserSessionCommon;
 import com.love.baby.web.exception.SystemException;
 import com.love.baby.web.service.MusicService;
 import com.love.baby.web.service.UploadFileService;

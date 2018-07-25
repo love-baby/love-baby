@@ -1,7 +1,7 @@
-package com.love.baby.web.common;
+package com.love.baby.user.common;
 
 import com.alibaba.fastjson.JSON;
-import com.love.baby.web.util.RenderInfo;
+import com.love.baby.user.util.RenderInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +17,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
  *
  * @author 23770
  */
-@RestControllerAdvice(basePackages = "com.love.baby.web.controller")
+@RestControllerAdvice(basePackages = "com.love.baby.user.controller")
 public class GlobalHandler implements ResponseBodyAdvice<Object> {
 
     private static Logger logger = LoggerFactory.getLogger(GlobalHandler.class);

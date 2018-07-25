@@ -1,6 +1,6 @@
 package com.love.baby.web.service;
 
-import com.love.baby.web.bean.UploadFile;
+import com.love.baby.common.bean.UploadFile;
 import com.love.baby.web.dao.UploadFileDao;
 import org.springframework.stereotype.Service;
 

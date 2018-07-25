@@ -1,7 +1,7 @@
 package com.love.baby.web.service;
 
-import com.love.baby.web.api.UserRpcService;
-import com.love.baby.web.dto.UserDto;
+import com.love.baby.common.api.UserRpcService;
+import com.love.baby.common.dto.UserDto;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

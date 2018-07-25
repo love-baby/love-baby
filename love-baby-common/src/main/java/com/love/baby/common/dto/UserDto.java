@@ -1,6 +1,6 @@
-package com.love.baby.web.vo;
+package com.love.baby.common.dto;
 
-import com.love.baby.common.dto.UserDto;
+import com.love.baby.common.bean.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,7 +8,7 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * 展示层显示的对象
+ * 服务之间传输的对象
  *
  * @author liangbc
  * @date 2018/6/28
@@ -16,7 +16,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @Builder
-public class UserVo {
+public class UserDto {
     /**
      * id
      */
@@ -26,6 +26,10 @@ public class UserVo {
      */
     private String name;
     /**
+     * 密码
+     */
+    private String pwd;
+    /**
      * 性别
      */
     private Integer sex;
@@ -34,16 +38,27 @@ public class UserVo {
      */
     private String avatar;
     /**
+     * 资源地址
+     */
+    private String resourcesPath;
+    /**
+     * 状态
+     */
+    private Integer status;
+    /**
      * 创建时间
      */
     private Date createTime;
 
 
-    public UserVo(UserDto user) {
+    public UserDto(User user) {
         this.id = user.getId();
         this.name = user.getName();
+        this.pwd = user.getPwd();
         this.sex = user.getSex();
         this.avatar = user.getAvatar();
+        this.resourcesPath = user.getResourcesPath();
+        this.status = user.getStatus();
         this.createTime = user.getCreateTime();
     }
 }

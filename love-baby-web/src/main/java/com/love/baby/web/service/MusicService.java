@@ -1,6 +1,6 @@
 package com.love.baby.web.service;
 
-import com.love.baby.web.bean.Music;
+import com.love.baby.common.bean.Music;
 import com.love.baby.web.dao.MusicDao;
 import org.springframework.stereotype.Service;
 

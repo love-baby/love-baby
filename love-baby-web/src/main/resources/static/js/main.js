@@ -12,7 +12,7 @@ jQuery(document).ready(function($){
 			autoPlayDelay = 5000;
 
 		//upload videos (if not on mobile devices)
-		uploadVideo(slidesWrapper);
+		// uploadVideo(slidesWrapper);
 
 		//autoplay slider
 		setAutoplay(slidesWrapper, slidesNumber, autoPlayDelay);
@@ -91,19 +91,19 @@ jQuery(document).ready(function($){
 		updateSliderNavigation(sliderNav, visibleSlidePosition);
 	}
 
-	function uploadVideo(container) {
-		container.find('.cd-bg-video-wrapper').each(function(){
-			var videoWrapper = $(this);
-			if( videoWrapper.is(':visible') ) {
-				// if visible - we are not on a mobile device 
-				var	videoUrl = videoWrapper.data('video'),
-					video = $('<video loop><source src="'+videoUrl+'.mp4" type="video/mp4" /><source src="'+videoUrl+'.webm" type="video/webm" /></video>');
-				video.appendTo(videoWrapper);
-				// play video if first slide
-				if(videoWrapper.parent('.cd-bg-video.selected').length > 0) video.get(0).play();
-			}
-		});
-	}
+	// function uploadVideo(container) {
+	// 	container.find('.cd-bg-video-wrapper').each(function(){
+	// 		var videoWrapper = $(this);
+	// 		if( videoWrapper.is(':visible') ) {
+	// 			// if visible - we are not on a mobile device
+	// 			var	videoUrl = videoWrapper.data('video'),
+	// 				video = $('<video loop><source src="'+videoUrl+'.mp4" type="video/mp4" /><source src="'+videoUrl+'.webm" type="video/webm" /></video>');
+	// 			video.appendTo(videoWrapper);
+	// 			// play video if first slide
+	// 			if(videoWrapper.parent('.cd-bg-video.selected').length > 0) video.get(0).play();
+	// 		}
+	// 	});
+	// }
 
 	function checkVideo(hiddenSlide, container, n) {
 		//check if a video outside the viewport is playing - if yes, pause it

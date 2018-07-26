@@ -1,5 +1,6 @@
 package com.love.baby.web.exception;
 
+import com.love.baby.common.exception.SystemException;
 import com.love.baby.web.util.RenderInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -127,7 +128,7 @@ public class GlobalExceptionHandler {
     private <T extends Throwable> RenderInfo resultFormat(T ex) {
         RenderInfo<Object> renderInfo = new RenderInfo<>();
         renderInfo.setCode(500);
-        renderInfo.setMessage("请求失败");
+        renderInfo.setMessage(ex.getMessage());
         renderInfo.setData(ex.getMessage());
         logger.error("请求失败 = ex", ex);
         return renderInfo;

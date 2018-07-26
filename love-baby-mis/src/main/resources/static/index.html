@@ -151,7 +151,7 @@
             </li>
             <li>
                 <a href="login.html">
-                    <span class="text-label">Mr. John </span><span class="fs1" aria-hidden="true" data-icon="&#xe088;"></span>
+                    <span id="userName" class="text-label">Mr. John </span><span class="fs1" aria-hidden="true" data-icon="&#xe088;"></span>
                 </a>
                 <ul class="user-summary">
                     <li>
@@ -1443,9 +1443,9 @@
             type: "GET",
             url: "user/userInfo",
             success: function (data) {
-                if(data.code==200){
-                    $(".text-label".html(data.data.name))
-                }else{
+                if (data.code == 200) {
+                    $("#userName".html(data.data.name))
+                } else {
                     window.location.replace("login.html");
                 }
             },

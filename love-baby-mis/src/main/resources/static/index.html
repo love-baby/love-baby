@@ -1444,7 +1444,7 @@
             url: "user/userInfo",
             success: function (data) {
                 if(data.code==200){
-                    $(".text-label".html(data.data.))
+                    $(".text-label".html(data.data.name))
                 }else{
                     window.location.replace("login.html");
                 }

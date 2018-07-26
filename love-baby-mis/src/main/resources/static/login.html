@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7]>
+<html class="lt-ie9 lt-ie8 lt-ie7" lang="en">
+<![endif]-->
+
+<!--[if IE 7]>
+<html class="lt-ie9 lt-ie8" lang="en">
+<![endif]-->
+
+<!--[if IE 8]>
+<html class="lt-ie9" lang="en">
+<![endif]-->
+
+<!--[if gt IE 8]>
+  <!-->
+<html lang="en">
+<!--
+<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <title>Slick Admin</title>
+    <meta name="author" content="John">
+    <meta content="width=device-width, initial-scale=1.0, user-scalable=no" name="viewport">
+    <meta name="description" content="Slick Admin Admin UI">
+    <meta name="keywords" content="Slick Admin, Admin UI, Admin Dashboard, John">
+
+    <script src="js/html5-trunk.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.cookie.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/jquery-form/form@4.2.2/dist/jquery.form.min.js" integrity="sha384-FzT3vTVGXqf7wRfy8k4BiyzvbNfeYjK+frTVqZeNDFl8woCbF0CYG6g2fMEFFo/i" crossorigin="anonymous"></script>
+
+    <link href="icomoon/style.css" rel="stylesheet">
+    <!--[if lte IE 7]>
+    <script src="css/icomoon-font/lte-ie7.js"></script>
+    <![endif]-->
+
+    <!-- bootstrap css -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <!-- custom css -->
+    <link href="css/main.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<!-- Main Container start -->
+<div class="main-container">
+    <div class="row">
+        <form id="login_form" action="/user/login" class="login-wrapper" method="post" enctype="multipart/form-data">
+            <div class="header">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Login<img src="img/logo.png" alt="Logo" class="pull-right"></h3>
+                        <p style="color: #7f7f7f">水太清则无鱼，人太急则无智</p>
+                    </div>
+                </div>
+            </div>
+            <div class="content">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <input class="input col-md-12 col-sm-12 email" id="name" name="name" placeholder="用户名" required="required">
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <input class="input col-md-12 col-sm-12 password" id="pwd" name="pwd" placeholder="密码" required="required" type="password">
+                    </div>
+                </div>
+            </div>
+            <div class="actions">
+                <button type="submit" id="btnSubmit" class="btn btn-danger">Login</button>
+                <!--<a class="link" href="#">Forgot Password?</a>-->
+                <div class="clearfix" style="color: red"></div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Main Container end -->
+</body>
+<script type="application/javascript">
+    $(document).ready(function () {
+        $("#login_form").ajaxForm(function (data) {
+            if (data.code == 200) {
+                var date = new Date();
+                date.setTime(date.getTime() + (1 * 30 * 24 * 60 * 60 * 1000));//一个月
+                $.cookie('token', data.data.token, {path: "/", expires: date});
+                window.location.replace("index.html");
+            } else {
+                $(".clearfix").html(data.message);
+            }
+        });
+    });
+</script>
+</html>

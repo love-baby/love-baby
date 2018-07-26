@@ -19,6 +19,7 @@
         <module>love-baby-common</module>
         <module>love-baby-user</module>
         <module>love-baby-web</module>
+        <module>love-baby-mis</module>
     </modules>
     <properties>
         <spring-cloud.version>Finchley.RELEASE</spring-cloud.version>

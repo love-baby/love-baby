@@ -1443,7 +1443,11 @@
             type: "GET",
             url: "user/userInfo",
             success: function (data) {
-
+                if(data.code==200){
+                    $(".text-label".html(data.data.))
+                }else{
+                    window.location.replace("login.html");
+                }
             },
             beforeSend: function (request) {
                 request.setRequestHeader("token", $.cookie('token'));
@@ -1452,7 +1456,7 @@
 
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                console.log(JSON.stringify(XMLHttpRequest));
+                window.location.replace("login.html");
             }
         });
     });

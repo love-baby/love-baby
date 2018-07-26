@@ -17,7 +17,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
  *
  * @author 23770
  */
-@RestControllerAdvice(basePackages = "com.love.baby.web.controller")
+@RestControllerAdvice(basePackages = "com.love.baby.mis.controller")
 public class GlobalHandler implements ResponseBodyAdvice<Object> {
 
     private static Logger logger = LoggerFactory.getLogger(GlobalHandler.class);

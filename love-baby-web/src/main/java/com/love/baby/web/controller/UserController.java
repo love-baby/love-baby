@@ -96,4 +96,18 @@ public class UserController {
         //存缓存
         return userSessionCommon.saveUserToken(userDto);
     }
+
+
+    /**
+     * 获取用户信息
+     *
+     * @param token
+     * @return
+     */
+    @GetMapping("/userInfo")
+    public UserVo userInfo(@RequestHeader(value = "token") String token) {
+        String userId = userSessionCommon.assertSessionAndGetUid(token);
+        UserDto userDto = userService.findById(userId);
+        return userDto == null ? null : new UserVo(userDto);
+    }
 }

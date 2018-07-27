@@ -11,6 +11,7 @@
     <!--[if lt IE 9]>
     <script type="text/javascript" src="lib/html5shiv.js"></script>
     <script type="text/javascript" src="lib/respond.min.js"></script>
+    <script type="text/javascript" src="js/jquery.cookie.js"></script>
     <![endif]-->
     <link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css"/>
     <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css"/>
@@ -180,7 +181,26 @@
 <script type="text/javascript" src="lib/jquery.contextmenu/jquery.contextmenu.r2.js"></script>
 <script type="text/javascript">
     $(function () {
+        $.ajax({
+            type: "GET",
+            url: "user/userInfo",
+            success: function (data) {
+                if (data.code == 200) {
+                    $("#userName".html(data.data.name))
+                } else {
+                    window.location.replace("login.html");
+                }
+            },
+            beforeSend: function (request) {
+                request.setRequestHeader("token", $.cookie('token'));
+            },
+            complete: function (XMLHttpRequest, textStatus) {
 
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                window.location.replace("login.html");
+            }
+        });
     });
     /*个人信息*/
     function myselfinfo() {

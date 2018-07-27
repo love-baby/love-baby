@@ -22,7 +22,7 @@ public class BaseRestDoc {
 
     protected MockMvc mockMvc;
 
-    protected String token = "";
+    protected String token = "095da5d7-69f8-4139-b018-2aca08fc0f63";
 
     @Autowired
     protected WebApplicationContext context;

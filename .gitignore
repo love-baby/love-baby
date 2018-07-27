@@ -27,7 +27,10 @@ hs_err_pid*
 .idea/
 love-baby-common/love-baby-common.iml
 love-baby-user/love-baby-user.iml
-love-baby-user/src/test/
 love-baby-web/love-baby-web.iml
-love-baby-web/src/test/
 love-baby.iml
+logs/
+love-baby-common/target/
+love-baby-mis/love-baby-mis.iml
+love-baby-web/logs/
+love-baby-web/target/

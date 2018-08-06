@@ -180,7 +180,7 @@
             url: "user/userInfo",
             success: function (data) {
                 if (data.code == 200) {
-                    $("#userName".html(data.data.name + '<i class="Hui-iconfont">&#xe6d5;</i>'))
+                    $("#userName").html(data.data.name + '<i class="Hui-iconfont">&#xe6d5;</i>');
                 } else {
                     window.location.replace("login.html");
                 }

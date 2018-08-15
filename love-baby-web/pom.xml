@@ -112,11 +112,6 @@
             <artifactId>spring-rabbit</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.47</version>
-        </dependency>
         <!--RPC-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

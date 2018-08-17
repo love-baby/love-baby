@@ -948,48 +948,7 @@ pre code {
     text-align: right;
 }
 
-/*弹出层*/
 
-.so {
-    display: none;
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background: url(img/1px.png) repeat;
-    top: 0;
-    left: 0;
-    z-index: 999;
-
-}
-
-.so .iconfont {
-    display: block;
-    font-size: 30px;
-    position: absolute;
-    top: 20px;
-    right: 30px;
-    color: #fff;
-    cursor: pointer;
-
-}
-
-.so .iconfont:hover {
-    color: #19B5FE;
-}
-
-.so .form-control {
-    height: 60px;
-    margin: 240px auto;
-    border: none;
-    box-shadow: none;
-    border-bottom: solid 1px #fff;
-    background: none;
-    font-size: 20px;
-    padding: 20px 40px;
-    color: #fff;
-    text-align: center;
-
-}
 
 .gb2-site {
 
@@ -1408,86 +1367,7 @@ pre code {
     color: #19B5FE;
 }
 
-/*友情链接*/
 
-.links {
-    width: 100%;
-    margin: 40px auto;
-}
-
-.links .linkt {
-    text-align: center;
-}
-
-.links .linkb {
-    margin-top: 60px;
-}
-
-.links .linkb ul li {
-    display: block;
-    padding: 0;
-}
-
-.links .linkb ul li a {
-    display: block;
-    height: 120px;
-    padding: 10px 20px;
-    box-shadow: #ced2db 0 1px 2px 0;
-    transition: all 0.4s linear;
-    -moz-transition: all 0.4s linear;
-    -webkit-transition: all 0.4s linear;
-    -o-transition: all 0.4s linear;
-}
-
-.links .linkb ul li a:hover {
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
-}
-
-.links .linkb ul li b {
-    line-height: 30px;
-    font-size: 14px;
-}
-
-.links .linkb ul li p {
-    margin-top: 1em;
-    font-size: 0.6em;
-    color: #666;
-}
-
-.links .linkb a {
-    color: #000;
-    margin: 10px;
-    display: inline-block;
-}
-
-.links .linka {
-    margin: 40px auto;
-    padding: 20px;
-    background: #f8f8f8;
-}
-
-.links .linka h3 {
-    margin-bottom: 1em;
-}
-
-/*地图*/
-
-.bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-}
-
-.bg .wbg {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: #000;
-    opacity: 0.4;
-}
 
 .bg video {
     height: 120%;

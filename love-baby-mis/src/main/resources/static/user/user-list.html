@@ -103,7 +103,7 @@
 
     function searchUser() {
         $.ajax({
-            url: "user/listAll",
+            url: "/user/listAll",
             datatype: "json",
             'headers': {
                 'token': $.cookie('token')

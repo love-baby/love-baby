@@ -81,6 +81,7 @@
 <script type="text/javascript" src="/lib/laypage/1.2/laypage.js"></script>
 <script type="text/javascript">
     $(function () {
+        searchUser();
         $('.table-sort').dataTable({
             "aaSorting": [[1, "desc"]],//默认第几个排序
             "bStateSave": true,//状态保存
@@ -99,14 +100,40 @@
             }
         });
     });
+
+    function searchUser() {
+        $.ajax({
+            url: "user/listAll",
+            datatype: "json",
+            'headers': {
+                'token': $.cookie('token')
+            },
+            async: false,
+            success: function (data) {
+
+            },
+            beforeSend: function () {
+
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                layer.msg("查询失败");
+            }
+        });
+    }
+
     /*用户-添加*/
     function member_add(title, url, w, h) {
         layer_show(title, url, w, h);
     }
+
     /*用户-查看*/
     function member_show(title, url, id, w, h) {
         layer_show(title, url, w, h);
     }
+
     /*用户-停用*/
     function member_stop(obj, id) {
         layer.confirm('确认要停用吗？', function (index) {
@@ -126,14 +153,17 @@
             layer.msg('已启用!', {icon: 6, time: 1000});
         });
     }
+
     /*用户-编辑*/
     function member_edit(title, url, id, w, h) {
         layer_show(title, url, w, h);
     }
+
     /*密码-修改*/
     function change_password(title, url, id, w, h) {
         layer_show(title, url, w, h);
     }
+
     /*用户-删除*/
     function member_del(obj, id) {
         layer.confirm('确认要删除吗？', function (index) {

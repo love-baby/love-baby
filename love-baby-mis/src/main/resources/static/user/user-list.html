@@ -79,6 +79,7 @@
 <script type="text/javascript" src="/lib/My97DatePicker/4.8/WdatePicker.js"></script>
 <script type="text/javascript" src="/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript" src="/js/util.js"></script>
 <script type="text/javascript">
     $(function () {
         searchUser();
@@ -103,7 +104,7 @@
 
     function searchUser() {
         $.ajax({
-            url: "/user/listAll",
+            url: host + "/user/listAll",
             datatype: "json",
             'headers': {
                 'token': $.cookie('token')

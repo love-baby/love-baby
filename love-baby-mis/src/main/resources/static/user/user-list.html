@@ -75,7 +75,7 @@
                     'type': 'post',
                     "url": sSource,
                     "dataType": "json",
-                    "data": {"searchUserParams": JSON.stringify(aoData)},
+                    "data": {"searchParams": JSON.stringify(aoData)},
                     "success": function (resp) {
                         fnCallback(resp.data);
                     }, error: function () {

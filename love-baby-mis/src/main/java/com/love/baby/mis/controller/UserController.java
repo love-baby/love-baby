@@ -5,9 +5,10 @@ import com.love.baby.common.bean.User;
 import com.love.baby.common.common.UserSessionCommon;
 import com.love.baby.common.dto.UserDto;
 import com.love.baby.common.exception.SystemException;
+import com.love.baby.common.util.PageUtil;
 import com.love.baby.mis.config.SystemConfig;
-import com.love.baby.mis.vo.UserVo;
 import com.love.baby.mis.service.UserService;
+import com.love.baby.mis.vo.UserVo;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,12 +43,16 @@ public class UserController {
      * @return
      */
     @PostMapping("/listAll")
-    public List<UserVo> listAll(@RequestHeader(value = "token") String token, @RequestBody String searchData) {
+    public PageUtil listAll(@RequestHeader(value = "token") String token, @RequestBody String searchData) {
         String uId = userSessionCommon.assertSessionAndGetUid(token);
         logger.info("获取所有用户 token = {},uId = {},searchData = {}", token, uId, searchData);
         List<UserVo> list = new ArrayList<>();
         userService.findAll().forEach(user -> list.add(new UserVo(user)));
-        return list;
+        PageUtil pageUtil = PageUtil.builder()
+                .data(list)
+                .iTotalDisplayRecords(100)
+                .iTotalRecords(1000).build();
+        return pageUtil;
     }
 
 

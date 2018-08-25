@@ -65,14 +65,6 @@
         $('#userTable').DataTable({
             "bProcessing": true,//是否显示取数据时的那个等待提示
             "serverSide": true,//这个用来指明是通过服务端来取数据
-            "bStateSave": true,//状态保存
-            "bPaginate": true, //翻页功能
-            "bLengthChange": true, //改变每页显示数据数量
-            "bFilter": true, //过滤功能
-            "bSort": true, //排序功能
-            "bInfo": true,//页脚信息
-            "bAutoWidth": true,//自动宽度
-            "iDisplayLength": 20, //每页显示20条记录</div>
             "sAjaxSource": host + "/user/listAll",
             "fnServerData": function (sSource, aoData, fnCallback) {
                 $.ajax({

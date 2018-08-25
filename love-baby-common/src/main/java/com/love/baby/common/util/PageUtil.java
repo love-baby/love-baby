@@ -13,13 +13,8 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @Builder
-public class PageUtil<T> implements Serializable {
-    private static final long serialVersionUID = -6718838800112233445L;
-    private List<T> content;
-    private long totalElements;
-    private int totalPages;
-    private int number;
-    private int size;
-    private int numberOfElements;
-    private int newJobCount;
+public class PageUtil implements Serializable {
+    private List data;
+    private long iTotalDisplayRecords;
+    private int iTotalRecords;
 }

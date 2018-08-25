@@ -49,9 +49,9 @@ public class UserController {
         List<UserVo> list = new ArrayList<>();
         userService.findAll().forEach(user -> list.add(new UserVo(user)));
         PageUtil pageUtil = PageUtil.builder()
-                .aaData(list)
-                .iTotalDisplayRecords(100)
-                .iTotalRecords(1000).build();
+                .data(list)
+                .recordsFiltered(100)
+                .recordsTotal(1000).build();
         return pageUtil;
     }
 

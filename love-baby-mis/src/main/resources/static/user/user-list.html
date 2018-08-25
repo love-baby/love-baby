@@ -89,31 +89,39 @@
 
                 });
             },
-            "aoColumns": [{
-                "mDataProp": "id",
-                "sDefaultContent": "",
-                "bVisible": false
-            }, {
-                "mDataProp": "name",
-                "sTitle": "用户名",
-                "sDefaultContent": "",
-                "sClass": "center"
-            }, {
-                "mDataProp": "sex",
-                "sTitle": " 性别",
-                "sDefaultContent": "",
-                "sClass": "center"
-            }, {
-                "mDataProp": "avatar",
-                "sTitle": "头像",
-                "sDefaultContent": "",
-                "sClass": "center"
-            }, {
-                "mDataProp": "createTime",
-                "sTitle": "创建时间",
-                "sDefaultContent": "",
-                "sClass": "center"
-            }],
+            "aoColumns": [
+                {
+                    "mDataProp": "id",
+                    "title": "序号",
+                    "defaultContent": "",
+                    "sClass": "center"
+                },
+                {
+                    "mDataProp": "name",
+                    "sTitle": "用户名",
+                    "sDefaultContent": "",
+                    "sClass": "center"
+                }, {
+                    "mDataProp": "sex",
+                    "sTitle": " 性别",
+                    "sDefaultContent": "",
+                    "sClass": "center"
+                }, {
+                    "mDataProp": "avatar",
+                    "sTitle": "头像",
+                    "sDefaultContent": "",
+                    "sClass": "center"
+                }, {
+                    "mDataProp": "createTime",
+                    "sTitle": "创建时间",
+                    "sDefaultContent": "",
+                    "sClass": "center"
+                }, {
+                    "data": null,
+                    "title": "操作",
+                    "defaultContent": "<button class='edit-btn' type='button'>编辑</button>"
+                }
+            ],
             columns: [
                 {data: 'name'},
                 {data: 'sex'},

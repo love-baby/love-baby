@@ -64,6 +64,31 @@
                 },
                 dataSrc: 'data'
             },
+            "aoColumns": [{
+                "mDataProp": "id",
+                "sDefaultContent": "", //此列默认值为""，以防数据中没有此值，DataTables加载数据的时候报错
+                "bVisible": false //此列不显示
+            }, {
+                "mDataProp": "name",
+                "sTitle": "用户名",
+                "sDefaultContent": "",
+                "sClass": "center"
+            }, {
+                "mDataProp": "sex",
+                "sTitle": " 性别",
+                "sDefaultContent": "",
+                "sClass": "center"
+            }, {
+                "mDataProp": "avatar",
+                "sTitle": "头像",
+                "sDefaultContent": "",
+                "sClass": "center"
+            }, {
+                "mDataProp": "createTime",
+                "sTitle": "创建时间",
+                "sDefaultContent": "",
+                "sClass": "center"
+            }],
             columns: [
                 {data: 'name'},
                 {data: 'sex'},

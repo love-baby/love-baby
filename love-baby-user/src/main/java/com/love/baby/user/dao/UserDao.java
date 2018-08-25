@@ -38,7 +38,7 @@ public class UserDao extends BaseDao<User> {
         Integer count = jdbcTemplate.queryForObject(sql, Integer.class);
         PageUtil pageUtil = PageUtil.builder()
                 .data(list)
-                .recordsFiltered(list.size())
+                .recordsFiltered(count)
                 .recordsTotal(count).build();
         return pageUtil;
     }

@@ -18,7 +18,6 @@ public class SearchParams {
     private String name;
     private String value;
 
-
     public static Map findAllparams(SearchParams[] searchParams) {
         Map<String, String> m = new HashMap();
         for (int i = 0; i < searchParams.length; i++) {

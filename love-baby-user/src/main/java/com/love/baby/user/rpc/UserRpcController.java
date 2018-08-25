@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.love.baby.common.api.UserRpcService;
 import com.love.baby.common.bean.User;
 import com.love.baby.common.dto.UserDto;
+import com.love.baby.common.param.SearchUserParams;
 import com.love.baby.common.util.PageUtil;
 import com.love.baby.user.service.UserService;
 import org.springframework.http.MediaType;
@@ -26,10 +27,10 @@ public class UserRpcController implements UserRpcService {
 
     @Override
     @GetMapping(value = "/listAll/{cursor}/{size}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public PageUtil listAll(@PathVariable Integer cursor, @PathVariable Integer size) {
+    public PageUtil listAll(@PathVariable Integer cursor, @PathVariable Integer size, @RequestBody SearchUserParams searchUserParams) {
         List<UserDto> list = new ArrayList<>();
-        PageUtil pageUtil = userService.findAll(cursor, size);
-        pageUtil.getData().forEach(user -> list.add(new UserDto(JSON.parseObject(JSON.toJSONString(user),User.class))));
+        PageUtil pageUtil = userService.findAll(cursor, size,searchUserParams);
+        pageUtil.getData().forEach(user -> list.add(new UserDto(JSON.parseObject(JSON.toJSONString(user), User.class))));
         pageUtil.setData(list);
         return pageUtil;
     }

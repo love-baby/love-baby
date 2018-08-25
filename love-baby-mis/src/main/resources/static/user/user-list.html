@@ -65,7 +65,7 @@
         $('#userTable').DataTable({
             "bFilter": false,//关闭搜索
             "bProcessing": true,//是否显示取数据时的那个等待提示
-            "serverSide": true,//这个用来指明是通过服务端来取数据
+            "serverSide": true,//启用服务器端分页
             "sAjaxSource": host + "/user/listAll",
             "fnServerData": function (sSource, aoData, fnCallback) {
                 aoData.push(

@@ -6,6 +6,7 @@ import com.love.baby.common.common.UserSessionCommon;
 import com.love.baby.common.dto.UserDto;
 import com.love.baby.common.exception.SystemException;
 import com.love.baby.common.param.SearchParams;
+import com.love.baby.common.param.SearchUserParams;
 import com.love.baby.common.util.PageUtil;
 import com.love.baby.mis.config.SystemConfig;
 import com.love.baby.mis.service.UserService;
@@ -49,8 +50,15 @@ public class UserController {
         logger.info("获取所有用户 token = {},uId = {},searchParams = {}", token, uId, JSON.toJSONString(searchParams));
         Map<String, String> map = SearchParams.findAllparams(searchParams);
         logger.info("获取所有用户搜索参数  Map = {}", JSON.toJSONString(map));
+
+        SearchUserParams searchUserParams = SearchUserParams.builder()
+                .searchText(map.get("searchText"))
+                .dateMax(map.get("dateMax"))
+                .dateMin(map.get("dateMin"))
+                .sortField(map.get("iSortCol_0"))
+                .sort(map.get("sSortDir_0")).build();
         List<UserVo> list = new ArrayList<>();
-        PageUtil pageUtil = userService.findAll(Integer.parseInt(map.get("iDisplayStart")), Integer.parseInt(map.get("iDisplayLength")));
+        PageUtil pageUtil = userService.findAll(Integer.parseInt(map.get("iDisplayStart")), Integer.parseInt(map.get("iDisplayLength")), searchUserParams);
         pageUtil.getData().forEach(user -> list.add(JSON.parseObject(JSON.toJSONString(user), UserVo.class)));
         pageUtil.setData(list);
         return pageUtil;

@@ -76,9 +76,7 @@
                     url: sSource,
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
-                    data: {
-                        "searchParams": JSON.stringify(aoData)
-                    },
+                    data: JSON.stringify(aoData),
                     success: function (resp) {
                         if (resp.code == 200) {
                             fnCallback(resp.data);

@@ -41,7 +41,7 @@ public class UserController {
      *
      * @return
      */
-    @GetMapping("/listAll")
+    @PostMapping("/listAll")
     public List<UserVo> listAll(@RequestHeader(value = "token") String token, @RequestBody String searchData) {
         String uId = userSessionCommon.assertSessionAndGetUid(token);
         logger.info("获取所有用户 token = {},uId = {},searchData = {}", token, uId, searchData);

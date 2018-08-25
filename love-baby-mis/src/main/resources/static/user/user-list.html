@@ -75,10 +75,10 @@
                     'type': 'post',
                     "url": sSource,
                     "dataType": "json",
-                    "data": {"searchData": JSON.stringify(aoData)},
+                    "data": {"searchUserParams": JSON.stringify(aoData)},
                     "success": function (resp) {
                         fnCallback(resp.data);
-                    }, error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    }, error: function () {
                         layer.msg("查询失败");
                     }
 
@@ -86,8 +86,8 @@
             },
             "aoColumns": [{
                 "mDataProp": "id",
-                "sDefaultContent": "", //此列默认值为""，以防数据中没有此值，DataTables加载数据的时候报错
-                "bVisible": false //此列不显示
+                "sDefaultContent": "",
+                "bVisible": false
             }, {
                 "mDataProp": "name",
                 "sTitle": "用户名",

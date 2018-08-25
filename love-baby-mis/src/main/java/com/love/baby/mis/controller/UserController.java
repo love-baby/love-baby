@@ -5,6 +5,7 @@ import com.love.baby.common.bean.User;
 import com.love.baby.common.common.UserSessionCommon;
 import com.love.baby.common.dto.UserDto;
 import com.love.baby.common.exception.SystemException;
+import com.love.baby.common.param.SearchParams;
 import com.love.baby.common.util.PageUtil;
 import com.love.baby.mis.config.SystemConfig;
 import com.love.baby.mis.service.UserService;
@@ -43,12 +44,15 @@ public class UserController {
      * @return
      */
     @PostMapping("/listAll")
-    public PageUtil listAll(@RequestHeader(value = "token") String token, @RequestBody String searchData) {
+    public PageUtil listAll(@RequestHeader(value = "token") String token, @RequestBody SearchParams[] searchParams) {
         String uId = userSessionCommon.assertSessionAndGetUid(token);
-        logger.info("获取所有用户 token = {},uId = {},searchData = {}", token, uId, searchData);
+        logger.info("获取所有用户 token = {},uId = {},searchParams = {}", token, uId, JSON.toJSON(searchParams));
+        Map map = SearchParams.findAllparams(searchParams);
+        logger.info("获取所有用户搜索参数  Map = {}", token, uId, JSON.toJSON(map));
         List<UserVo> list = new ArrayList<>();
         userService.findAll().forEach(user -> list.add(new UserVo(user)));
         PageUtil pageUtil = PageUtil.builder()
+                .sEcho(Integer.parseInt(String.valueOf(map.get("sEcho"))))
                 .data(list)
                 .recordsFiltered(100)
                 .recordsTotal(1000).build();

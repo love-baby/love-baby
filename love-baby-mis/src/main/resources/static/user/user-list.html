@@ -68,15 +68,18 @@
             "sAjaxSource": host + "/user/listAll",
             "fnServerData": function (sSource, aoData, fnCallback) {
                 $.ajax({
-                    'headers': {
+                    headers: {
                         'token': $.cookie('token')
                     },
-                    'async': false,
-                    'type': 'post',
-                    "url": sSource,
-                    "dataType": "json",
-                    "data": {"searchParams": JSON.stringify(aoData)},
-                    "success": function (resp) {
+                    async: false,
+                    type: 'post',
+                    url: sSource,
+                    dataType: "json",
+                    contentType: "application/json",
+                    data: {
+                        "searchParams": JSON.stringify(aoData)
+                    },
+                    success: function (resp) {
                         if (resp.code == 200) {
                             fnCallback(resp.data);
                         } else {

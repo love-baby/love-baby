@@ -55,7 +55,7 @@ public class UserController {
                 .searchText(map.get("searchText"))
                 .dateMax(map.get("dateMax"))
                 .dateMin(map.get("dateMin"))
-                .sortField(map.get("iSortCol_0"))
+                .sortField(Integer.parseInt(map.get("iSortCol_0")) == 4 ? "create_time" : "create_time")
                 .sort(map.get("sSortDir_0")).build();
         List<UserVo> list = new ArrayList<>();
         PageUtil pageUtil = userService.findAll(Integer.parseInt(map.get("iDisplayStart")), Integer.parseInt(map.get("iDisplayLength")), searchUserParams);

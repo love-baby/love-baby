@@ -63,23 +63,20 @@
 <script type="text/javascript">
     $(function () {
         $('#userTable').DataTable({
-            ajax: {
-                url: host + "/user/listAll",
-                datatype: "json",
-                async: false,
-                'headers': {
-                    'token': $.cookie('token')
-                },
-                dataSrc: 'data'
-            },
+            "bProcessing": true,
             "serverSide": true,
-            "fnServerData": function(sSource, aoData, fnCallback){
-                $.ajax( {
-                    'type' : 'post',
+            "sAjaxSource": host + "/user/listAll",
+            "fnServerData": function (sSource, aoData, fnCallback) {
+                $.ajax({
+                    'headers': {
+                        'token': $.cookie('token')
+                    },
+                    'async': false,
+                    'type': 'post',
                     "url": sSource,
                     "dataType": "json",
-                    "data": { "searchData" : JSON.stringify(aoData) },
-                    "success": function(resp) {
+                    "data": {"searchData": JSON.stringify(aoData)},
+                    "success": function (resp) {
                         fnCallback(resp);
                     }
                 });

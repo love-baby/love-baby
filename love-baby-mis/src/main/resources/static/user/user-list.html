@@ -57,6 +57,11 @@
         $('#userTable').DataTable({
             ajax: {
                 url: host + "/user/listAll",
+                datatype: "json",
+                async: false,
+                'headers': {
+                    'token': $.cookie('token')
+                },
                 dataSrc: 'data'
             },
             columns: [

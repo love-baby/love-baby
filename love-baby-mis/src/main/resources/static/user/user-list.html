@@ -77,7 +77,11 @@
                     "dataType": "json",
                     "data": {"searchParams": JSON.stringify(aoData)},
                     "success": function (resp) {
-                        fnCallback(resp.data);
+                        if (resp.code == 200) {
+                            fnCallback(resp.data);
+                        } else {
+                            layer.msg("查询失败");
+                        }
                     }, error: function () {
                         layer.msg("查询失败");
                     }

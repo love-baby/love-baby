@@ -1,9 +1,12 @@
 package com.love.baby.user.dao;
 
+import com.alibaba.fastjson.JSON;
 import com.love.baby.common.bean.User;
 import com.love.baby.common.param.SearchUserParams;
 import com.love.baby.common.util.PageUtil;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -16,6 +19,10 @@ import java.util.List;
  */
 @Repository
 public class UserDao extends BaseDao<User> {
+
+
+    private static Logger logger = LoggerFactory.getLogger(UserDao.class);
+
     /**
      * 根据用户名获取用户
      *
@@ -61,6 +68,10 @@ public class UserDao extends BaseDao<User> {
         }
         sql += " limit ?,?";
         params = new Object[]{params, cursor, size};
+
+        logger.info("params = {}", JSON.toJSON(params));
+        logger.info("paramsCount = {}", JSON.toJSON(paramsCount));
+
         RowMapper<User> rowMapper = BeanPropertyRowMapper.newInstance(entityClass);
         List<User> list = jdbcTemplate.query(sql, rowMapper, params);
         Integer count = jdbcTemplate.queryForObject(sqlCount, Integer.class, paramsCount);

@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,33 +43,34 @@ public class UserDao extends BaseDao<User> {
     public PageUtil findAll(int cursor, int size, SearchUserParams searchUserParams) {
         String sql = "select * from user where 1 = 1";
         String sqlCount = "select count(1) from user where 1 = 1";
-        Object[] params = null;
-        Object[] paramsCount = null;
+        List params = new ArrayList();
+        List paramsCount = new ArrayList();
         if (StringUtils.isNotBlank(searchUserParams.getSearchText())) {
             sql += " and name = ?";
             sqlCount += " and name = ?";
-            params = new Object[]{searchUserParams.getSearchText()};
-            paramsCount = new Object[]{searchUserParams.getSearchText()};
+            params.add(searchUserParams.getSearchText());
+            paramsCount.add(searchUserParams.getSearchText());
         }
         if (StringUtils.isNotBlank(searchUserParams.getDateMin())) {
             sql += " and create_time >= ?";
             sqlCount += " and create_time >= ?";
-            params = new Object[]{params, searchUserParams.getDateMin() + " 00:00:00"};
-            paramsCount = new Object[]{paramsCount, searchUserParams.getDateMin() + " 00:00:00"};
+            params.add(searchUserParams.getDateMin() + " 00:00:00");
+            paramsCount.add(searchUserParams.getDateMin() + " 00:00:00");
         }
         if (StringUtils.isNotBlank(searchUserParams.getDateMax())) {
             sql += " and create_time <= ?";
             sqlCount += " and create_time <= ?";
-            params = new Object[]{params, searchUserParams.getDateMax() + " 23:59:59"};
-            paramsCount = new Object[]{paramsCount, searchUserParams.getDateMax() + " 23:59:59"};
+            params.add(searchUserParams.getDateMax() + " 23:59:59");
+            paramsCount.add(searchUserParams.getDateMax() + " 23:59:59");
         }
         if (StringUtils.isNotBlank(searchUserParams.getSortField()) && StringUtils.isNotBlank(searchUserParams.getSortField())) {
             sql += " order by ? ?";
-            params = new Object[]{params, searchUserParams.getSortField(), searchUserParams.getSortField()};
+            params.add(searchUserParams.getSortField());
+            params.add(searchUserParams.getSortField());
         }
         sql += " limit ?,?";
-        params = new Object[]{params, cursor, size};
-
+        params.add(cursor);
+        params.add(size);
         logger.info("params = {}", JSON.toJSON(params));
         logger.info("paramsCount = {}", JSON.toJSON(paramsCount));
 

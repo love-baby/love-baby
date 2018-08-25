@@ -26,7 +26,7 @@ public class UserRpcController implements UserRpcService {
     private UserService userService;
 
     @Override
-    @GetMapping(value = "/listAll/{cursor}/{size}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "/listAll/{cursor}/{size}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public PageUtil listAll(@PathVariable Integer cursor, @PathVariable Integer size, @RequestBody SearchUserParams searchUserParams) {
         List<UserDto> list = new ArrayList<>();
         PageUtil pageUtil = userService.findAll(cursor, size,searchUserParams);

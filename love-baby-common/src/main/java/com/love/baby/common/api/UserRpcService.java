@@ -19,7 +19,7 @@ public interface UserRpcService {
      *
      * @return
      */
-    @GetMapping(value = "/listAll/{cursor}/{size}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "/listAll/{cursor}/{size}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     PageUtil listAll(@PathVariable Integer cursor, @PathVariable Integer size, @RequestBody SearchUserParams searchUserParams);
 
     /**

@@ -52,7 +52,10 @@ public class UserController {
         List<UserVo> list = new ArrayList<>();
         PageUtil pageUtil = userService.findAll(Integer.parseInt(map.get("iDisplayStart")), Integer.parseInt(map.get("iDisplayLength")));
         logger.info("pageUtil = {}", JSON.toJSON(pageUtil));
-        pageUtil.getData().forEach(user -> list.add(new UserVo((UserDto) user)));
+        pageUtil.getData().forEach(user -> {
+            logger.info("user = {}", JSON.toJSON(user));
+            list.add(JSON.parseObject(JSON.toJSON(JSON.toJSON(user)).toString(), UserVo.class));
+        });
         pageUtil.setData(list);
         return pageUtil;
     }

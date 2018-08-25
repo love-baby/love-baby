@@ -15,7 +15,7 @@ import java.util.List;
 @Builder
 public class PageUtil implements Serializable {
     private int sEcho;
-    private List aaData;
-    private int iTotalDisplayRecords;
-    private int iTotalRecords;
+    private List data;
+    private int recordsFiltered;
+    private int recordsTotal;
 }

@@ -63,7 +63,7 @@ public class UserDao extends BaseDao<User> {
             params.add(searchUserParams.getDateMax() + " 23:59:59");
             paramsCount.add(searchUserParams.getDateMax() + " 23:59:59");
         }
-        if (StringUtils.isNotBlank(searchUserParams.getSortField()) && StringUtils.isNotBlank(searchUserParams.getSortField())) {
+        if (StringUtils.isNotBlank(searchUserParams.getSortField()) && StringUtils.isNotBlank(searchUserParams.getSort())) {
             sql += " order by ? ?";
             params.add(searchUserParams.getSortField());
             params.add(searchUserParams.getSortField());

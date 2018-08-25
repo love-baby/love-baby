@@ -77,7 +77,7 @@
                     "dataType": "json",
                     "data": {"searchData": JSON.stringify(aoData)},
                     "success": function (resp) {
-                        fnCallback(resp);
+                        fnCallback(resp.data);
                     }
                 });
             },

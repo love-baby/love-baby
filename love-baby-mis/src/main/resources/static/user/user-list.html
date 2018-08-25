@@ -72,6 +72,18 @@
                 },
                 dataSrc: 'data'
             },
+            "serverSide": true,
+            "fnServerData": function(sSource, aoData, fnCallback){
+                $.ajax( {
+                    'type' : 'post',
+                    "url": sSource,
+                    "dataType": "json",
+                    "data": { "searchData" : JSON.stringify(aoData) },
+                    "success": function(resp) {
+                        fnCallback(resp);
+                    }
+                });
+            },
             "aoColumns": [{
                 "mDataProp": "id",
                 "sDefaultContent": "", //此列默认值为""，以防数据中没有此值，DataTables加载数据的时候报错

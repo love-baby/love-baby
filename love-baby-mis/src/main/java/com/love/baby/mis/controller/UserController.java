@@ -47,15 +47,12 @@ public class UserController {
     public PageUtil listAll(@RequestHeader(value = "token") String token, @RequestBody SearchParams[] searchParams) {
         String uId = userSessionCommon.assertSessionAndGetUid(token);
         logger.info("获取所有用户 token = {},uId = {},searchParams = {}", token, uId, JSON.toJSON(searchParams));
-        Map map = SearchParams.findAllparams(searchParams);
-        logger.info("获取所有用户搜索参数  Map = {}", token, uId, JSON.toJSON(map));
+        Map<String,String> map = SearchParams.findAllparams(searchParams);
+        logger.info("获取所有用户搜索参数  Map = {}", JSON.toJSON(map));
         List<UserVo> list = new ArrayList<>();
-        userService.findAll().forEach(user -> list.add(new UserVo(user)));
-        PageUtil pageUtil = PageUtil.builder()
-                .sEcho(Integer.parseInt(String.valueOf(map.get("sEcho"))))
-                .data(list)
-                .recordsFiltered(100)
-                .recordsTotal(1000).build();
+        PageUtil pageUtil = userService.findAll(Integer.parseInt(map.get("iDisplayStart")), Integer.parseInt(map.get("iDisplayLength")));
+        pageUtil.getData().forEach(user -> list.add(new UserVo((UserDto) user)));
+        pageUtil.setData(list);
         return pageUtil;
     }
 

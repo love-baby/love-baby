@@ -1,14 +1,10 @@
 package com.love.baby.common.api;
 
 import com.love.baby.common.dto.UserDto;
+import com.love.baby.common.util.PageUtil;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author liangbc
@@ -22,8 +18,8 @@ public interface UserRpcService {
      *
      * @return
      */
-    @GetMapping(value = "/listAll", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    List<UserDto> listAll();
+    @GetMapping(value = "/listAll/{cursor}/{size}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    PageUtil listAll(@PathVariable Integer cursor, @PathVariable Integer size);
 
     /**
      * 用户name获取用户

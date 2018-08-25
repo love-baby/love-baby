@@ -20,7 +20,7 @@ public class SearchParams {
 
 
     public static Map findAllparams(SearchParams[] searchParams) {
-        Map m = new HashMap();
+        Map<String, String> m = new HashMap();
         for (int i = 0; i < searchParams.length; i++) {
             SearchParams searchParam = searchParams[i];
             m.put(searchParam.getName(), searchParam.value);

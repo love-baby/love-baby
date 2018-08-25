@@ -1,6 +1,7 @@
 package com.love.baby.user.service;
 
 import com.love.baby.common.bean.User;
+import com.love.baby.common.util.PageUtil;
 import com.love.baby.user.dao.UserDao;
 import org.springframework.stereotype.Service;
 
@@ -65,6 +66,11 @@ public class UserService implements BaseService<User> {
      */
     public Boolean isExist(String name) {
         return userDao.findByName(name) == null ? false : true;
+    }
+
+
+    public PageUtil findAll(int cursor, int size) {
+       return userDao.findAll(cursor,size);
     }
 }
 

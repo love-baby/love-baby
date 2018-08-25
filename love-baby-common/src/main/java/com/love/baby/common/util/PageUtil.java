@@ -8,7 +8,8 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by liangbc on 16/8/11.
+ * @author liangbc
+ * @date 16/8/11
  */
 @Data
 @AllArgsConstructor

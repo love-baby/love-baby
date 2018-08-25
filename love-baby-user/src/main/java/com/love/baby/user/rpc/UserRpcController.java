@@ -3,6 +3,7 @@ package com.love.baby.user.rpc;
 import com.love.baby.common.api.UserRpcService;
 import com.love.baby.common.bean.User;
 import com.love.baby.common.dto.UserDto;
+import com.love.baby.common.util.PageUtil;
 import com.love.baby.user.service.UserService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * @author liangbc
  * @date 2018/7/24
  */
@@ -24,11 +24,13 @@ public class UserRpcController implements UserRpcService {
     private UserService userService;
 
     @Override
-    @GetMapping(value = "/listAll", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public List<UserDto> listAll() {
+    @GetMapping(value = "/listAll/{cursor}/{size}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public PageUtil listAll(@PathVariable Integer cursor, @PathVariable Integer size) {
         List<UserDto> list = new ArrayList<>();
-        userService.findAll().forEach(user -> list.add(new UserDto(user)));
-        return list;
+        PageUtil pageUtil = userService.findAll(cursor, size);
+        pageUtil.getData().forEach(user -> list.add(new UserDto((User) user)));
+        pageUtil.setData(list);
+        return pageUtil;
     }
 
     @Override

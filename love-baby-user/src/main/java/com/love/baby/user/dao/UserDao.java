@@ -75,8 +75,8 @@ public class UserDao extends BaseDao<User> {
         logger.info("paramsCount = {}", JSON.toJSON(paramsCount));
 
         RowMapper<User> rowMapper = BeanPropertyRowMapper.newInstance(entityClass);
-        List<User> list = jdbcTemplate.query(sql, rowMapper, params);
-        Integer count = jdbcTemplate.queryForObject(sqlCount, Integer.class, paramsCount);
+        List<User> list = jdbcTemplate.query(sql, rowMapper, params.toArray());
+        Integer count = jdbcTemplate.queryForObject(sqlCount, Integer.class, paramsCount.toArray());
         PageUtil pageUtil = PageUtil.builder()
                 .data(list)
                 .recordsFiltered(count)

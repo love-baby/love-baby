@@ -39,7 +39,7 @@ public class UserDao extends BaseDao<User> {
         PageUtil pageUtil = PageUtil.builder()
                 .data(list)
                 .recordsFiltered(list.size())
-                .recordsFiltered(count).build();
+                .recordsTotal(count).build();
         return pageUtil;
     }
 }

@@ -46,15 +46,13 @@ public class UserController {
     @PostMapping("/listAll")
     public PageUtil listAll(@RequestHeader(value = "token") String token, @RequestBody SearchParams[] searchParams) {
         String uId = userSessionCommon.assertSessionAndGetUid(token);
-        logger.info("获取所有用户 token = {},uId = {},searchParams = {}", token, uId, JSON.toJSON(searchParams));
+        logger.info("获取所有用户 token = {},uId = {},searchParams = {}", token, uId, JSON.toJSONString(searchParams));
         Map<String, String> map = SearchParams.findAllparams(searchParams);
-        logger.info("获取所有用户搜索参数  Map = {}", JSON.toJSON(map));
+        logger.info("获取所有用户搜索参数  Map = {}", JSON.toJSONString(map));
         List<UserVo> list = new ArrayList<>();
         PageUtil pageUtil = userService.findAll(Integer.parseInt(map.get("iDisplayStart")), Integer.parseInt(map.get("iDisplayLength")));
-        logger.info("pageUtil = {}", JSON.toJSON(pageUtil));
         pageUtil.getData().forEach(user -> {
-            logger.info("user = {}", JSON.toJSON(user));
-            list.add(JSON.parseObject(JSON.toJSON(JSON.toJSON(user)).toString(), UserVo.class));
+            list.add(JSON.parseObject(JSON.toJSONString(user), UserVo.class));
         });
         pageUtil.setData(list);
         return pageUtil;

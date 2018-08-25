@@ -1,5 +1,6 @@
 package com.love.baby.user.rpc;
 
+import com.alibaba.fastjson.JSON;
 import com.love.baby.common.api.UserRpcService;
 import com.love.baby.common.bean.User;
 import com.love.baby.common.dto.UserDto;
@@ -28,7 +29,7 @@ public class UserRpcController implements UserRpcService {
     public PageUtil listAll(@PathVariable Integer cursor, @PathVariable Integer size) {
         List<UserDto> list = new ArrayList<>();
         PageUtil pageUtil = userService.findAll(cursor, size);
-        pageUtil.getData().forEach(user -> list.add(new UserDto((User) user)));
+        pageUtil.getData().forEach(user -> list.add(new UserDto(JSON.parseObject(JSON.toJSONString(user),User.class))));
         pageUtil.setData(list);
         return pageUtil;
     }

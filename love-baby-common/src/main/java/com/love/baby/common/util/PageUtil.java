@@ -14,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class PageUtil implements Serializable {
+    private int sEcho;
     private List aaData;
     private int iTotalDisplayRecords;
     private int iTotalRecords;

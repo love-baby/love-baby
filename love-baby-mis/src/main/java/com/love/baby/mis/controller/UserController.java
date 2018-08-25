@@ -42,9 +42,9 @@ public class UserController {
      * @return
      */
     @GetMapping("/listAll")
-    public List<UserVo> listAll(@RequestHeader(value = "token") String token) {
+    public List<UserVo> listAll(@RequestHeader(value = "token") String token, @RequestBody String searchData) {
         String uId = userSessionCommon.assertSessionAndGetUid(token);
-        logger.info("获取所有用户 token = {},uId = {}", token, uId);
+        logger.info("获取所有用户 token = {},uId = {},searchData = {}", token, uId, searchData);
         List<UserVo> list = new ArrayList<>();
         userService.findAll().forEach(user -> list.add(new UserVo(user)));
         return list;

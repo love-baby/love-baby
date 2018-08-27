@@ -129,8 +129,12 @@
                 contentType: "application/x-www-form-urlencoded; charset=utf-8",
                 data: JSON.stringify($("#form-user-add").serialize()),
                 dataType: "text",
-                success: function () {
-                    layer.msg("添加成功");
+                success: function (data) {
+                    if (data.code == 200) {
+                        layer.msg("添加成功");
+                    }else{
+                        layer.msg(data.message);
+                    }
                 },
                 error: function () {
                     layer.msg("添加失败");

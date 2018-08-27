@@ -126,7 +126,10 @@
                     url: host + "/user",
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify(user),
-                    dataType: "text",
+                    dataType: "json",
+                    headers: {
+                        'token': $.cookie('token')
+                    },
                     success: function (data) {
                         if (data.code == 200) {
                             layer.msg("添加成功");

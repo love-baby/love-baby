@@ -116,29 +116,26 @@
             submitHandler: function (form) {
                 var user = {
                     "name": "周佳良",
-                    "pwd":"zhoujl",
-                    "sex":"zhoujl",
-                    "avatar":"zhoujl"
+                    "pwd": "zhoujl",
+                    "sex": "zhoujl",
+                    "avatar": "zhoujl"
                 };
-                $(form).ajaxSubmit({
+                $.ajax({
                     async: false,
                     type: "PUT",
                     url: host + "/user",
-                    dataType: "json",
                     contentType: "application/json; charset=utf-8",
-                    headers: {
-                        'token': $.cookie('token')
-                    },
-                    data:  JSON.stringify(user),
+                    data: JSON.stringify(user),
+                    dataType: "text",
                     success: function (data) {
                         if (data.code == 200) {
-                            parent.layer.msg("添加成功");
+                            layer.msg("添加成功");
                         } else {
-                            parent.layer.msg(data.message);
+                            layer.msg(data.message);
                         }
                     },
                     error: function () {
-                        parent.layer.msg("添加失败");
+                        layer.msg("添加失败");
                     }
                 });
                 var index = parent.layer.getFrameIndex(window.name);

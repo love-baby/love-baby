@@ -5,7 +5,6 @@ import com.love.baby.common.dto.UserDto;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * @author liangbc
@@ -16,10 +15,6 @@ public class UserService {
 
     @Resource
     private UserRpcService userRpcService;
-
-    public List<UserDto> findAll() {
-        return userRpcService.listAll();
-    }
 
     public UserDto findByName(String name) {
         return userRpcService.findByName(name);

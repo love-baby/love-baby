@@ -113,12 +113,12 @@
             onkeyup: false,
             focusCleanup: true,
             success: "valid",
-            submitHandler: function (form) {
+            submitHandler: function () {
                 var user = {
-                    "name": "周佳良",
-                    "pwd": "zhoujl",
-                    "sex": "zhoujl",
-                    "avatar": "zhoujl"
+                    "name": $("#name").val(),
+                    "pwd": $("#pwd").val(),
+                    "sex": $("#sex").val(),
+                    "avatar": $("#avatar").val()
                 };
                 $.ajax({
                     async: false,
@@ -129,13 +129,13 @@
                     dataType: "text",
                     success: function (data) {
                         if (data.code == 200) {
-                            parent.layer.msg("添加成功");
+                            layer.msg("添加成功");
                         } else {
-                            parent.layer.msg(data.message);
+                            layer.msg(data.message);
                         }
                     },
                     error: function () {
-                        parent.layer.msg("添加失败");
+                        layer.msg("添加失败");
                     }
                 });
                 var index = parent.layer.getFrameIndex(window.name);

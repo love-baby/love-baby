@@ -114,21 +114,22 @@
             focusCleanup: true,
             success: "valid",
             submitHandler: function (form) {
+
+                var user = new Object();
+                user.name = $("#name").val();
+                user.pwd = $("#pwd").val();
+                user.sex = $("#sex").val();
+                user.avatar = $("#avatar").val();
                 $(form).ajaxSubmit({
                     async: false,
                     type: "PUT",
                     url: host + "/user",
+                    dataType: "json",
                     contentType: "application/json; charset=utf-8",
                     headers: {
                         'token': $.cookie('token')
                     },
-                    data: {
-                        name: $("#name").val(),
-                        pwd: $("#pwd").val(),
-                        sex: $("#sex").val(),
-                        avatar: $("#avatar").val()
-                    },
-                    dataType: "text",
+                    data: JSON.stringify(user),
                     success: function (data) {
                         if (data.code == 200) {
                             layer.msg("添加成功");

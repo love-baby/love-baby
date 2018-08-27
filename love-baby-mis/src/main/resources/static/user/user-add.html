@@ -114,6 +114,12 @@
             focusCleanup: true,
             success: "valid",
             submitHandler: function (form) {
+                var user = {
+                    "name": "周佳良",
+                    "pwd":"zhoujl",
+                    "sex":"zhoujl",
+                    "avatar":"zhoujl"
+                };
                 $(form).ajaxSubmit({
                     async: false,
                     type: "PUT",
@@ -123,7 +129,7 @@
                     headers: {
                         'token': $.cookie('token')
                     },
-                   // data:  JSON.stringify($("#form-user-add").serialize()),
+                    data:  JSON.stringify(user),
                     success: function (data) {
                         if (data.code == 200) {
                             parent.layer.msg("添加成功");

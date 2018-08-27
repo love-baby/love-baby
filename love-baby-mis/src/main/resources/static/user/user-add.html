@@ -28,7 +28,7 @@
 </head>
 <body>
 <article class="cl pd-20">
-    <form action="" method="post" class="form form-horizontal" id="form-member-add">
+    <form action="/user" method="post" class="form form-horizontal" id="form-user-add">
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>用户名：</label>
             <div class="formControls col-xs-8 col-sm-9">
@@ -56,13 +56,15 @@
         </div>
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-3">头像：</label>
-            <div class="formControls col-xs-8 col-sm-9"> <span class="btn-upload form-group">
-				<input class="input-text upload-url" type="text" name="uploadfile" id="uploadfile" readonly nullmsg="请上传头像！" style="width:200px">
-				<a href="javascript:void();" class="btn btn-primary radius upload-btn"><i class="Hui-iconfont">&#xe642;</i> 浏览文件</a>
-				<input type="file" multiple name="avatar" class="input-file">
-				</span></div>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span class="btn-upload form-group">
+                    <input class="input-text upload-url" type="text" name="uploadfile" id="uploadfile" readonly nullmsg="请上传头像！" style="width:200px">
+                    <a href="javascript:void();" class="btn btn-primary radius upload-btn"><i class="Hui-iconfont">&#xe642;</i> 浏览文件</a>
+                    <input type="file" multiple name="avatar" class="input-file">
+				</span>
+            </div>
         </div>
-        <div class="row cl" style="margin-top: 200px">
+        <div class="row cl" style="margin-top: 218px">
             <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
                 <input style="float: right" class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
             </div>
@@ -100,7 +102,7 @@
                 },
                 pwd: {
                     required: true,
-                    isPwd:true
+                    isPwd: true
                 },
                 uploadfile: {
                     required: true
@@ -117,6 +119,24 @@
                 parent.layer.close(index);
             }
         });
+
+
+        $("#form-user-add").submit(function () {
+            $.ajax({
+                async: false,
+                type: "PUT",
+                url: host + "/user",
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                data: JSON.stringify($("#form-user-add").serialize()),
+                dataType: "text",
+                success: function () {
+                    layer.msg("添加成功");
+                },
+                error: function () {
+                    layer.msg("添加失败");
+                }
+            })
+        })
     });
 </script>
 <!--/请在上方写此页面业务相关的脚本-->

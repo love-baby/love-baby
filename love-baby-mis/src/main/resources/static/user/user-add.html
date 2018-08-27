@@ -114,24 +114,7 @@
             focusCleanup: true,
             success: "valid",
             submitHandler: function (form) {
-                $(form).ajaxSubmit({
-                    async: false,
-                    type: "PUT",
-                    url: host + "/user",
-                    contentType: "application/json; charset=utf-8",
-                    data: JSON.stringify($("#form-user-add").serialize()),
-                    dataType: "text",
-                    success: function (data) {
-                        if (data.code == 200) {
-                            layer.msg("添加成功");
-                        } else {
-                            layer.msg(data.message);
-                        }
-                    },
-                    error: function () {
-                        layer.msg("添加失败");
-                    }
-                });
+                $(form).ajaxSubmit();
                 var index = parent.layer.getFrameIndex(window.name);
                 parent.$('.btn-refresh').click();
                 parent.layer.close(index);

@@ -75,12 +75,22 @@ public class UserDao extends BaseDao<User> {
         sql += " limit ?,?";
         params.add(cursor);
         params.add(size);
-        logger.info("sql = {},params = {}", sql, JSON.toJSON(params.toArray()));
-        logger.info("sqlCount = {},paramsCount = {}", sqlCount, JSON.toJSON(paramsCount.toArray()));
+
+        Object[] paramsArr = new Object[params.size()];
+        for (int i = 0; i < params.size(); i++) {
+            paramsArr[i]=params.get(i);
+        }
+        Object[] paramsCountArr = new Object[paramsCount.size()];
+        for (int i = 0; i < paramsCount.size(); i++) {
+            paramsCountArr[i]=paramsCount.get(i);
+        }
+
+        logger.info("sql = {},paramsArr = {}", sql, JSON.toJSON(paramsArr));
+        logger.info("sqlCount = {},paramsCountArr = {}", sqlCount, JSON.toJSON(paramsCount.toArray()));
 
         RowMapper<User> rowMapper = BeanPropertyRowMapper.newInstance(entityClass);
-        List<User> list = jdbcTemplate.query(sql, rowMapper, params.toArray());
-        Integer count = jdbcTemplate.queryForObject(sqlCount, Integer.class, paramsCount.toArray());
+        List<User> list = jdbcTemplate.query(sql, rowMapper, paramsArr);
+        Integer count = jdbcTemplate.queryForObject(sqlCount, Integer.class,paramsCountArr);
         PageUtil pageUtil = PageUtil.builder()
                 .data(list)
                 .recordsFiltered(count)

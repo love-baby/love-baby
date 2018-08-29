@@ -89,6 +89,26 @@ public class UserController {
         return userDto;
     }
 
+    /**
+     * 创建用户
+     *
+     * @param userDto
+     * @return
+     */
+    @PutMapping(value = "/update")
+    public UserDto update(@RequestBody UserDto userDto, @RequestHeader(value = "token") String token) {
+        logger.info("创建用户 userDto = {}", JSON.toJSONString(userDto));
+        userSessionCommon.assertSessionAndGetUid(token);
+        UserDto userDtoOld = userService.findByName(userDto.getName());
+        logger.info("userDtoOld = {}", JSON.toJSONString(userDtoOld));
+        if (userDtoOld != null) {
+            throw new SystemException(500, "用户名已存在");
+        }
+        userService.update(userDto);
+        return userDto;
+    }
+
+
 
     /**
      * 登录

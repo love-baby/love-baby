@@ -30,6 +30,10 @@ public class UserService {
         userRpcService.create(userDto);
     }
 
+    public void update(UserDto userDto) {
+        userRpcService.update(userDto);
+    }
+
     public UserDto findById(String id) {
         return userRpcService.findById(id);
     }

@@ -30,7 +30,7 @@
     <div class="cl pd-5 bg-1 bk-gray mt-20">
             <span class="l">
                     <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
-                    <a href="javascript:;" onclick="member_add('添加用户','user/user-add.html','','510')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加用户</a>
+                    <a href="javascript:;" onclick="user_add('添加用户','user/user-add.html','','510')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加用户</a>
             </span>
         <span class="r">
                 <div class="text-c"> 日期范围：
@@ -128,7 +128,9 @@
                     "data": null,
                     "orderable": false,
                     "title": "操作",
-                    "defaultContent": "<button class='edit-btn' type='button'>编辑</button>"
+                    "render": function (data, type, row, meta) {
+                        return "<button onclick=\"user_edit('添加用户','user/user-add.html','" + data + "','510')\" class='edit-btn' type='button'>编辑</button>"
+                    }
                 }
             ],
             columns: [
@@ -175,7 +177,7 @@
 
 
     /*用户-添加*/
-    function member_add(title, url, w, h) {
+    function user_add(title, url, w, h) {
         layer_show(title, url, w, h);
     }
 
@@ -205,7 +207,7 @@
     }
 
     /*用户-编辑*/
-    function member_edit(title, url, id, w, h) {
+    function user_edit(title, url, id, w, h) {
         layer_show(title, url, w, h);
     }
 

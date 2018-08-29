@@ -68,14 +68,11 @@ public class UserDao extends BaseDao<User> {
         }
         if (StringUtils.isNotBlank(searchUserParams.getSortField()) && StringUtils.isNotBlank(searchUserParams.getSort())) {
             logger.info("searchUserParams.getSortField() = {},searchUserParams.getSort() = {}", searchUserParams.getSortField(), searchUserParams.getSort());
-            sql += " order by ? ?";
-            params.add(searchUserParams.getSortField());
-            params.add(searchUserParams.getSort());
+            sql += " order by searchUserParams.getSortField() searchUserParams.getSort()";
         }
         sql += " limit ?,?";
         params.add(cursor);
         params.add(size);
-
         Object[] paramsArr = new Object[params.size()];
         for (int i = 0; i < params.size(); i++) {
             paramsArr[i]=params.get(i);

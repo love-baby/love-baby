@@ -63,7 +63,7 @@ public class UserDao extends BaseDao<User> {
             paramsCount.add(searchUserParams.getDateMax() + " 23:59:59");
         }
         if (StringUtils.isNotBlank(searchUserParams.getSortField()) && StringUtils.isNotBlank(searchUserParams.getSort())) {
-            sql += " order by searchUserParams.getSortField() searchUserParams.getSort()";
+            sql += " order by " + searchUserParams.getSortField() + " " + searchUserParams.getSort();
         }
         sql += " limit ?,?";
         params.add(cursor);
@@ -71,7 +71,7 @@ public class UserDao extends BaseDao<User> {
 
         RowMapper<User> rowMapper = BeanPropertyRowMapper.newInstance(entityClass);
         List<User> list = jdbcTemplate.query(sql, rowMapper, params.toArray());
-        Integer count = jdbcTemplate.queryForObject(sqlCount, Integer.class,paramsCount.toArray());
+        Integer count = jdbcTemplate.queryForObject(sqlCount, Integer.class, paramsCount.toArray());
         PageUtil pageUtil = PageUtil.builder()
                 .data(list)
                 .recordsFiltered(count)

@@ -59,7 +59,7 @@ public class UserController {
                 .sort(map.get("sSortDir_0")).build();
         List<UserVo> list = new ArrayList<>();
         PageUtil pageUtil = userService.findAll(Integer.parseInt(map.get("iDisplayStart")), Integer.parseInt(map.get("iDisplayLength")), searchUserParams);
-        pageUtil.getData().forEach(user -> list.add(JSON.parseObject(JSON.toJSONString(user), UserVo.class)));
+        pageUtil.getData().forEach(user -> list.add(new UserVo(JSON.parseObject(JSON.toJSONString(user), UserDto.class))));
         pageUtil.setData(list);
         return pageUtil;
     }

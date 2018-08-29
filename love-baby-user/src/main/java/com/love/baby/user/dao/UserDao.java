@@ -66,7 +66,7 @@ public class UserDao extends BaseDao<User> {
         if (StringUtils.isNotBlank(searchUserParams.getSortField()) && StringUtils.isNotBlank(searchUserParams.getSort())) {
             sql += " order by ? ?";
             params.add(searchUserParams.getSortField());
-            params.add(searchUserParams.getSortField());
+            params.add(searchUserParams.getSort());
         }
         sql += " limit ?,?";
         params.add(cursor);

@@ -37,7 +37,7 @@ public interface UserRpcService {
      * @param userDto
      */
     @PutMapping(value = "/create", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    void create(@RequestBody UserDto userDto);
+    UserDto create(@RequestBody UserDto userDto);
 
     /**
      * 根据ID获取用户
@@ -47,4 +47,14 @@ public interface UserRpcService {
      */
     @GetMapping(value = "/findById", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     UserDto findById(@RequestParam(value = "id") String id);
+
+    /**
+     * 修改
+     *
+     * @param userDto
+     * @return
+     */
+    @PutMapping(value = "/update", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    UserDto update(@RequestBody UserDto userDto);
+
 }

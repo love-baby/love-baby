@@ -29,7 +29,7 @@ public class UserRpcController implements UserRpcService {
     @PostMapping(value = "/listAll/{cursor}/{size}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public PageUtil listAll(@PathVariable Integer cursor, @PathVariable Integer size, @RequestBody SearchUserParams searchUserParams) {
         List<UserDto> list = new ArrayList<>();
-        PageUtil pageUtil = userService.findAll(cursor, size,searchUserParams);
+        PageUtil pageUtil = userService.findAll(cursor, size, searchUserParams);
         pageUtil.getData().forEach(user -> list.add(new UserDto(JSON.parseObject(JSON.toJSONString(user), User.class))));
         pageUtil.setData(list);
         return pageUtil;
@@ -47,8 +47,9 @@ public class UserRpcController implements UserRpcService {
 
     @Override
     @PutMapping(value = "/create", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public void create(@RequestBody UserDto userDto) {
+    public UserDto create(@RequestBody UserDto userDto) {
         userService.save(new User(userDto));
+        return userDto;
     }
 
     @Override
@@ -59,5 +60,12 @@ public class UserRpcController implements UserRpcService {
             return null;
         }
         return new UserDto(user);
+    }
+
+    @Override
+    @PutMapping(value = "/update", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public UserDto update(UserDto userDto) {
+        userService.update(new User(userDto));
+        return userDto;
     }
 }

@@ -71,8 +71,8 @@ public class UserDao extends BaseDao<User> {
         sql += " limit ?,?";
         params.add(cursor);
         params.add(size);
-        logger.info("params = {}", JSON.toJSON(params));
-        logger.info("paramsCount = {}", JSON.toJSON(paramsCount));
+        logger.info("sql = {},params = {}", sql, JSON.toJSON(params));
+        logger.info("sqlCount = {},paramsCount = {}", sqlCount, JSON.toJSON(paramsCount));
 
         RowMapper<User> rowMapper = BeanPropertyRowMapper.newInstance(entityClass);
         List<User> list = jdbcTemplate.query(sql, rowMapper, params.toArray());

@@ -46,24 +46,28 @@ public class UserDao extends BaseDao<User> {
         List params = new ArrayList();
         List paramsCount = new ArrayList();
         if (StringUtils.isNotBlank(searchUserParams.getSearchText())) {
+            logger.info("searchUserParams.getSearchText() = {}", searchUserParams.getSearchText());
             sql += " and name = ?";
             sqlCount += " and name = ?";
             params.add(searchUserParams.getSearchText());
             paramsCount.add(searchUserParams.getSearchText());
         }
         if (StringUtils.isNotBlank(searchUserParams.getDateMin())) {
+            logger.info("searchUserParams.getDateMin() = {}", searchUserParams.getDateMin());
             sql += " and create_time >= ?";
             sqlCount += " and create_time >= ?";
             params.add(searchUserParams.getDateMin() + " 00:00:00");
             paramsCount.add(searchUserParams.getDateMin() + " 00:00:00");
         }
         if (StringUtils.isNotBlank(searchUserParams.getDateMax())) {
+            logger.info("searchUserParams.getDateMax() = {}", searchUserParams.getDateMax());
             sql += " and create_time <= ?";
             sqlCount += " and create_time <= ?";
             params.add(searchUserParams.getDateMax() + " 23:59:59");
             paramsCount.add(searchUserParams.getDateMax() + " 23:59:59");
         }
         if (StringUtils.isNotBlank(searchUserParams.getSortField()) && StringUtils.isNotBlank(searchUserParams.getSort())) {
+            logger.info("searchUserParams.getSortField() = {},searchUserParams.getSort() = {}", searchUserParams.getSortField(), searchUserParams.getSort());
             sql += " order by ? ?";
             params.add(searchUserParams.getSortField());
             params.add(searchUserParams.getSort());

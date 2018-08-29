@@ -1,11 +1,12 @@
 package com.love.baby.mis.vo;
 
 import com.love.baby.common.dto.UserDto;
+import com.love.baby.common.util.StatusUtil;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.Date;
+import java.util.*;
 
 /**
  * 展示层显示的对象
@@ -28,7 +29,7 @@ public class UserVo {
     /**
      * 性别
      */
-    private Integer sex;
+    private StatusUtil sex;
     /**
      * 头像
      */
@@ -42,8 +43,28 @@ public class UserVo {
     public UserVo(UserDto user) {
         this.id = user.getId();
         this.name = user.getName();
-        this.sex = user.getSex();
+        this.sex = Sex.statusUtil(user.getSex());
         this.avatar = user.getAvatar();
         this.createTime = user.getCreateTime();
+    }
+    public static class Sex {
+
+        public static Integer INITIAL = 0;
+
+        public static Integer MAN = 1;
+
+        public static Integer woman = 2;
+
+        public static StatusUtil statusUtil(Integer sex) {
+            List<Map<Integer, String>> listMap = new ArrayList<>();
+            Map<Integer, String> m = new HashMap();
+            m.put(0, "未知");
+            m.put(1, "男");
+            m.put(2, "女");
+            listMap.add(m);
+            StatusUtil statusUtil = StatusUtil.builder().id(sex).statusList(listMap).name("未知").build();
+            m.keySet().forEach(key -> statusUtil.setName(m.get(key)));
+            return statusUtil;
+        }
     }
 }

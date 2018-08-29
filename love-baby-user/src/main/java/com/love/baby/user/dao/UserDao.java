@@ -71,7 +71,7 @@ public class UserDao extends BaseDao<User> {
         sql += " limit ?,?";
         params.add(cursor);
         params.add(size);
-        logger.info("sql = {},params = {}", sql, JSON.toJSON(params));
+        logger.info("sql = {},params = {}", sql, JSON.toJSON(params.toArray()));
         logger.info("sqlCount = {},paramsCount = {}", sqlCount, JSON.toJSON(paramsCount));
 
         RowMapper<User> rowMapper = BeanPropertyRowMapper.newInstance(entityClass);

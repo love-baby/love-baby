@@ -89,7 +89,44 @@
     $(function () {
         var id = location.search.substring(1);//获取查询串
         if (id != null) {
-            alert(id);
+            $.ajax({
+                type: "GET",
+                url: host + "/user/userInfo",
+                data: {
+                    id: id,
+                },
+                'headers': {
+                    'x-auth-token': $.cookie('token')
+                },
+                datatype: "json",
+                success: function (data) {
+                    if (data.code == 500) {
+                        window.location = "/login.html";
+                    } else if (data.code == 200) {
+                        if (data.data != null) {
+                            $("#name").val(data.data.name);
+                            $("#pwd").val(data.data.pwd);
+                            $("input[name='sex'][value="+data.data.sex.id+"]").attr("checked",true);
+                            $("#avatar").val(data.data.avatar);
+                        }
+
+                    } else {
+                        layer.msg(data.message);
+                    }
+                    if (data != null) {
+
+                    }
+                },
+                beforeSend: function () {
+
+                },
+                complete: function (XMLHttpRequest, textStatus) {
+
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                }
+            });
         }
         $('.skin-minimal input').iCheck({
             checkboxClass: 'icheckbox-blue',

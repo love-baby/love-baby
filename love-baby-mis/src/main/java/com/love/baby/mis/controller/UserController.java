@@ -150,7 +150,7 @@ public class UserController {
      * @param token
      * @return
      */
-    @GetMapping("/{id}")
+    @GetMapping("/userInfo/{id}")
     public UserVo userInfo(@RequestHeader(value = "token") String token, @PathVariable String id) {
         userSessionCommon.assertSessionAndGetUid(token);
         UserDto userDto = userService.findById(id);

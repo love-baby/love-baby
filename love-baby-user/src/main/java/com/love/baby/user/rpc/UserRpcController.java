@@ -64,7 +64,7 @@ public class UserRpcController implements UserRpcService {
 
     @Override
     @PutMapping(value = "/update", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public UserDto update(UserDto userDto) {
+    public UserDto update(@RequestBody UserDto userDto) {
         userService.update(new User(userDto));
         return userDto;
     }

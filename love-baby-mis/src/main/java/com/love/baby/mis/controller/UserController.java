@@ -90,7 +90,7 @@ public class UserController {
     }
 
     /**
-     * 创建用户
+     * 修改用户用户
      *
      * @param userDto
      * @return
@@ -101,10 +101,15 @@ public class UserController {
         userSessionCommon.assertSessionAndGetUid(token);
         UserDto userDtoOld = userService.findByName(userDto.getName());
         logger.info("userDtoOld = {}", JSON.toJSONString(userDtoOld));
-        if (userDtoOld != null) {
+        if (userDtoOld != null && !StringUtils.equals(userDtoOld.getId(), userDto.getId())) {
             throw new SystemException(500, "用户名已存在");
         }
-        userService.update(userDto);
+        UserDto userDtoNew = userService.findById(userDto.getId());
+        userDtoNew.setAvatar(userDto.getAvatar());
+        userDtoNew.setPwd(userDto.getPwd());
+        userDtoNew.setName(userDto.getName());
+        userDtoNew.setSex(userDto.getSex());
+        userService.update(userDtoNew);
         return userDto;
     }
 

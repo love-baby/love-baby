@@ -146,10 +146,15 @@
                     "sex": $("input[name='sex']:checked").val(),
                     "avatar": $("#avatar").val()
                 };
+                var url = host + "/user";
+                if (id != null) {
+                    url = host + "/user/update";
+                    user.id = id;
+                }
                 $.ajax({
                     async: false,
                     type: "PUT",
-                    url: host + "/user",
+                    url: url,
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify(user),
                     dataType: "json",

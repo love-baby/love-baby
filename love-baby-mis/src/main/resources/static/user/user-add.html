@@ -102,17 +102,14 @@
                     } else if (data.code == 200) {
                         if (data.data != null) {
                             $("#name").val(data.data.name);
-                            $("#pwd").val(data.data.pwd);
-                            $("input[name='sex'][value=" + data.data.sex.id + "]").attr("checked", true);
+                            $("#pwd").hide();
+                            $("input[name='sex'][value=" + data.data.sex + "]").prop("checked", "checked");
                             $("#avatar").val(data.data.avatar);
                         }
 
                     } else {
                         layer.msg(data.message);
                     }
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    layer.msg(data.message);
                 }
             });
         }

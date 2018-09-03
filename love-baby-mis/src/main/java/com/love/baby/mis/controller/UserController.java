@@ -151,9 +151,8 @@ public class UserController {
      * @return
      */
     @GetMapping("/userInfo/{id}")
-    public UserVo userInfo(@RequestHeader(value = "token") String token, @PathVariable String id) {
+    public UserDto userInfo(@RequestHeader(value = "token") String token, @PathVariable String id) {
         userSessionCommon.assertSessionAndGetUid(token);
-        UserDto userDto = userService.findById(id);
-        return userDto == null ? null : new UserVo(userDto);
+        return userService.findById(id);
     }
 }

@@ -63,7 +63,7 @@ public class UserVo {
             m.put(2, "女");
             listMap.add(m);
             StatusUtil statusUtil = StatusUtil.builder().id(sex).statusList(listMap).name("未知").build();
-            m.keySet().forEach(key -> statusUtil.setName(m.get(key)));
+            statusUtil.setName(m.get(sex));
             return statusUtil;
         }
     }

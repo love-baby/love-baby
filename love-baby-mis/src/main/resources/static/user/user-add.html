@@ -102,8 +102,8 @@
                     } else if (data.code == 200) {
                         if (data.data != null) {
                             $("#name").val(data.data.name);
-                            $("#pwd").hide();
-                            $("input[name='sex'][value=" + data.data.sex + "]").prop("checked", "checked");
+                            $("#pwd").val(data.data.pwd);
+                            $(":radio[name='sex'][value=" + data.data.sex + "]").prop("checked", "checked");
                             $("#avatar").val(data.data.avatar);
                         }
 

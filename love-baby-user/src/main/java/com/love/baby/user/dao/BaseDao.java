@@ -1,5 +1,6 @@
 package com.love.baby.user.dao;
 
+import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -41,14 +42,14 @@ public abstract class BaseDao<T> {
     public void save(T entity) {
         String sql = this.makeSql(SQL_INSERT);
         Object[] args = this.setArgs(entity, SQL_INSERT);
-        logger.info("save sql = {}", sql);
+        logger.info("update sql={},args = {}", sql, JSON.toJSON(args));
         jdbcTemplate.update(sql, args);
     }
 
     public void update(T entity) {
         String sql = this.makeSql(SQL_UPDATE);
         Object[] args = this.setArgs(entity, SQL_UPDATE);
-        logger.info("update sql={}", sql);
+        logger.info("update sql={},args = {}", sql, JSON.toJSON(args));
         jdbcTemplate.update(sql, args);
     }
 

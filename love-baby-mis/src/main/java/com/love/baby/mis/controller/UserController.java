@@ -109,7 +109,6 @@ public class UserController {
     }
 
 
-
     /**
      * 登录
      *
@@ -142,6 +141,19 @@ public class UserController {
     public UserVo userInfo(@RequestHeader(value = "token") String token) {
         String userId = userSessionCommon.assertSessionAndGetUid(token);
         UserDto userDto = userService.findById(userId);
+        return userDto == null ? null : new UserVo(userDto);
+    }
+
+    /**
+     * 获取用户信息
+     *
+     * @param token
+     * @return
+     */
+    @GetMapping("/{id}")
+    public UserVo userInfo(@RequestHeader(value = "token") String token, @PathVariable String id) {
+        userSessionCommon.assertSessionAndGetUid(token);
+        UserDto userDto = userService.findById(id);
         return userDto == null ? null : new UserVo(userDto);
     }
 }

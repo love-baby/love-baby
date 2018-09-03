@@ -91,10 +91,7 @@
         if (id != null) {
             $.ajax({
                 type: "GET",
-                url: host + "/user/userInfo",
-                data: {
-                    id: id,
-                },
+                url: host + "/user/" + id,
                 headers: {
                     'token': $.cookie('token')
                 },
@@ -106,7 +103,7 @@
                         if (data.data != null) {
                             $("#name").val(data.data.name);
                             $("#pwd").val(data.data.pwd);
-                            $("input[name='sex'][value="+data.data.sex.id+"]").attr("checked",true);
+                            $("input[name='sex'][value=" + data.data.sex.id + "]").attr("checked", true);
                             $("#avatar").val(data.data.avatar);
                         }
 

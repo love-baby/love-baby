@@ -113,18 +113,9 @@
                     } else {
                         layer.msg(data.message);
                     }
-                    if (data != null) {
-
-                    }
-                },
-                beforeSend: function () {
-
-                },
-                complete: function (XMLHttpRequest, textStatus) {
-
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
-
+                    layer.msg(data.message);
                 }
             });
         }

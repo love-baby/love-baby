@@ -88,7 +88,7 @@
 <script type="text/javascript">
     $(function () {
         var id = location.search.substring(1);//获取查询串
-        if (id != null) {
+        if (id != "" && id != null) {
             $.ajax({
                 type: "GET",
                 url: host + "/user/userInfo/" + id,

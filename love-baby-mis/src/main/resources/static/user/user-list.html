@@ -130,7 +130,7 @@
                     "title": "操作",
                     "render": function (data, type, row, meta) {
                         return '<a title="编辑" href="javascript:;" onclick="user_edit(\'编辑\',\'user/user-add.html\',\'' + data.id + '\',\'\',550)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>'
-                        +'<a title="删除" href="javascript:;" onclick="user_delete(this,\'' + data.id + '\')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>';
+                            + '<a title="删除" href="javascript:;" onclick="user_delete(this,\'' + data.id + '\')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>';
                     }
                 }
             ],
@@ -183,8 +183,8 @@
     }
 
     /*用户-编辑*/
-    function user_edit(title, url,id, w, h) {
-        layer_show(title, url, w, h);
+    function user_edit(title, url, id, w, h) {
+        layer_show(title, url + "?" + id, w, h);
     }
 
     /*用户-删除*/

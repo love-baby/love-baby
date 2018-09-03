@@ -87,6 +87,10 @@
 <script type="text/javascript" src="/js/util.js"></script>
 <script type="text/javascript">
     $(function () {
+        var id = location.search.substring(1);//获取查询串
+        if (id != null) {
+            alert(id);
+        }
         $('.skin-minimal input').iCheck({
             checkboxClass: 'icheckbox-blue',
             radioClass: 'iradio-blue',

@@ -147,7 +147,7 @@
                     "avatar": $("#avatar").val()
                 };
                 var url = host + "/user";
-                if (id != null) {
+                if (id != "" && id != null) {
                     url = host + "/user/update";
                     user.id = id;
                 }

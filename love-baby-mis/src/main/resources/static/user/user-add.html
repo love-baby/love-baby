@@ -95,8 +95,8 @@
                 data: {
                     id: id,
                 },
-                'headers': {
-                    'x-auth-token': $.cookie('token')
+                headers: {
+                    'token': $.cookie('token')
                 },
                 datatype: "json",
                 success: function (data) {

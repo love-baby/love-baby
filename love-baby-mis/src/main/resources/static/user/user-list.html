@@ -190,8 +190,25 @@
     /*用户-删除*/
     function user_delete(obj, id) {
         layer.confirm('确认要删除吗？', function (index) {
-            $(obj).parents("tr").remove();
-            layer.msg('已删除!', {icon: 1, time: 1000});
+            $.ajax({
+                type: "delete",
+                url: host + "/user/" + id,
+                headers: {
+                    'token': $.cookie('token')
+                },
+                datatype: "json",
+                success: function (data) {
+                    if (data.code == 500) {
+                        window.location = "/login.html";
+                    } else if (data.code == 200) {
+                        $(obj).parents("tr").remove();
+                        layer.msg('已删除!', {icon: 1, time: 1000});
+                    } else {
+                        layer.msg(data.message);
+                    }
+                }
+            });
+
         });
     }
 </script>

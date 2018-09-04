@@ -90,6 +90,20 @@ public class UserController {
     }
 
     /**
+     * 删除
+     *
+     * @param id
+     * @param token
+     */
+    @DeleteMapping(value = "/{id}")
+    public void delete(@PathVariable String id, @RequestHeader(value = "token") String token) {
+        logger.info("删除 id = {}", JSON.toJSONString(id));
+        userSessionCommon.assertSessionAndGetUid(token);
+        userService.deleteById(id);
+    }
+
+
+    /**
      * 修改用户用户
      *
      * @param userDto

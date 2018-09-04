@@ -57,4 +57,13 @@ public interface UserRpcService {
     @PutMapping(value = "/update", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     UserDto update(@RequestBody UserDto userDto);
 
+    /**
+     * 删除用户
+     *
+     * @param id
+     * @return
+     */
+    @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    void delete(@RequestParam(value = "id") String id);
+
 }

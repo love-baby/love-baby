@@ -68,4 +68,10 @@ public class UserRpcController implements UserRpcService {
         userService.update(new User(userDto));
         return userDto;
     }
+
+    @Override
+    @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public void delete(@PathVariable String id) {
+        userService.delete(id);
+    }
 }

@@ -38,5 +38,10 @@ public class UserService {
         return userRpcService.findById(id);
     }
 
+
+    public void deleteById(String id){
+        userRpcService.delete(id);
+    }
+
 }
 

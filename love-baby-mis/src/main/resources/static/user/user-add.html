@@ -103,7 +103,7 @@
                         if (data.data != null) {
                             $("#name").val(data.data.name);
                             $("#pwd").val(data.data.pwd);
-                            $(":radio[name='sex'][value=" + data.data.sex + "]").attr("checked",true);
+                            $("input[name='sex'][value=" + data.data.sex + "]").attr("checked",true);
                             $("#avatar").val(data.data.avatar);
                         }
 

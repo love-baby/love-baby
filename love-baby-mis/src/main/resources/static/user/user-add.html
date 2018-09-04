@@ -163,13 +163,13 @@
                     },
                     success: function (data) {
                         if (data.code == 200) {
-                            layer.msg("添加成功");
+                            parent.layer.msg("提交成功");
                         } else {
-                            layer.msg(data.message);
+                            parent.layer.msg(data.message);
                         }
                     },
                     error: function () {
-                        layer.msg("添加失败");
+                        parent.layer.msg("提交成功");
                     }
                 });
                 var index = parent.layer.getFrameIndex(window.name);

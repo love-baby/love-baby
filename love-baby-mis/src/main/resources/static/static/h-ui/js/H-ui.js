@@ -4941,17 +4941,12 @@ $(function () {
 
     /*上传*/
     $(document).on("change", ".input-file", function () {
-        var uploadVal = $(this).val();
-
         $.ajaxFileUpload({
             url: host + "/tool/fileUpload",
             secureuri: false, //一般设置为false
             fileElementId: 'file',
             type: 'post',
             dataType: 'json', //返回值类型 一般设置为json
-            headers: {
-                'token': $.cookie('token')
-            },
             success: function (data) {
                 if (data.code == 500) {
                     window.location = "/login.html";
@@ -4960,11 +4955,8 @@ $(function () {
                         $(this).parent().find(".upload-url").val(data.data.path).focus().blur();
                     }
                 } else {
-                    layer.msg(data.message);
+                    parent.layer.msg(data.message);
                 }
-            },
-            error: function (data, status, e) {
-                alert("上传失败");
             }
         });
 

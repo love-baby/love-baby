@@ -53,6 +53,7 @@
                     <label for="sex-2">女</label>
                 </div>
             </div>
+
         </div>
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-3">头像：</label>
@@ -104,6 +105,7 @@
                             $("#name").val(data.data.name);
                             $("#pwd").val(data.data.pwd);
                             $("input[name='sex'][value=" + data.data.sex + "]").attr("checked",true);
+                            $("input[name='sex'][value=" + data.data.sex + "]").parent().addClass("checked");
                             $("#avatar").val(data.data.avatar);
                         }
 

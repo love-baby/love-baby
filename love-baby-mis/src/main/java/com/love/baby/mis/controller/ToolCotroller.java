@@ -76,12 +76,11 @@ public class ToolCotroller {
      * 上传文件
      *
      * @param file
-     * @param token
      * @throws IOException
      */
     @RequestMapping(value = "/fileUpload", method = RequestMethod.POST)
-    public UploadFile fileUpload(@RequestParam("file") MultipartFile file, @RequestHeader(value = "token") String token) throws SystemException, IOException {
-        String userId = userSessionCommon.assertSessionAndGetUid(token);
+    public UploadFile fileUpload(@RequestParam("file") MultipartFile file) throws SystemException, IOException {
+//        String userId = userSessionCommon.assertSessionAndGetUid(token);
         //文件名称
         String path = SystemConfig.SystemPath + File.separator + "upload" + File.separator + LocalDate.now();
         File filePath = new File(path);

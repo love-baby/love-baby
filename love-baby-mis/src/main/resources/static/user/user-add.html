@@ -45,7 +45,7 @@
             <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>性别：</label>
             <div class="formControls col-xs-8 col-sm-9 skin-minimal">
                 <div class="radio-box">
-                    <input value="1" name="sex" type="radio" id="sex-1" checked>
+                    <input value="1" name="sex" type="radio" id="sex-1">
                     <label for="sex-1">男</label>
                 </div>
                 <div class="radio-box">
@@ -103,7 +103,8 @@
                         if (data.data != null) {
                             $("#name").val(data.data.name);
                             $("#pwd").val(data.data.pwd);
-                            $(":radio[name='sex'][value='" + data.data.sex + "']").prop("checked", "checked");
+                            alert(data.data.sex);
+                            $(":radio[name='sex'][value='" + data.data.sex + "']").click();
                             $("#avatar").val(data.data.avatar);
                         }
 

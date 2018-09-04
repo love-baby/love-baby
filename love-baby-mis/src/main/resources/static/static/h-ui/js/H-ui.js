@@ -4946,7 +4946,7 @@ $(function () {
             secureuri: false, //一般设置为false
             fileElementId: 'file',
             type: 'post',
-            dataType: 'json', //返回值类型 一般设置为json
+            dataType: "text"
             success: function (data) {
                 if (data.code == 500) {
                     window.location = "/login.html";

@@ -103,8 +103,7 @@
                         if (data.data != null) {
                             $("#name").val(data.data.name);
                             $("#pwd").val(data.data.pwd);
-                            alert(data.data.sex);
-                            $(":radio[name='sex'][value='" + data.data.sex + "']").click();
+                            $(":radio[name='sex'][value='" + data.data.sex + "']").checked = true;
                             $("#avatar").val(data.data.avatar);
                         }
 

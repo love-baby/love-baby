@@ -103,7 +103,7 @@
                 //     progress + '%'
                 // );
             }, done: function (e, data) {
-                alert("data.data[0].path");
+                alert(data.data[0].path);
                 $("#avatar").val(data.data[0].path);
                 parent.layer.msg(data.message);
             }

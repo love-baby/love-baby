@@ -56,7 +56,7 @@
             <div class="formControls col-xs-8 col-sm-9">
                 <input id="fileupload" type="file" name="files[]" data-url="/tool/fileUpload" multiple>
                 <div id="progress" style="height: 10px;background-color: red">
-                    <div style="width: 0%;height: 10px;background-color: #0a6999"></div>
+                    <div class="bar" style="width: 0%;height: 10px;background-color: #0a6999"></div>
                 </div>
             </div>
         </div>
@@ -97,17 +97,14 @@
         //上传文件
         $('#fileupload').fileupload({
             dataType: 'json',
-            done: function (e, data) {
-
-            },
             progressall: function (e, data) {
-                var progress = parseInt(data.loaded / data.total * 100, 10);
+                alert(data);
+                var progress = parseInt(data.loaded / data.total * 100);
                 $('#progress .bar').css(
                     'width',
                     progress + '%'
                 );
             },
-            dropZone: $('#dropzone')
         });
 
         var id = location.search.substring(1);//获取查询串

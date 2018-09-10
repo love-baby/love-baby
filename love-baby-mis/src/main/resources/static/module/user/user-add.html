@@ -96,13 +96,7 @@
         $('#fileupload').fileupload({
             dataType: 'json',
             singleFileUploads: false,
-            maxFileSize: 99 * 1024 * 1024,
-            minFileSize: 5,
-            maxNumberOfFiles: 1,
-            messages: {
-                maxFileSize: 'File exceeds maximum allowed size of 99MB',
-                acceptFileTypes: 'File type not allowed'
-            }, processfail: function (e, data) {
+            processfail: function (e, data) {
                 var currentFile = data.files[data.index];
                 if (data.files.error && currentFile.error) {
                     console.log(currentFile.error);
@@ -120,7 +114,6 @@
                 //     console.log(JSON.stringify(file));
                 // });
                 parent.layer.msg("上传成功！");
-                console.log(JSON.stringify(data));
             }
         });
 

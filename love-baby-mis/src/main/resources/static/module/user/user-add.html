@@ -115,6 +115,10 @@
                 //     progress + '%'
                 // );
             }, done: function (e, data) {
+                console.log(data.files[0]);
+                var fileName = data.files[0].name;
+                var size = data.files[0].size;
+                var obj = data.result;
                 parent.layer.msg(data.message);
             }
         });

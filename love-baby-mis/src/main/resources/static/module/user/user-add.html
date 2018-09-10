@@ -109,7 +109,7 @@
                 //     progress + '%'
                 // );
             }, done: function (e, data) {
-                $.each(data.result, function (index, file) {
+                $.each(data.result.files, function (index, file) {
                     $("#avatar").val(file.path);
                 });
                 console.log(JSON.stringify(data.result.files));

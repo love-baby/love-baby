@@ -55,9 +55,7 @@
             <label class="form-label col-xs-4 col-sm-3">头像：</label>
             <div class="formControls col-xs-8 col-sm-9">
                 <input id="fileupload" type="file" name="files[]" data-url="/tool/fileUpload" multiple>
-                <div id="progress" style="height: 10px;background-color: red">
-                    <div class="bar" style="width: 0%;height: 10px;background-color: #0a6999"></div>
-                </div>
+                <input id="avatar" style="display: none">
             </div>
         </div>
         <div class="row cl" style="margin-top: 218px">
@@ -99,11 +97,14 @@
             dataType: 'json',
             progressall: function (e, data) {
                 var progress = parseInt(data.loaded / data.total * 100);
-                $('#progress .bar').css(
-                    'width',
-                    progress + '%'
-                );
-            },
+                // $('#progress .bar').css(
+                //     'width',
+                //     progress + '%'
+                // );
+            }, done: function (e, data) {
+                $("")
+                layer.msg(data.message);
+            }
         });
 
         var id = location.search.substring(1);//获取查询串

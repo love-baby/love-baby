@@ -8,7 +8,6 @@ import com.love.baby.mis.service.MusicService;
 import com.love.baby.mis.service.UploadFileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -105,7 +105,9 @@ public class ToolCotroller {
                 String type = file.getContentType();
                 String originFileName = file.getOriginalFilename();
                 path = path + File.separator + System.currentTimeMillis() + "_" + originFileName;
-                FileCopyUtils.copy(file.getBytes(), new FileOutputStream(path));
+                BufferedOutputStream buffStream = new BufferedOutputStream(new FileOutputStream(path));
+                buffStream.write(file.getBytes());
+                buffStream.close();
                 UploadFile uploadFile = UploadFile.builder()
                         .id(fileMeta.get("id").toString())
                         .createTime(new Date())

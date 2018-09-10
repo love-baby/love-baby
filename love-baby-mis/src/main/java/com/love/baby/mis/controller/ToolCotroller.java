@@ -101,15 +101,15 @@ public class ToolCotroller {
             try {
                 String path = SystemConfig.SystemPath + File.separator + "upload" + File.separator + LocalDate.now();
                 File filePath = new File(path);
-                String type = file.getContentType();
-                String originFileName = file.getOriginalFilename();
-                path = path + File.separator + System.currentTimeMillis() + originFileName;
                 if (!filePath.exists() && !filePath.isDirectory()) {
                     if (!filePath.mkdirs()) {
                         logger.error("创建目标文件所在目录失败！");
                         throw new SystemException(500, "创建目标文件所在目录失败");
                     }
                 }
+                String type = file.getContentType();
+                String originFileName = file.getOriginalFilename();
+                path = path + File.separator + System.currentTimeMillis() + originFileName;
                 FileCopyUtils.copy(file.getBytes(), new FileOutputStream(path));
                 UploadFile uploadFile = UploadFile.builder()
                         .id(fileMeta.get("id").toString())

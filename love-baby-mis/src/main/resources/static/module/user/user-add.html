@@ -98,7 +98,6 @@
         $('#fileupload').fileupload({
             dataType: 'json',
             progressall: function (e, data) {
-                alert(data);
                 var progress = parseInt(data.loaded / data.total * 100);
                 $('#progress .bar').css(
                     'width',

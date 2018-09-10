@@ -92,7 +92,6 @@ public class ToolCotroller {
         while (itr.hasNext()) {
             MultipartFile file = request.getFile(itr.next());
             logger.info(file.getOriginalFilename() + " fileUpload! " + fileUploadMap.size());
-            //2.3 create new fileMeta
             Map fileMeta = new HashMap();
             fileMeta.put("fileName", file.getOriginalFilename());
             fileMeta.put("fileSize", file.getSize() / 1024 + " Kb");
@@ -109,7 +108,7 @@ public class ToolCotroller {
                 }
                 String type = file.getContentType();
                 String originFileName = file.getOriginalFilename();
-                path = path + File.separator + System.currentTimeMillis() + originFileName;
+                path = path + File.separator + System.currentTimeMillis() + "_" + originFileName;
                 FileCopyUtils.copy(file.getBytes(), new FileOutputStream(path));
                 UploadFile uploadFile = UploadFile.builder()
                         .id(fileMeta.get("id").toString())
@@ -119,6 +118,8 @@ public class ToolCotroller {
                         .fileType(type)
                         .build();
                 uploadFileService.save(uploadFile);
+
+                fileMeta.put("path",path);
             } catch (IOException e) {
                 logger.error("上传失败", e);
             }

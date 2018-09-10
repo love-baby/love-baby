@@ -109,12 +109,13 @@
                 //     progress + '%'
                 // );
             }, done: function (e, data) {
-                $("#avatar").val(data.result[0].path);
+                // $("#avatar").val(data.result[0].path);
                 // $.each(data.result, function (index, file) {
                 //     console.log(JSON.stringify(file));
                 // });
-                parent.layer.msg("上传成功！");
                 console.log(JSON.stringify(data));
+            }, success: function (result, textStatus, jqXHR) {/* ... */
+                parent.layer.msg(result.message);
             }
         });
 

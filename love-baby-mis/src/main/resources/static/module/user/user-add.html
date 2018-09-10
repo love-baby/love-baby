@@ -18,31 +18,7 @@
 
     <title>添加用户</title>
     <style type="text/css">
-        #dropzone {
-            background: #cccccc;
-            width: 150px;
-            height: 50px;
-            line-height: 50px;
-            text-align: center;
-            font-weight: bold;
-        }
-        #dropzone.in {
-            width: 600px;
-            height: 200px;
-            line-height: 200px;
-            font-size: larger;
-        }
-        #dropzone.hover {
-            background: lawngreen;
-        }
-        #dropzone.fade {
-            -webkit-transition: all 0.3s ease-out;
-            -moz-transition: all 0.3s ease-out;
-            -ms-transition: all 0.3s ease-out;
-            -o-transition: all 0.3s ease-out;
-            transition: all 0.3s ease-out;
-            opacity: 1;
-        }
+
     </style>
 
 </head>
@@ -79,20 +55,9 @@
             <label class="form-label col-xs-4 col-sm-3">头像：</label>
             <div class="formControls col-xs-8 col-sm-9">
                 <input id="fileupload" type="file" name="files[]" data-url="/tool/fileUpload" multiple>
-                <div id="dropzone">Drop files here</div>
-
-                <div id="progress">
-                    <div style="width: 0%;"></div>
+                <div id="progress" style="height: 10px;background-color: red">
+                    <div style="width: 0%;height: 10px;background-color: #0a6999"></div>
                 </div>
-
-                <table id="uploaded-files">
-                    <tr>
-                        <th>File Name</th>
-                        <th>File Size</th>
-                        <th>File Type</th>
-                        <th>Download</th>
-                    </tr>
-                </table>
             </div>
         </div>
         <div class="row cl" style="margin-top: 218px">
@@ -133,19 +98,8 @@
         $('#fileupload').fileupload({
             dataType: 'json',
             done: function (e, data) {
-                $("tr:has(td)").remove();
-                $.each(data.result, function (index, file) {
 
-                    $("#uploaded-files").append(
-                        $('<tr/>')
-                            .append($('<td/>').text(file.fileName))
-                            .append($('<td/>').text(file.fileSize))
-                            .append($('<td/>').text(file.fileType))
-                            .append($('<td/>').html("<a href='rest/controller/get/" + index + "'>Click</a>"))
-                    )//end $("#uploaded-files").append()
-                });
             },
-
             progressall: function (e, data) {
                 var progress = parseInt(data.loaded / data.total * 100, 10);
                 $('#progress .bar').css(

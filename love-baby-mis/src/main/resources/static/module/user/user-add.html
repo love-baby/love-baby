@@ -51,7 +51,7 @@
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-3">头像：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input id="fileupload" type="file" name="files[]" data-url="server/php/" multiple>
+                <input id="fileupload" type="file" name="files[]" data-url="/tool/fileUpload" multiple>
             </div>
         </div>
         <div class="row cl" style="margin-top: 218px">
@@ -67,7 +67,6 @@
 <script type="text/javascript" src="https://js.love-baby.vip/jquery.min.js"></script>
 <script type="text/javascript" src="https://js.love-baby.vip/jquery.cookie.js"></script>
 <script type="text/javascript" src="/lib/layer/layer.js"></script>
-<script type="text/javascript" src="/lib/ajaxfileupload.js"></script>
 <script type="text/javascript" src="/lib/h-ui/js/H-ui.js"></script>
 <script type="text/javascript" src="/lib/h-ui.admin/js/H-ui.admin.js"></script>
 <script type="text/javascript" src="/lib/My97DatePicker/WdatePicker.js"></script>
@@ -90,6 +89,16 @@
 
 <script type="text/javascript">
     $(function () {
+
+        $('#fileupload').fileupload({
+            dataType: 'json',
+            done: function (e, data) {
+                $.each(data.result.files, function (index, file) {
+                    $('<p/>').text(file.name).appendTo(document.body);
+                });
+            }
+        });
+
         var id = location.search.substring(1);//获取查询串
         if (id != "" && id != null) {
             $.ajax({
@@ -137,7 +146,7 @@
                 },
                 avatar: {
                     required: true
-                },
+                }
 
             },
             onkeyup: false,

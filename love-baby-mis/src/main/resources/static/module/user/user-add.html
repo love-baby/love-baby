@@ -110,6 +110,7 @@
                 //     progress + '%'
                 // );
             }, done: function (e, data) {
+                alert(data.data);
                 $("#avatar").val(data.data[1].path);
                 parent.layer.msg(data.message);
             }

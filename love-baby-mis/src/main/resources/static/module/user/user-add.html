@@ -96,6 +96,18 @@
         $('#fileupload').fileupload({
             dataType: 'json',
             singleFileUploads: false,
+            maxFileSize: 99 * 1024 * 1024,
+            minFileSize: 5,
+            maxNumberOfFiles: 50,
+            messages: {
+                maxFileSize: 'File exceeds maximum allowed size of 99MB',
+                acceptFileTypes: 'File type not allowed'
+            }, processfail: function (e, data) {
+                var currentFile = data.files[data.index];
+                if (data.files.error && currentFile.error) {
+                    console.log(currentFile.error);
+                }
+            },
             progressall: function (e, data) {
                 var progress = parseInt(data.loaded / data.total * 100);
                 // $('#progress .bar').css(
@@ -103,7 +115,6 @@
                 //     progress + '%'
                 // );
             }, done: function (e, data) {
-                alert(JSON.stringify(data));
                 parent.layer.msg(data.message);
             }
         });

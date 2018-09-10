@@ -54,7 +54,7 @@
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-3">头像：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input id="fileupload" type="file" name="files[]" data-url="/tool/fileUpload" multiple>
+                <input id="fileupload" type="file" name="files[]" data-url="/tool/fileUpload" multiple="multiple"/>
                 <input id="avatar" style="display: none">
             </div>
         </div>
@@ -95,6 +95,7 @@
         //上传文件
         $('#fileupload').fileupload({
             dataType: 'json',
+            singleFileUploads: false,
             progressall: function (e, data) {
                 var progress = parseInt(data.loaded / data.total * 100);
                 // $('#progress .bar').css(

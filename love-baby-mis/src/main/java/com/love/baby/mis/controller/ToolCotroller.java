@@ -110,7 +110,7 @@ public class ToolCotroller {
                         throw new SystemException(500, "创建目标文件所在目录失败");
                     }
                 }
-                FileCopyUtils.copy(file.getBytes(), new FileOutputStream(filePath));
+                FileCopyUtils.copy(file.getBytes(), new FileOutputStream(path));
                 UploadFile uploadFile = UploadFile.builder()
                         .id(fileMeta.get("id").toString())
                         .createTime(new Date())

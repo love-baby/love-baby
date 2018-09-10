@@ -41,10 +41,6 @@ public class ToolCotroller {
     @Resource
     private MusicService musicService;
 
-
-    private Map fileUploadMap = new HashMap();
-
-
 //    @PostMapping(value = "/analyze/music")
 //    public void music(@RequestParam("file") MultipartFile file, @RequestHeader(value = "token") String token) throws InvalidDataException, IOException, UnsupportedTagException {
 //        String userId = userSessionCommon.assertSessionAndGetUid(token);
@@ -91,7 +87,7 @@ public class ToolCotroller {
         Map m = new HashMap();
         while (itr.hasNext()) {
             MultipartFile file = request.getFile(itr.next());
-            logger.info(file.getOriginalFilename() + " fileUpload! " + fileUploadMap.size());
+            logger.info(file.getOriginalFilename() + " fileUpload! ");
             Map fileMeta = new HashMap();
             fileMeta.put("fileName", file.getOriginalFilename());
             fileMeta.put("fileSize", file.getSize() / 1024 + " Kb");
@@ -118,13 +114,11 @@ public class ToolCotroller {
                         .fileType(type)
                         .build();
                 uploadFileService.save(uploadFile);
-
                 fileMeta.put("path",path);
             } catch (IOException e) {
                 logger.error("上传失败", e);
             }
             m.put(fileMeta.get("id").toString(), fileMeta);
-            fileUploadMap.putAll(m);
         }
         return m;
     }

@@ -44,9 +44,10 @@ public class UserVo {
         this.id = user.getId();
         this.name = user.getName();
         this.sex = Sex.statusUtil(user.getSex());
-        this.avatar = user.getAvatar();
+        this.avatar = "http://img.love-baby.vip/" + user.getAvatar();
         this.createTime = user.getCreateTime();
     }
+
     public static class Sex {
 
         public static Integer INITIAL = 0;

@@ -109,10 +109,9 @@
                 //     progress + '%'
                 // );
             }, done: function (e, data) {
-                // $("#avatar").val(data.result.files.0.path);
-                // $.each(data.result, function (index, file) {
-                //     console.log(JSON.stringify(file));
-                // });
+                $.each(data.result, function (index, file) {
+                    $("#avatar").val(file.path);
+                });
                 console.log(JSON.stringify(data.result.files));
             }, success: function (result, textStatus, jqXHR) {/* ... */
                 parent.layer.msg(result.message);

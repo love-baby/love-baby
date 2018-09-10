@@ -112,6 +112,7 @@
                 $.each(data.result.files, function (index, file) {
                     $("#avatar").val(file.path);
                 });
+                console.log(JSON.stringify(data.result));
                 console.log(JSON.stringify(data.result.files));
             }, success: function (result, textStatus, jqXHR) {/* ... */
                 parent.layer.msg(result.message);

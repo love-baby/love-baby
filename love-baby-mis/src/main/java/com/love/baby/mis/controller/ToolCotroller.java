@@ -88,9 +88,9 @@ public class ToolCotroller {
     @RequestMapping(value = "/fileUpload", method = RequestMethod.POST)
     public Map fileUpload(MultipartHttpServletRequest request) throws SystemException {
         Iterator<String> itr = request.getFileNames();
-        MultipartFile file;
+        Map m = new HashMap();
         while (itr.hasNext()) {
-            file = request.getFile(itr.next());
+            MultipartFile file = request.getFile(itr.next());
             logger.info(file.getOriginalFilename() + " fileUpload! " + fileUploadMap.size());
             //2.3 create new fileMeta
             Map fileMeta = new HashMap();
@@ -99,7 +99,6 @@ public class ToolCotroller {
             fileMeta.put("fileType", file.getContentType());
             fileMeta.put("id", UUID.randomUUID().toString().replaceAll("-", ""));
             try {
-                fileMeta.put("bytes", file.getBytes());
                 String path = SystemConfig.SystemPath + File.separator + "upload" + File.separator + LocalDate.now();
                 File filePath = new File(path);
                 String type = file.getContentType();
@@ -123,8 +122,9 @@ public class ToolCotroller {
             } catch (IOException e) {
                 logger.error("上传失败", e);
             }
-            fileUploadMap.put(fileMeta.get("id").toString(), fileMeta);
+            m.put(fileMeta.get("id").toString(), fileMeta);
+            fileUploadMap.putAll(m);
         }
-        return fileUploadMap;
+        return m;
     }
 }

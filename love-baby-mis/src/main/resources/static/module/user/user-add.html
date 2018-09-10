@@ -115,10 +115,9 @@
                 //     progress + '%'
                 // );
             }, done: function (e, data) {
-                console.log(data.files[0]);
-                var fileName = data.files[0].name;
-                var size = data.files[0].size;
-                var obj = data.result;
+                $.each(data.result, function (index, file) {
+                    console.log(JSON.stringify(file));
+                });
                 parent.layer.msg(data.message);
             }
         });

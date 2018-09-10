@@ -1,33 +1,26 @@
 package com.love.baby.mis.controller;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.love.baby.common.bean.UploadFile;
 import com.love.baby.common.common.UserSessionCommon;
 import com.love.baby.common.exception.SystemException;
 import com.love.baby.mis.config.SystemConfig;
 import com.love.baby.mis.service.MusicService;
 import com.love.baby.mis.service.UploadFileService;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author liangbc
@@ -47,6 +40,10 @@ public class ToolCotroller {
 
     @Resource
     private MusicService musicService;
+
+
+    private Map fileUploadMap = new HashMap();
+
 
 //    @PostMapping(value = "/analyze/music")
 //    public void music(@RequestParam("file") MultipartFile file, @RequestHeader(value = "token") String token) throws InvalidDataException, IOException, UnsupportedTagException {
@@ -85,124 +82,49 @@ public class ToolCotroller {
     /**
      * 上传文件
      *
-     * @param file
+     * @param request
      * @throws IOException
      */
     @RequestMapping(value = "/fileUpload", method = RequestMethod.POST)
-    public UploadFile fileUpload(@RequestParam("file") MultipartFile file) throws SystemException, IOException {
-//        String userId = userSessionCommon.assertSessionAndGetUid(token);
-        //文件名称
-        String path = SystemConfig.SystemPath + File.separator + "upload" + File.separator + LocalDate.now();
-        File filePath = new File(path);
-        String type = file.getContentType();
-        String originFileName = file.getOriginalFilename();
-        path = path + File.separator + System.currentTimeMillis() + originFileName;
-        if (!filePath.exists() && !filePath.isDirectory()) {
-            if (!filePath.mkdirs()) {
-                logger.error("创建目标文件所在目录失败！");
-                throw new SystemException(500, "创建目标文件所在目录失败");
-            }
-        }
-        byte[] bytes = file.getBytes();
-        BufferedOutputStream buffStream = new BufferedOutputStream(new FileOutputStream(path));
-        buffStream.write(bytes);
-        buffStream.close();
-        UploadFile uploadFile = UploadFile.builder()
-                .id(UUID.randomUUID().toString().replaceAll("-", ""))
-                .createTime(new Date())
-                .name(originFileName)
-                .path(path)
-                .fileType(type)
-                .build();
-        uploadFileService.save(uploadFile);
-        return uploadFile;
-    }
-
-
-    LinkedList<FileMeta> files = new LinkedList<>();
-    FileMeta fileMeta = null;
-
-    /***************************************************
-     * URL: /rest/controller/upload
-     * upload(): receives files
-     * @param request : MultipartHttpServletRequest auto passed
-     * @param response : HttpServletResponse auto passed
-     * @return LinkedList<FileMeta> as json format
-     ****************************************************/
-    @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public LinkedList<FileMeta> upload(MultipartHttpServletRequest request, HttpServletResponse response) {
-
-        //1. build an iterator
+    public Map fileUpload(MultipartHttpServletRequest request) throws SystemException {
         Iterator<String> itr = request.getFileNames();
-        MultipartFile mpf = null;
-
-        //2. get each file
+        MultipartFile file;
         while (itr.hasNext()) {
-
-            //2.1 get next MultipartFile
-            mpf = request.getFile(itr.next());
-            System.out.println(mpf.getOriginalFilename() + " uploaded! " + files.size());
-
-            //2.2 if files > 10 remove the first from the list
-            if (files.size() >= 10) {
-                files.pop();
-            }
+            file = request.getFile(itr.next());
+            logger.info(file.getOriginalFilename() + " fileUpload! " + fileUploadMap.size());
             //2.3 create new fileMeta
-            fileMeta = new FileMeta();
-            fileMeta.setFileName(mpf.getOriginalFilename());
-            fileMeta.setFileSize(mpf.getSize() / 1024 + " Kb");
-            fileMeta.setFileType(mpf.getContentType());
-
+            Map fileMeta = new HashMap();
+            fileMeta.put("fileName", file.getOriginalFilename());
+            fileMeta.put("fileSize", file.getSize() / 1024 + " Kb");
+            fileMeta.put("fileType", file.getContentType());
+            fileMeta.put("id", UUID.randomUUID().toString().replaceAll("-", ""));
             try {
-                fileMeta.setBytes(mpf.getBytes());
-
-                // copy file to local disk (make sure the path "e.g. D:/temp/files" exists)
-                FileCopyUtils.copy(mpf.getBytes(), new FileOutputStream("D:/temp/files/" + mpf.getOriginalFilename()));
-
+                fileMeta.put("bytes", file.getBytes());
+                String path = SystemConfig.SystemPath + File.separator + "upload" + File.separator + LocalDate.now();
+                File filePath = new File(path);
+                String type = file.getContentType();
+                String originFileName = file.getOriginalFilename();
+                path = path + File.separator + System.currentTimeMillis() + originFileName;
+                if (!filePath.exists() && !filePath.isDirectory()) {
+                    if (!filePath.mkdirs()) {
+                        logger.error("创建目标文件所在目录失败！");
+                        throw new SystemException(500, "创建目标文件所在目录失败");
+                    }
+                }
+                FileCopyUtils.copy(file.getBytes(), new FileOutputStream(filePath));
+                UploadFile uploadFile = UploadFile.builder()
+                        .id(fileMeta.get("id").toString())
+                        .createTime(new Date())
+                        .name(originFileName)
+                        .path(path)
+                        .fileType(type)
+                        .build();
+                uploadFileService.save(uploadFile);
             } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                logger.error("上传失败", e);
             }
-            //2.4 add to files
-            files.add(fileMeta);
+            fileUploadMap.put(fileMeta.get("id").toString(), fileMeta);
         }
-        // result will be like this
-        // [{"fileName":"app_engine-85x77.png","fileSize":"8 Kb","fileType":"image/png"},...]
-        return files;
+        return fileUploadMap;
     }
-
-    /***************************************************
-     * URL: /rest/controller/get/{value}
-     * get(): get file as an attachment
-     * @param response : passed by the server
-     * @param value : value from the URL
-     * @return void
-     ****************************************************/
-    @RequestMapping(value = "/get/{value}", method = RequestMethod.GET)
-    public void get(HttpServletResponse response, @PathVariable String value) {
-        FileMeta getFile = files.get(Integer.parseInt(value));
-        try {
-            response.setContentType(getFile.getFileType());
-            response.setHeader("Content-disposition", "attachment; filename=\"" + getFile.getFileName() + "\"");
-            FileCopyUtils.copy(getFile.getBytes(), response.getOutputStream());
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
-
-    @Data
-    @NoArgsConstructor(force = true)
-    @AllArgsConstructor
-    @JsonIgnoreProperties({"bytes"})
-    public class FileMeta {
-        private String fileName;
-        private String fileSize;
-        private String fileType;
-
-        private byte[] bytes;
-
-        //setters & getters
-    }
-
 }

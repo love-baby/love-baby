@@ -96,22 +96,21 @@
         $('#fileupload').fileupload({
             dataType: 'json',
             singleFileUploads: false,
-            maxNumberOfFiles: 1,
-            acceptFileTypes: /^gif|jpe?g|png|doc|docx|xls|xlsx|pdf|txt$/i,
-            maxFileSize: 5000000,
-            messages: {//文件错误信息
-                acceptFileTypes: '文件类型不匹配',
-                maxFileSize: '文件过大'
-            },
-            progressall: function (e, data) {
+            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+            maxFileSize: 99 * 1024 * 1024,
+            minFileSize: 5,
+            maxNumberOfFiles: 50,
+            messages: {
+                maxFileSize: 'File exceeds maximum allowed size of 99MB',
+                acceptFileTypes: 'File type not allowed'
+            }, progressall: function (e, data) {
                 var progress = parseInt(data.loaded / data.total * 100);
                 // $('#progress .bar').css(
                 //     'width',
                 //     progress + '%'
                 // );
             }, done: function (e, data) {
-                alert(data.data[0]);
-                $("#avatar").val(data.data[0]);
+                $("#avatar").val(data.data[1].path);
                 parent.layer.msg(data.message);
             }
         });

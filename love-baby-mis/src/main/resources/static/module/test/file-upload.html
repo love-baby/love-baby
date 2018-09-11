@@ -31,7 +31,7 @@
     <label class="mt-20">多文件上传一次提交</label>
     <div class="cl pd-5 bg-1 bk-gray">
         <input id="fileupload_one_submit" type="file" name="files[]" data-url="/tool/fileUpload" multiple/>
-        <div style="width: 100%;margin-top: 10px;margin-top: 5px">
+        <div style="width: 100%;margin-top: 5px;float: left">
             <div style="width: 20%;float: left;text-align: center" id="fileupload_one_submit_file_name">
 
             </div>
@@ -154,10 +154,25 @@
             acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,//文件类型
             maxFileSize: 5 * 1024 * 1024,//文件大小
             maxNumberOfFiles: 5,//最大文件数量
+            async: true,
             messages: {
                 maxFileSize: '文件最大不能大于5M',
                 acceptFileTypes: '只能上传图片类型文件',
                 maxNumberOfFiles: '上传的文件数量超过允许的最大值'
+            },
+            add: function (e, data) {
+                $("#fileupload_many_submit_table").empty();
+                $.each(data.files, function (index, file) {
+                    $("#fileupload_many_submit_table").append(
+                        "               <div style=\"width: 100%;margin-top: 5px;float: left\">\n" +
+                        "                    <div title='\" + file.fileName + \"'  style=\"width: 20%;float: left;text-align: left;white-space: nowrap; overflow: hidden;text-overflow: ellipsis;\">" + (index + 1) + "、" + file.name + "</div>\n" +
+                        "                    <div style=\"width: 80%;float: left\">\n" +
+                        "                        <div style=\"background-color: #5bc0de;text-align: left;width: 0px;\">1</div>\n" +
+                        "                    </div>\n" +
+                        "                </div>"
+                    );
+                });
+                data.submit();
             },
             processfail: function (e, data) {
                 var currentFile = data.files[data.index];
@@ -173,16 +188,16 @@
                 // ).text(progress + "%");
             },
             done: function (e, data) {
-                $.each(data.result.data, function (index, file) {
-                    $("#fileupload_many_submit_table").append(
-                        "               <div style=\"width: 100%;height: auto;margin-top: 10px\">\n" +
-                        "                    <div style=\"width: 20%;float: left;text-align: left;white-space: nowrap; overflow: hidden;text-overflow: ellipsis;\">" + (index + 1) + "、" + file.fileName + "</div>\n" +
-                        "                    <div style=\"width: 80%;float: left\">\n" +
-                        "                        <div style=\"background-color: #5bc0de;text-align: left;width: 0px;\">1</div>\n" +
-                        "                    </div>\n" +
-                        "                </div>"
-                    );
-                });
+                // $.each(data.result.data, function (index, file) {
+                //     $("#fileupload_many_submit_table").append(
+                //         "               <div style=\"width: 100%;margin-top: 5px;float: left\">\n" +
+                //         "                    <div style=\"width: 20%;float: left;text-align: left;white-space: nowrap; overflow: hidden;text-overflow: ellipsis;\">" + (index + 1) + "、" + file.fileName + "</div>\n" +
+                //         "                    <div style=\"width: 80%;float: left\">\n" +
+                //         "                        <div style=\"background-color: #5bc0de;text-align: left;width: 0px;\">1</div>\n" +
+                //         "                    </div>\n" +
+                //         "                </div>"
+                //     );
+                // });
             },
             success: function (result, textStatus, jqXHR) {
             }

@@ -22,10 +22,17 @@
 <article class="cl pl-20 pr-20 pt-5">
 
     <div class="cl pd-5 bg-1 bk-gray mt-20">
-
+        <label>单文件上传</label>
+        <div>
+            <input id="fileupload_one" type="file" name="files[]" data-url="/tool/fileUpload" multiple="multiple"/>
+            <div id="progress" style="height: 10px;background-color: red;text-align: left"></div>
+        </div>
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
+        <label>多文件上传</label>
+        <div>
 
+        </div>
     </div>
 </article>
 
@@ -47,14 +54,41 @@
 <script type="text/javascript" src="/lib/util.js"></script>
 
 
-
-
-
-
-
 <script type="text/javascript">
     $(function () {
+        //上传文件
+        var jqXHR = $('#fileupload_one').fileupload({
+            dataType: 'json',
+            singleFileUploads: false,
+            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+            maxFileSize: 5 * 1024 * 1024,
+            minFileSize: 5,
+            maxNumberOfFiles: 1,
+            messages: {
+                maxFileSize: '文件最大不能大于5M',
+                acceptFileTypes: '只能上传图片类型文件',
+                maxNumberOfFiles: '上传的文件数量超过允许的最大值'
+            },
+            processfail: function (e, data) {
+                var currentFile = data.files[data.index];
+                if (data.files.error && currentFile.error) {
+                    parent.layer.msg(currentFile.error);
+                }
+            },
+            progressall: function (e, data) {
+                var progress = parseInt(data.loaded / data.total * 100);
+                $('#progress').css(
+                    'width',
+                    progress + '%'
+                ).text(progress + "%");
+            },
+            done: function (e, data) {
 
+            },
+            success: function (result, textStatus, jqXHR) {
+                parent.layer.msg(result.message);
+            }
+        });
 
     });
 </script>

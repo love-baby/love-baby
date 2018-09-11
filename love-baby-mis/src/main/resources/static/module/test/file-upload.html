@@ -21,27 +21,38 @@
 <body>
 <article class="cl pl-20 pr-20 pt-5">
 
-    <!--<label>单文件上传</label>-->
-    <!--<div class="cl pd-5 bg-1 bk-gray mt-20">-->
-        <!--<div>-->
-            <!--<input id="fileupload_one" type="file" name="files[]" data-url="/tool/fileUpload"/>-->
-            <!--<div id="progress_one" style="height: 20px;background-color: #5bc0de;text-align: left;width: 0px;margin-top: 5px"></div>-->
-        <!--</div>-->
-    <!--</div>-->
-    <label>多文件上传</label>
+    <label>单文件上传</label>
     <div class="cl pd-5 bg-1 bk-gray mt-20">
         <div>
-            <input id="fileupload_many" type="file" name="files[]" data-url="/tool/fileUpload" multiple/>
-            <div id="many" style="margin-top: 5px">
+            <input id="fileupload" type="file" name="files[]" data-url="/tool/fileUpload"/>
+            <div id="progress_one" style="height: 20px;background-color: #5bc0de;text-align: left;width: 0px;margin-top: 5px"></div>
+        </div>
+    </div>
+    <label>多文件上传一次提交</label>
+    <div class="cl pd-5 bg-1 bk-gray mt-20">
+        <div>
+            <input id="fileupload_one_submit" type="file" name="files[]" data-url="/tool/fileUpload" multiple/>
+            <div style="margin-top: 5px">
                 <div style="width: 100%;margin-top: 10px">
-                    <div style="width: 10%;float: left;text-align: center">文件名：</div>
+                    <div style="width: 10%;float: left;text-align: center" id="fileupload_one_submit_file_name">
+
+                    </div>
                     <div style="width: 80%;float: left">
-                        <div id="progress_many" style="height: 20px;background-color: #5bc0de;text-align: left;width: 0px;"></div>
+                        <div id="progress_fileupload_one_submit" style="height: 20px;background-color: #5bc0de;text-align: left;width: 0px;"></div>
                     </div>
                     <div style="width: 10%;float: left;text-align: center">成功</div>
                 </div>
             </div>
 
+        </div>
+    </div>
+    <label>多文件上传多次提交</label>
+    <div class="cl pd-5 bg-1 bk-gray mt-20">
+        <div>
+            <input id="fileupload_many_submit" type="file" name="files[]" data-url="/tool/fileUpload" multiple/>
+            <div id="fileupload_many_submit_table" style="margin-top: 5px">
+
+            </div>
         </div>
     </div>
 </article>
@@ -66,41 +77,41 @@
 
 <script type="text/javascript">
     $(function () {
-        // //上传文件
-        // var jqXHR = $('#fileupload_one').fileupload({
-        //     dataType: 'json',
-        //     singleFileUploads: false,
-        //     acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
-        //     maxFileSize: 5 * 1024 * 1024,//文件最大
-        //     maxNumberOfFiles:1,//文件数量限制
-        //     messages: {
-        //         maxFileSize: '文件最大不能大于5M',
-        //         acceptFileTypes: '只能上传图片类型文件',
-        //         maxNumberOfFiles: '上传的文件数量超过允许的最大值'
-        //     },
-        //     processfail: function (e, data) {
-        //         var currentFile = data.files[data.index];
-        //         if (data.files.error && currentFile.error) {
-        //             parent.layer.msg(currentFile.error);
-        //         }
-        //     },
-        //     progressall: function (e, data) {
-        //         var progress = parseInt(data.loaded / data.total * 100);
-        //         $('#progress_one').css(
-        //             'width',
-        //             progress + '%'
-        //         ).text(progress + "%");
-        //     },
-        //     done: function (e, data) {
-        //
-        //     },
-        //     success: function (result, textStatus, jqXHR) {
-        //         parent.layer.msg(result.message);
-        //     }
-        // });
+        //上传文件
+        var jqXHR = $('#fileupload').fileupload({
+            dataType: 'json',
+            singleFileUploads: false,
+            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+            maxFileSize: 5 * 1024 * 1024,//文件最大
+            maxNumberOfFiles: 1,//文件数量限制
+            messages: {
+                maxFileSize: '文件最大不能大于5M',
+                acceptFileTypes: '只能上传图片类型文件',
+                maxNumberOfFiles: '上传的文件数量超过允许的最大值'
+            },
+            processfail: function (e, data) {
+                var currentFile = data.files[data.index];
+                if (data.files.error && currentFile.error) {
+                    parent.layer.msg(currentFile.error);
+                }
+            },
+            progressall: function (e, data) {
+                var progress = parseInt(data.loaded / data.total * 100);
+                $('#progress_one').css(
+                    'width',
+                    progress + '%'
+                ).text(progress + "%");
+            },
+            done: function (e, data) {
 
+            },
+            success: function (result, textStatus, jqXHR) {
+                parent.layer.msg(result.message);
+            }
+        });
 
-        $('#fileupload_many').fileupload({
+        //多文件一次提交
+        $('#fileupload_one_submit').fileupload({
             dataType: 'json',
             singleFileUploads: false,
             acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,//文件类型
@@ -119,10 +130,47 @@
             },
             progressall: function (e, data) {
                 var progress = parseInt(data.loaded / data.total * 100);
-                $('#progress_many').css(
+                $('#progress_fileupload_one_submit').css(
                     'width',
                     progress + '%'
                 ).text(progress + "%");
+            },
+            done: function (e, data) {
+                $.each(data.result, function (index, file) {
+                    $("#fileupload_one_submit_file_name").append("<div>" + file.fileName + "</div>");
+                });
+            },
+            success: function (result, textStatus, jqXHR) {
+                parent.layer.msg(result.message);
+            }
+        });
+
+        //多文件多次提交
+        $('#fileupload_many_submit').fileupload({
+            dataType: 'json',
+            singleFileUploads: true,
+            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,//文件类型
+            maxFileSize: 5 * 1024 * 1024,//文件大小
+            maxNumberOfFiles: 5,//最大文件数量
+            messages: {
+                maxFileSize: '文件最大不能大于5M',
+                acceptFileTypes: '只能上传图片类型文件',
+                maxNumberOfFiles: '上传的文件数量超过允许的最大值'
+            },
+            processfail: function (e, data) {
+                var currentFile = data.files[data.index];
+                if (data.files.error && currentFile.error) {
+                    parent.layer.msg(currentFile.error);
+                }
+            },
+            progressall: function (e, data) {
+                var progress = parseInt(data.loaded / data.total * 100);
+                // $('#progress_many_many_submit').css(
+                //     'width',
+                //     progress + '%'
+                // ).text(progress + "%");
+                $("#fileupload_many_submit_table").empty();
+
             },
             done: function (e, data) {
 

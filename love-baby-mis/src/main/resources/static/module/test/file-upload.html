@@ -32,13 +32,13 @@
     <div class="cl pd-5 bg-1 bk-gray mt-20">
         <div>
             <input id="fileupload_many" type="file" name="files[]" data-url="/tool/fileUpload" multiple="multiple"/>
-            <div id="many">
-                <div style="width: 100%">
-                    <div style="width: 10%;float: left">文件名：</div>
+            <div id="many" style="margin-top: 5px">
+                <div style="width: 100%;margin-top: 10px">
+                    <div style="width: 10%;float: left;text-align: center">文件名：</div>
                     <div style="width: 80%;float: left">
                         <div id="progress_many" style="height: 20px;background-color: #5bc0de;text-align: left;width: 0px;margin-top: 5px"></div>
                     </div>
-                    <div style="width: 10%">成功</div>
+                    <div style="width: 10%;float: left;text-align: center">成功</div>
                 </div>
             </div>
 
@@ -72,7 +72,6 @@
             singleFileUploads: false,
             acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
             maxFileSize: 5 * 1024 * 1024,
-            minFileSize: 5,
             maxNumberOfFiles: 1,
             messages: {
                 maxFileSize: '文件最大不能大于5M',
@@ -88,6 +87,39 @@
             progressall: function (e, data) {
                 var progress = parseInt(data.loaded / data.total * 100);
                 $('#progress_one').css(
+                    'width',
+                    progress + '%'
+                ).text(progress + "%");
+            },
+            done: function (e, data) {
+
+            },
+            success: function (result, textStatus, jqXHR) {
+                parent.layer.msg(result.message);
+            }
+        });
+
+
+        $('#fileupload_many').fileupload({
+            dataType: 'json',
+            singleFileUploads: false,
+            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,//文件类型
+            maxFileSize: 5 * 1024 * 1024,//文件大小
+            maxNumberOfFiles: 5,//最大文件数量
+            messages: {
+                maxFileSize: '文件最大不能大于5M',
+                acceptFileTypes: '只能上传图片类型文件',
+                maxNumberOfFiles: '上传的文件数量超过允许的最大值'
+            },
+            processfail: function (e, data) {
+                var currentFile = data.files[data.index];
+                if (data.files.error && currentFile.error) {
+                    parent.layer.msg(currentFile.error);
+                }
+            },
+            progressall: function (e, data) {
+                var progress = parseInt(data.loaded / data.total * 100);
+                $('#progress_many').css(
                     'width',
                     progress + '%'
                 ).text(progress + "%");

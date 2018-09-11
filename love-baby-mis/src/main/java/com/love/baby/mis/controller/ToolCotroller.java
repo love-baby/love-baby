@@ -10,9 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
 import java.io.BufferedOutputStream;
@@ -78,15 +78,13 @@ public class ToolCotroller {
     /**
      * 上传文件
      *
-     * @param request
+     * @param files
      * @throws IOException
      */
     @RequestMapping(value = "/fileUpload", method = RequestMethod.POST)
-    public List<Map> fileUpload(MultipartHttpServletRequest request) throws SystemException {
-        Iterator<String> itr = request.getFileNames();
+    public List<Map> fileUpload(@RequestParam("files") MultipartFile[] files) throws SystemException {
         List<Map> list = new ArrayList<>();
-        while (itr.hasNext()) {
-            MultipartFile file = request.getFile(itr.next());
+        for (MultipartFile file : files) {
             logger.info(file.getOriginalFilename() + " fileUpload! ");
             Map fileMeta = new HashMap();
             fileMeta.put("fileName", file.getOriginalFilename());

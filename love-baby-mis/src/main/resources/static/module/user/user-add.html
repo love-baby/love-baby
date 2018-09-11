@@ -87,22 +87,24 @@
 <script src="/lib/jquery-file-upload-9.22.0/js/vendor/jquery.ui.widget.js"></script>
 <script src="/lib/jquery-file-upload-9.22.0/js/jquery.iframe-transport.js"></script>
 <script src="/lib/jquery-file-upload-9.22.0/js/jquery.fileupload.js"></script>
+<script src="/lib/jquery-file-upload-9.22.0/js/jquery.fileupload-process.js"></script>
+<script src="/lib/jquery-file-upload-9.22.0/js/jquery.fileupload-validate.js"></script>
 
 
 <script type="text/javascript">
     $(function () {
 
         //上传文件
-        $('#fileupload').fileupload({
+        var jqXHR = $('#fileupload').fileupload({
             dataType: 'json',
             singleFileUploads: false,
-            add: function (e, data) {
-                data.context = $('<button/>').text('Upload')
-                    .appendTo(document.body)
-                    .click(function () {
-                        data.context = $('<p/>').text('Uploading...').replaceAll($(this));
-                        data.submit();
-                    });
+            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+            maxFileSize: 99 * 1024 * 1024,
+            minFileSize: 5,
+            maxNumberOfFiles: 50,
+            messages: {
+                maxFileSize: 'File exceeds maximum allowed size of 99MB',
+                acceptFileTypes: 'File type not allowed'
             },
             progressall: function (e, data) {
                 var progress = parseInt(data.loaded / data.total * 100);

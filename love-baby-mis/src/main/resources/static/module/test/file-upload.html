@@ -22,14 +22,14 @@
 <article class="cl pl-20 pr-20 pt-5">
 
     <label>单文件上传</label>
-    <div class="cl pd-5 bg-1 bk-gray mt-20">
+    <div class="cl pd-5 bg-1 bk-gray">
         <div>
             <input id="fileupload" type="file" name="files[]" data-url="/tool/fileUpload"/>
             <div id="progress_one" style="height: 20px;background-color: #5bc0de;text-align: left;width: 0px;margin-top: 5px"></div>
         </div>
     </div>
-    <label>多文件上传一次提交</label>
-    <div class="cl pd-5 bg-1 bk-gray mt-20">
+    <label class="mt-20">多文件上传一次提交</label>
+    <div class="cl pd-5 bg-1 bk-gray">
         <div>
             <input id="fileupload_one_submit" type="file" name="files[]" data-url="/tool/fileUpload" multiple/>
             <div style="margin-top: 5px">
@@ -40,14 +40,14 @@
                     <div style="width: 80%;float: left">
                         <div id="progress_fileupload_one_submit" style="height: 20px;background-color: #5bc0de;text-align: left;width: 0px;"></div>
                     </div>
-                    <div style="width: 10%;float: left;text-align: center">成功</div>
+                    <div style="width: 10%;float: left;text-align: center" id="progress_fileupload_one_submit_msg"></div>
                 </div>
             </div>
 
         </div>
     </div>
-    <label>多文件上传多次提交</label>
-    <div class="cl pd-5 bg-1 bk-gray mt-20">
+    <label class="mt-20">多文件上传多次提交</label>
+    <div class="cl pd-5 bg-1 bk-gray">
         <div>
             <input id="fileupload_many_submit" type="file" name="files[]" data-url="/tool/fileUpload" multiple/>
             <div id="fileupload_many_submit_table" style="margin-top: 5px">
@@ -136,12 +136,13 @@
                 ).text(progress + "%");
             },
             done: function (e, data) {
-                $.each(data.result, function (index, file) {
+                $.each(data.result.data, function (index, file) {
                     $("#fileupload_one_submit_file_name").append("<div>" + file.fileName + "</div>");
                 });
             },
             success: function (result, textStatus, jqXHR) {
                 parent.layer.msg(result.message);
+                $("#progress_fileupload_one_submit_msg").html("成功");
             }
         });
 
@@ -169,14 +170,21 @@
                 //     'width',
                 //     progress + '%'
                 // ).text(progress + "%");
-                $("#fileupload_many_submit_table").empty();
-
             },
             done: function (e, data) {
-
+                $.each(data.result.data, function (index, file) {
+                    $("#fileupload_many_submit_table").append(
+                        "\t\t<div style=\"width: 100%;margin-top: 10px\">\n" +
+                        "                    <div style=\"width: 10%;float: left;text-align: center\">"+file.fileName+"</div>\n" +
+                        "                    <div style=\"width: 80%;float: left\">\n" +
+                        "                        <div style=\"background-color: #5bc0de;text-align: left;width: 0px;\"></div>\n" +
+                        "                    </div>\n" +
+                        "                    <div style=\"width: 10%;float: left;text-align: center\">成功</div>\n" +
+                        "                </div>"
+                    );
+                });
             },
             success: function (result, textStatus, jqXHR) {
-                parent.layer.msg(result.message);
             }
         });
 

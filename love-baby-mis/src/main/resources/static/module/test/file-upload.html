@@ -181,6 +181,7 @@
                 }
             },
             progressall: function (e, data) {
+                alert(JSON.stringify(data));
                 var progress = parseInt(data.loaded / data.total * 100);
                 // $('#progress_many_many_submit').css(
                 //     'width',

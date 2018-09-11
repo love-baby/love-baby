@@ -2,6 +2,7 @@ package com.love.baby.mis.vo;
 
 import com.love.baby.common.dto.UserDto;
 import com.love.baby.common.util.StatusUtil;
+import com.love.baby.mis.config.SystemConfig;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -44,7 +45,7 @@ public class UserVo {
         this.id = user.getId();
         this.name = user.getName();
         this.sex = Sex.statusUtil(user.getSex());
-        this.avatar = "http://img.love-baby.vip" + user.getAvatar();
+        this.avatar = SystemConfig.web_host + user.getAvatar();
         this.createTime = user.getCreateTime();
     }
 

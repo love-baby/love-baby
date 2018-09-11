@@ -94,7 +94,7 @@ public class ToolCotroller {
             fileMeta.put("fileType", file.getContentType());
             fileMeta.put("id", UUID.randomUUID().toString().replaceAll("-", ""));
             try {
-                String path = SystemConfig.SystemPath + File.separator + "upload" + File.separator + LocalDate.now();
+                String path = SystemConfig.systemPath + File.separator + "upload" + File.separator + LocalDate.now();
                 File filePath = new File(path);
                 if (!filePath.exists() && !filePath.isDirectory()) {
                     if (!filePath.mkdirs()) {

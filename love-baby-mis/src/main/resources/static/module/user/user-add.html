@@ -96,11 +96,13 @@
         $('#fileupload').fileupload({
             dataType: 'json',
             singleFileUploads: false,
-            processfail: function (e, data) {
-                var currentFile = data.files[data.index];
-                if (data.files.error && currentFile.error) {
-                    console.log(currentFile.error);
-                }
+            add: function (e, data) {
+                data.context = $('<button/>').text('Upload')
+                    .appendTo(document.body)
+                    .click(function () {
+                        data.context = $('<p/>').text('Uploading...').replaceAll($(this));
+                        data.submit();
+                    });
             },
             progressall: function (e, data) {
                 var progress = parseInt(data.loaded / data.total * 100);

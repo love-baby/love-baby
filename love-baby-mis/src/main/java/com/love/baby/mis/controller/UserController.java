@@ -83,7 +83,7 @@ public class UserController {
         String id = UUID.randomUUID().toString().replaceAll("-", "");
         userDto.setId(id);
         userDto.setStatus(User.Status.normal);
-        userDto.setResourcesPath(SystemConfig.SystemPath + File.separator + LocalDate.now().getYear() + File.separator + LocalDateTime.now().getMonth().getValue() + File.separator + LocalDateTime.now().getDayOfMonth() + File.separator + id);
+        userDto.setResourcesPath(SystemConfig.systemPath + File.separator + LocalDate.now().getYear() + File.separator + LocalDateTime.now().getMonth().getValue() + File.separator + LocalDateTime.now().getDayOfMonth() + File.separator + id);
         userDto.setCreateTime(Date.from(Instant.now()));
         userService.create(userDto);
         return userDto;

@@ -122,6 +122,11 @@
                     parent.layer.msg(currentFile.error);
                 }
             },
+            add: function (e, data) {
+                $.each(data, function (index, file) {
+                    $("#fileupload_one_submit_file_name").append("<div title='" + file.fileName + "' style='text-align: left;white-space: nowrap; overflow: hidden;text-overflow: ellipsis;'>" + (index + 1) + "、" + file.name + "</div>");
+                });
+            },
             progressall: function (e, data) {
                 var progress = parseInt(data.loaded / data.total * 100);
                 $('#progress_fileupload_one_submit').css(
@@ -132,7 +137,7 @@
             done: function (e, data) {
                 $("#fileupload_one_submit_file_name").empty();
                 $.each(data.result.data, function (index, file) {
-                    $("#fileupload_one_submit_file_name").append("<div title='" + file.fileName + "' style='white-space: nowrap; overflow: hidden;text-overflow: ellipsis;'>" + (index + 1) + "、" + file.fileName + "</div>");
+                    $("#fileupload_one_submit_file_name").append("<div title='" + file.fileName + "' style='text-align: left;white-space: nowrap; overflow: hidden;text-overflow: ellipsis;'>" + (index + 1) + "、" + file.fileName + "</div>");
                 });
             },
             success: function (result, textStatus, jqXHR) {
@@ -169,7 +174,7 @@
                 $.each(data.result.data, function (index, file) {
                     $("#fileupload_many_submit_table").append(
                         "               <div style=\"width: 100%;height: auto;margin-top: 10px\">\n" +
-                        "                    <div style=\"width: 20%;float: left;text-align: center;white-space: nowrap; overflow: hidden;text-overflow: ellipsis;\">" + file.fileName + "</div>\n" +
+                        "                    <div style=\"width: 20%;float: left;text-align: left;white-space: nowrap; overflow: hidden;text-overflow: ellipsis;\">" + (index + 1) + "、" + file.fileName + "</div>\n" +
                         "                    <div style=\"width: 80%;float: left\">\n" +
                         "                        <div style=\"background-color: #5bc0de;text-align: left;width: 0px;\">1</div>\n" +
                         "                    </div>\n" +

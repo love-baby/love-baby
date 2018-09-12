@@ -80,12 +80,12 @@
             "aaSorting": [[4, "desc"]],
             "aoColumns": [
                 {
-                    "sTitle": "序号",
+                    "sTitle": "序号&nbsp;<input type='checkbox' class='checkall'/>",
                     "width": "30px",
                     "render": function (data, type, row, meta) {
                         // 显示行号
                         var startIndex = meta.settings._iDisplayStart;
-                        return "<div align='center'>" + (startIndex + meta.row + 1) + "<input type='checkbox'></div>";
+                        return "<div align='center'>" + (startIndex + meta.row + 1) + "&nbsp;<input type='checkbox' value='" + data.id + "'></div>";
                     }
                 },
                 {

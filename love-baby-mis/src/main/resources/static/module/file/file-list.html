@@ -212,7 +212,6 @@
                     if (data.code == 500) {
                         window.location = "/login.html";
                     } else if (data.code == 200) {
-                        $(obj).parents("tr").remove();
                         layer.msg('已删除!', {icon: 1, time: 1000});
                         var table = $('#fileTable').DataTable();
                         table.draw();

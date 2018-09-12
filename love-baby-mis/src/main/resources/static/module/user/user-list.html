@@ -92,10 +92,13 @@
             "aaSorting": [[4, "desc"]],
             "aoColumns": [
                 {
-                    "mDataProp": "id",
-                    "title": "序号",
-                    "defaultContent": "",
-                    "sClass": "center"
+                    "data": null,
+                    "sTitle": "全选&nbsp;<input type='checkbox' id='selectAll'>",
+                    "width": "50px",
+                    "render": function (data, type, row, meta) {
+                        var startIndex = meta.settings._iDisplayStart;
+                        return "<div align='center'>" + (startIndex + meta.row + 1) + "&nbsp;<input type='checkbox' value='" + data.id + "'></div>";
+                    }
                 },
                 {
                     "mDataProp": "name",

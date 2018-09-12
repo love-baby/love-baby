@@ -46,7 +46,7 @@
             "bFilter": false,//关闭搜索
             "bProcessing": true,//是否显示取数据时的那个等待提示
             "serverSide": true,//启用服务器端分页
-            "sAjaxSource": host + "/user/listAll",
+            "sAjaxSource": host + "/file/listAll",
             "bAutoWidth": true,
             "fnServerData": function (sSource, aoData, fnCallback) {
                 aoData.push(
@@ -87,17 +87,17 @@
                 },
                 {
                     "mDataProp": "name",
-                    "sTitle": "用户名",
+                    "sTitle": "名称",
                     "sDefaultContent": "",
                     "sClass": "center"
                 }, {
-                    "mDataProp": "sex.name",
-                    "sTitle": " 性别",
+                    "mDataProp": "fileType",
+                    "sTitle": " 类型",
                     "sDefaultContent": "",
                     "sClass": "center"
                 }, {
-                    "mDataProp": "avatar",
-                    "sTitle": "头像",
+                    "mDataProp": "path",
+                    "sTitle": "路径",
                     "sDefaultContent": "",
                     "sClass": "center"
                 }, {

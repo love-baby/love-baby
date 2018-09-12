@@ -1,5 +1,8 @@
 package com.love.baby.mis.dao;
 
+import com.love.baby.common.param.SearchParamsDto;
+import com.love.baby.common.util.PageUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -10,6 +13,7 @@ import javax.annotation.Resource;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -78,6 +82,54 @@ public abstract class BaseDao<T> {
         logger.info("findAll sql={}", sql);
         RowMapper<T> rowMapper = BeanPropertyRowMapper.newInstance(entityClass);
         return jdbcTemplate.query(sql, rowMapper);
+    }
+
+    /**
+     * 获取所有
+     *
+     * @param cursor
+     * @param size
+     * @param searchParamsDto
+     * @return
+     */
+    public PageUtil findAll(int cursor, int size, SearchParamsDto searchParamsDto) {
+        String sql = "select * from " + camel4underline(entityClass.getSimpleName()) + " where 1 = 1";
+        String sqlCount = "select count(1) from " + camel4underline(entityClass.getSimpleName()) + " where 1 = 1";
+        List params = new ArrayList();
+        List paramsCount = new ArrayList();
+        if (StringUtils.isNotBlank(searchParamsDto.getSearchText())) {
+            sql += " and name = ?";
+            sqlCount += " and name = ?";
+            params.add(searchParamsDto.getSearchText());
+            paramsCount.add(searchParamsDto.getSearchText());
+        }
+        if (StringUtils.isNotBlank(searchParamsDto.getDateMin())) {
+            sql += " and create_time >= ?";
+            sqlCount += " and create_time >= ?";
+            params.add(searchParamsDto.getDateMin() + " 00:00:00");
+            paramsCount.add(searchParamsDto.getDateMin() + " 00:00:00");
+        }
+        if (StringUtils.isNotBlank(searchParamsDto.getDateMax())) {
+            sql += " and create_time <= ?";
+            sqlCount += " and create_time <= ?";
+            params.add(searchParamsDto.getDateMax() + " 23:59:59");
+            paramsCount.add(searchParamsDto.getDateMax() + " 23:59:59");
+        }
+        if (StringUtils.isNotBlank(searchParamsDto.getSortField()) && StringUtils.isNotBlank(searchParamsDto.getSort())) {
+            sql += " order by " + searchParamsDto.getSortField() + " " + searchParamsDto.getSort();
+        }
+        sql += " limit ?,?";
+        params.add(cursor);
+        params.add(size);
+
+        RowMapper<T> rowMapper = BeanPropertyRowMapper.newInstance(entityClass);
+        List<T> list = jdbcTemplate.query(sql, rowMapper, params.toArray());
+        Integer count = jdbcTemplate.queryForObject(sqlCount, Integer.class, paramsCount.toArray());
+        PageUtil pageUtil = PageUtil.builder()
+                .data(list)
+                .recordsFiltered(count)
+                .recordsTotal(count).build();
+        return pageUtil;
     }
 
     // 组装SQL

@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 @Builder
-public class SearchUserParams {
+public class SearchParamsDto {
     private String dateMin;
     private String dateMax;
     private String searchText;

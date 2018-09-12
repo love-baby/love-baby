@@ -1,7 +1,7 @@
 package com.love.baby.common.api;
 
 import com.love.baby.common.dto.UserDto;
-import com.love.baby.common.param.SearchUserParams;
+import com.love.baby.common.param.SearchParamsDto;
 import com.love.baby.common.util.PageUtil;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
@@ -20,7 +20,7 @@ public interface UserRpcService {
      * @return
      */
     @PostMapping(value = "/listAll/{cursor}/{size}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    PageUtil listAll(@PathVariable Integer cursor, @PathVariable Integer size, @RequestBody SearchUserParams searchUserParams);
+    PageUtil listAll(@PathVariable Integer cursor, @PathVariable Integer size, @RequestBody SearchParamsDto searchParamsDto);
 
     /**
      * 用户name获取用户

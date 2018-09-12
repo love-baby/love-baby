@@ -1,7 +1,7 @@
 package com.love.baby.user.service;
 
 import com.love.baby.common.bean.User;
-import com.love.baby.common.param.SearchUserParams;
+import com.love.baby.common.param.SearchParamsDto;
 import com.love.baby.common.util.PageUtil;
 import com.love.baby.user.dao.UserDao;
 import org.springframework.stereotype.Service;
@@ -70,8 +70,8 @@ public class UserService implements BaseService<User> {
     }
 
 
-    public PageUtil findAll(int cursor, int size, SearchUserParams searchUserParams) {
-        return userDao.findAll(cursor, size, searchUserParams);
+    public PageUtil findAll(int cursor, int size, SearchParamsDto searchParamsDto) {
+        return userDao.findAll(cursor, size, searchParamsDto);
     }
 }
 

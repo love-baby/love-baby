@@ -1,6 +1,8 @@
 package com.love.baby.mis.service;
 
 import com.love.baby.common.bean.UploadFile;
+import com.love.baby.common.param.SearchParamsDto;
+import com.love.baby.common.util.PageUtil;
 import com.love.baby.mis.dao.UploadFileDao;
 import org.springframework.stereotype.Service;
 
@@ -46,5 +48,10 @@ public class UploadFileService implements BaseService<UploadFile> {
     @Override
     public List<UploadFile> findAll() {
         return null;
+    }
+
+
+    public PageUtil findAll(int cursor, int size, SearchParamsDto searchUserParams) {
+        return uploadFileDao.findAll(cursor, size, searchUserParams);
     }
 }

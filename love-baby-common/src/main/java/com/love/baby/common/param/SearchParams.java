@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 前端参数
+ *
  * @author liangbc
  * @date 2018/8/25
  */

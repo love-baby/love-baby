@@ -2,7 +2,7 @@ package com.love.baby.mis.service;
 
 import com.love.baby.common.api.UserRpcService;
 import com.love.baby.common.dto.UserDto;
-import com.love.baby.common.param.SearchUserParams;
+import com.love.baby.common.param.SearchParamsDto;
 import com.love.baby.common.util.PageUtil;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +18,8 @@ public class UserService {
     @Resource
     private UserRpcService userRpcService;
 
-    public PageUtil findAll(int cursor, int size, SearchUserParams searchUserParams) {
-        return userRpcService.listAll(cursor, size,searchUserParams);
+    public PageUtil findAll(int cursor, int size, SearchParamsDto searchParamsDto) {
+        return userRpcService.listAll(cursor, size, searchParamsDto);
     }
 
     public UserDto findByName(String name) {

@@ -54,7 +54,7 @@
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-3">头像：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input id="fileupload" type="file" name="files[]" data-url="/tool/fileUpload" multiple="multiple"/>
+                <input id="fileupload" type="file" name="files[]" data-url="/tool/fileUpload"/>
                 <input id="avatar" style="display: none">
             </div>
         </div>
@@ -103,24 +103,15 @@
             acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
             maxFileSize: 5 * 1024 * 1024,
             minFileSize: 5,
-            maxNumberOfFiles: 1,
             messages: {
                 maxFileSize: '文件最大不能大于5M',
                 acceptFileTypes: '只能上传图片类型文件',
-                maxNumberOfFiles: '上传的文件数量超过允许的最大值'
             },
             processfail: function (e, data) {
                 var currentFile = data.files[data.index];
                 if (data.files.error && currentFile.error) {
                     parent.layer.msg(currentFile.error);
                 }
-            },
-            progressall: function (e, data) {
-                var progress = parseInt(data.loaded / data.total * 100);
-                // $('#progress .bar').css(
-                //     'width',
-                //     progress + '%'
-                // );
             },
             done: function (e, data) {
                 $("#avatar").val(data.result.data[0].path);

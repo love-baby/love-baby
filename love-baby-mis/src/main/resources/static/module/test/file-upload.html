@@ -68,11 +68,9 @@
             singleFileUploads: false,
             acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
             maxFileSize: 5 * 1024 * 1024,//文件最大
-            maxNumberOfFiles: 1,//文件数量限制
             messages: {
                 maxFileSize: '文件最大不能大于5M',
-                acceptFileTypes: '只能上传图片类型文件',
-                maxNumberOfFiles: '上传的文件数量超过允许的最大值'
+                acceptFileTypes: '只能上传图片类型文件'
             },
             processfail: function (e, data) {
                 var currentFile = data.files[data.index];
@@ -98,8 +96,8 @@
             singleFileUploads: false,
             acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,//文件类型
             maxFileSize: 5 * 1024 * 1024,//文件大小
+            minFileSize: 5,
             maxNumberOfFiles: 5,//最大文件数量
-            token:$.cookie('token'),
             messages: {
                 maxFileSize: '文件最大不能大于5M',
                 acceptFileTypes: '只能上传图片类型文件',
@@ -111,7 +109,7 @@
                     parent.layer.msg(currentFile.error);
                 }
             },
-            add: function (e, data) {//文件添加事件
+            start: function (e, data) {//开始上传
                 $("#fileupload_one_submit_file_name").empty();
                 $.each(data.files, function (index, file) {
                     $("#fileupload_one_submit_file_name").append("<div title='" + file.fileName + "' style='text-align: left;white-space: nowrap; overflow: hidden;text-overflow: ellipsis;'>" + (index + 1) + "、" + file.name + "</div>");

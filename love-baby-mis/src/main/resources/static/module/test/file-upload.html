@@ -114,7 +114,6 @@
                 $.each(data.files, function (index, file) {
                     $("#fileupload_one_submit_file_name").append("<div title='" + file.fileName + "' style='text-align: left;white-space: nowrap; overflow: hidden;text-overflow: ellipsis;'>" + (index + 1) + "、" + file.name + "</div>");
                 });
-                data.submit();
             },
             progressall: function (e, data) {//进度条事件
                 var progress = parseInt(data.loaded / data.total * 100);

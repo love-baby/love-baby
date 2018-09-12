@@ -80,11 +80,12 @@
             "aaSorting": [[4, "desc"]],
             "aoColumns": [
                 {
+                    "data": null,
                     "sTitle": "序号&nbsp;<input type='checkbox' id='selectAll'>",
                     "width": "50px",
                     "render": function (data, type, row, meta) {
                         var startIndex = meta.settings._iDisplayStart;
-                        return "<div align='center'>" + (startIndex + meta.row + 1) + "&nbsp;<input type='checkbox'></div>";
+                        return "<div align='center'>" + (startIndex + meta.row + 1) + "&nbsp;<input type='checkbox' value='" + data.id + "'></div>";
                     }
                 },
                 {
@@ -104,6 +105,7 @@
                     "sTitle": "创建时间",
                     "sDefaultContent": ""
                 }, {
+                    "data": null,
                     "orderable": false,
                     "title": "操作",
                     "render": function (data, type, row, meta) {

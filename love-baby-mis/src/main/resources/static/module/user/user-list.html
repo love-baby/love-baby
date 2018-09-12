@@ -97,11 +97,11 @@
             "aoColumns": [
                 {
                     "data": null,
-                    "sTitle": "全选&nbsp;<input type='checkbox' id='selectAll'>",
-                    "width": "50px",
+                    "sTitle": "序号",
+                    "width": "30px",
                     "render": function (data, type, row, meta) {
                         var startIndex = meta.settings._iDisplayStart;
-                        return "<div align='center'>" + (startIndex + meta.row + 1) + "&nbsp;<input type='checkbox' value='" + data.id + "'></div>";
+                        return startIndex + meta.row + 1;
                     }
                 },
                 {

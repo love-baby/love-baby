@@ -108,7 +108,7 @@
                 if (data.files.error && currentFile.error) {
                     parent.layer.msg(currentFile.error);
                     console.log("错误" + currentFile.error);
-                    return false;
+                    return;
                 }
             },
             start: function (e, data) {//开始上传

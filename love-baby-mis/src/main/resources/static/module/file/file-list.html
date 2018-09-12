@@ -81,7 +81,7 @@
             "aoColumns": [
                 {
                     "sTitle": "序号&nbsp;<input type='checkbox' id='selectAll'>",
-                    "width": "30px",
+                    "width": "50px",
                     "render": function (data, type, row, meta) {
                         var startIndex = meta.settings._iDisplayStart;
                         return "<div align='center'>" + (startIndex + meta.row + 1) + "&nbsp;<input type='checkbox'></div>";
@@ -104,7 +104,6 @@
                     "sTitle": "创建时间",
                     "sDefaultContent": ""
                 }, {
-                    "data": null,
                     "orderable": false,
                     "title": "操作",
                     "render": function (data, type, row, meta) {

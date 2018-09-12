@@ -1,0 +1,178 @@
+﻿<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="Bookmark" href="favicon.ico">
+    <link rel="Shortcut Icon" href="favicon.ico"/>
+
+    <link rel="stylesheet" type="text/css" href="/lib/h-ui/css/H-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/lib/h-ui.admin/css/H-ui.admin.css"/>
+    <link rel="stylesheet" type="text/css" href="/lib/iconfont/1.0.8/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="/lib/h-ui.admin/skin/default/skin.css" id="skin"/>
+    <link rel="stylesheet" type="text/css" href="/lib/h-ui.admin/css/style.css"/>
+
+
+    <title>文件列表 - 文件管理</title>
+</head>
+<body>
+<article class="cl pl-20 pr-20 pt-5">
+    <div class="mt-20">
+        <table id="fileTable" class="table table-border table-bordered table-hover table-bg table-sort" style="width: 100%">
+        </table>
+    </div>
+</article>
+
+
+<script type="text/javascript" src="https://js.love-baby.vip/jquery.min.js"></script>
+<script type="text/javascript" src="https://js.love-baby.vip/jquery.cookie.js"></script>
+<script type="text/javascript" src="/lib/layer/layer.js"></script>
+<script type="text/javascript" src="/lib/h-ui/js/H-ui.js"></script>
+<script type="text/javascript" src="/lib/h-ui.admin/js/H-ui.admin.js"></script>
+
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="https://js.love-baby.vip/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/lib/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/lib/util.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $('#fileTable').DataTable({
+            "bFilter": false,//关闭搜索
+            "bProcessing": true,//是否显示取数据时的那个等待提示
+            "serverSide": true,//启用服务器端分页
+            "sAjaxSource": host + "/user/listAll",
+            "bAutoWidth": true,
+            "fnServerData": function (sSource, aoData, fnCallback) {
+                aoData.push(
+                    {"name": "searchText", "value": $('#searchText').val()},
+                    {"name": "dateMin", "value": $('#dateMin').val()},
+                    {"name": "dateMax", "value": $('#dateMax').val()}
+                );
+                $.ajax({
+                    headers: {
+                        'token': $.cookie('token')
+                    },
+                    async: false,
+                    type: 'post',
+                    url: sSource,
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(aoData),
+                    success: function (resp) {
+                        if (resp.code == 200) {
+                            fnCallback(resp.data);
+                        } else {
+                            layer.msg("查询失败");
+                        }
+                    }, error: function () {
+                        layer.msg("查询失败");
+                    }
+
+                });
+            },
+            "aoColumnDefs": [{"bSortable": false, "aTargets": [0, 5]}],
+            "aaSorting": [[4, "desc"]],
+            "aoColumns": [
+                {
+                    "mDataProp": "id",
+                    "title": "序号",
+                    "defaultContent": "",
+                    "sClass": "center"
+                },
+                {
+                    "mDataProp": "name",
+                    "sTitle": "用户名",
+                    "sDefaultContent": "",
+                    "sClass": "center"
+                }, {
+                    "mDataProp": "sex.name",
+                    "sTitle": " 性别",
+                    "sDefaultContent": "",
+                    "sClass": "center"
+                }, {
+                    "mDataProp": "avatar",
+                    "sTitle": "头像",
+                    "sDefaultContent": "",
+                    "sClass": "center"
+                }, {
+                    "mDataProp": "createTime",
+                    "sTitle": "创建时间",
+                    "sDefaultContent": "",
+                    "sClass": "center"
+                }, {
+                    "data": null,
+                    "orderable": false,
+                    "title": "操作",
+                    "render": function (data, type, row, meta) {
+                        return'<a title="删除" href="javascript:;" onclick="user_delete(this,\'' + data.id + '\')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>';
+                    }
+                }
+            ],
+            columns: [
+                {data: 'name'},
+                {data: 'sex.name'},
+                {data: 'avatar'},
+                {data: 'createTime'}
+            ],
+            language: {
+                "sProcessing": "处理中...",
+                "sLengthMenu": "显示 _MENU_ 项结果",
+                "sZeroRecords": "没有匹配结果",
+                "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                "sInfoPostFix": "",
+                "sSearch": "搜索:",
+                "sUrl": "",
+                "sEmptyTable": "表中数据为空",
+                "sLoadingRecords": "载入中...",
+                "sInfoThousands": ",",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "上页",
+                    "sNext": "下页",
+                    "sLast": "末页"
+                },
+                "oAria": {
+                    "sSortAscending": ": 以升序排列此列",
+                    "sSortDescending": ": 以降序排列此列"
+                }
+            }
+        });
+
+    });
+
+    /*用户-删除*/
+    function user_delete(obj, id) {
+        layer.confirm('确认要删除吗？', function (index) {
+            $.ajax({
+                type: "delete",
+                url: host + "/user/" + id,
+                headers: {
+                    'token': $.cookie('token')
+                },
+                datatype: "json",
+                success: function (data) {
+                    if (data.code == 500) {
+                        window.location = "/login.html";
+                    } else if (data.code == 200) {
+                        $(obj).parents("tr").remove();
+                        layer.msg('已删除!', {icon: 1, time: 1000});
+                    } else {
+                        layer.msg(data.message);
+                    }
+                }
+            });
+
+        });
+    }
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

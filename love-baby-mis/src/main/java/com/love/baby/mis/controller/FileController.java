@@ -74,7 +74,7 @@ public class FileController {
      */
     @DeleteMapping(value = "/list")
     public void deleteAll(@RequestParam(value = "ids") String ids, @RequestHeader(value = "token") String token) {
-        logger.info("删除 idList = {}", JSON.toJSONString(ids));
+        logger.info("删除 ids = {}", JSON.toJSONString(ids));
         userSessionCommon.assertSessionAndGetUid(token);
         if (ids == null) {
             throw new SystemException(500, "参数非法！");

@@ -153,7 +153,7 @@
         layer.confirm('确认要删除吗？', function (index) {
             $.ajax({
                 type: "delete",
-                url: host + "/user/" + id,
+                url: host + "/file/" + id,
                 headers: {
                     'token': $.cookie('token')
                 },

@@ -1,12 +1,16 @@
 package com.love.baby.mis.service;
 
+import com.alibaba.fastjson.JSON;
 import com.love.baby.common.bean.UploadFile;
 import com.love.baby.common.param.SearchParamsDto;
 import com.love.baby.common.util.PageUtil;
 import com.love.baby.mis.dao.UploadFileDao;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.io.Serializable;
 import java.util.List;
 
@@ -16,6 +20,8 @@ import java.util.List;
  */
 @Service
 public class UploadFileService implements BaseService<UploadFile> {
+
+    private static Logger logger = LoggerFactory.getLogger(UploadFileService.class);
 
     @Resource
     private UploadFileDao uploadFileDao;
@@ -32,7 +38,21 @@ public class UploadFileService implements BaseService<UploadFile> {
 
     @Override
     public void delete(Serializable id) {
+        UploadFile uploadFile = uploadFileDao.findById(id);
         uploadFileDao.delete(id);
+        if (uploadFile != null) {
+            File file = new File(uploadFile.getPath());
+            if (file.exists() && file.isFile()) {
+                if (file.delete()) {
+                    logger.info("删除单个文件" + JSON.toJSON(uploadFile) + "成功！");
+
+                } else {
+                    logger.info("删除单个文件" + JSON.toJSON(uploadFile) + "失败！");
+                }
+            } else {
+                logger.info("删除单个文件失败 文件不存在" + JSON.toJSON(uploadFile));
+            }
+        }
     }
 
     @Override

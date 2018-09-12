@@ -60,6 +60,6 @@ public class FileController {
     public void delete(@PathVariable String id, @RequestHeader(value = "token") String token) {
         logger.info("删除 id = {}", JSON.toJSONString(id));
         userSessionCommon.assertSessionAndGetUid(token);
-        //userService.deleteById(id);
+        uploadFileService.delete(id);
     }
 }

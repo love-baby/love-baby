@@ -79,12 +79,16 @@
             "aoColumnDefs": [{"bSortable": false, "aTargets": [0, 5]}],
             "aaSorting": [[4, "desc"]],
             "aoColumns": [
-                {"sTitle": "序号", "mDataProp": null, "targets": 0, "sClass": "center", "bSortable": false, "sWidth": "100"},
                 {
-                    "mDataProp": "id",
-                    "title": "序号",
-                    "defaultContent": "",
-                    "sClass": "center"
+                    data : null,
+                    bSortable : false,
+                    className : "text-right",
+                    width : "30px",
+                    render : function(data, type, row, meta) {
+                        // 显示行号
+                        var startIndex = meta.settings._iDisplayStart;
+                        return startIndex + meta.row + 1;
+                    }
                 },
                 {
                     "mDataProp": "name",

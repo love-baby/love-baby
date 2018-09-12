@@ -42,7 +42,7 @@
 
 <script type="text/javascript">
     $(function () {
-        $('#fileTable').DataTable({
+        var fileTable = $('#fileTable').DataTable({
             "bFilter": false,//关闭搜索
             "bProcessing": true,//是否显示取数据时的那个等待提示
             "serverSide": true,//启用服务器端分页
@@ -79,6 +79,7 @@
             "aoColumnDefs": [{"bSortable": false, "aTargets": [0, 5]}],
             "aaSorting": [[4, "desc"]],
             "aoColumns": [
+                {"sTitle": "序号", "mDataProp": null, "targets": 0, "sClass": "center", "bSortable": false, "sWidth": "100"},
                 {
                     "mDataProp": "id",
                     "title": "序号",
@@ -110,7 +111,7 @@
                     "orderable": false,
                     "title": "操作",
                     "render": function (data, type, row, meta) {
-                        return'<a title="删除" href="javascript:;" onclick="user_delete(this,\'' + data.id + '\')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>';
+                        return '<a title="删除" href="javascript:;" onclick="user_delete(this,\'' + data.id + '\')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>';
                     }
                 }
             ],
@@ -145,6 +146,13 @@
                 }
             }
         });
+
+
+        $('#fileTable tbody').on('click', 'tr', function () {
+            $(this).toggleClass('selected');
+        });
+
+        //fileTable.rows('.selected').data()
 
     });
 

@@ -21,6 +21,20 @@
 </head>
 <body>
 <article class="cl pl-20 pr-20 pt-5">
+    <div class="cl pd-5 bg-1 bk-gray mt-20">
+         <span class="l">
+                    <a href="javascript:;" onclick="datadeAll()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
+         </span>
+        <span class="r">
+                <div class="text-c"> 日期范围：
+                    <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'dateMax\')||\'%y-%M-%d\'}'})" id="dateMin" class="input-text Wdate" style="width:120px;">
+                    -
+                    <input type="text" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'dateMin\')}',maxDate:'%y-%M-%d'})" id="dateMax" class="input-text Wdate" style="width:120px;">
+                    <input type="text" class="input-text" style="width:250px" placeholder="输入会员名称" id="searchText">
+                    <button type="submit" class="btn btn-success radius" id="btn_search" name="btn_search"><i class="Hui-iconfont">&#xe665;</i> 搜用户</button>
+                </div>
+        </span>
+    </div>
     <div class="mt-20">
         <table id="fileTable" class="table table-border table-bordered table-hover table-bg table-sort" style="width: 100%">
         </table>
@@ -176,6 +190,38 @@
                 }
             });
 
+        });
+    }
+
+    function datadeAll() {
+        layer.confirm('确认要删除吗？', function (index) {
+            var vals = [];
+            $("#fileTable tbody input:checkbox:checked").each(function (index, item) {
+                vals.push($(this).val());
+            });
+            $.ajax({
+                type: "delete",
+                url: host + "/file/list",
+                headers: {
+                    'token': $.cookie('token')
+                },
+                datatype: "json",
+                data: {
+                    "idList": vals
+                },
+                success: function (data) {
+                    if (data.code == 500) {
+                        window.location = "/login.html";
+                    } else if (data.code == 200) {
+                        $(obj).parents("tr").remove();
+                        layer.msg('已删除!', {icon: 1, time: 1000});
+                        var table = $('#fileTable').DataTable();
+                        table.draw();
+                    } else {
+                        layer.msg(data.message);
+                    }
+                }
+            });
         });
     }
 </script>

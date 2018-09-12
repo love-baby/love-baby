@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -61,5 +62,21 @@ public class FileController {
         logger.info("删除 id = {}", JSON.toJSONString(id));
         userSessionCommon.assertSessionAndGetUid(token);
         uploadFileService.delete(id);
+    }
+
+
+    /**
+     * 删除
+     *
+     * @param idList
+     * @param token
+     */
+    @DeleteMapping(value = "/list")
+    public void delete(@RequestParam(value = "idList") List<String> idList, @RequestHeader(value = "token") String token) {
+        logger.info("删除 idList = {}", JSON.toJSONString(idList));
+        userSessionCommon.assertSessionAndGetUid(token);
+        for (String id : idList) {
+            uploadFileService.delete(id);
+        }
     }
 }

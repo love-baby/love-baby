@@ -2,16 +2,17 @@ package com.love.baby.mis.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.love.baby.common.common.UserSessionCommon;
+import com.love.baby.common.exception.SystemException;
 import com.love.baby.common.param.SearchParams;
 import com.love.baby.common.param.SearchParamsDto;
 import com.love.baby.common.util.PageUtil;
 import com.love.baby.mis.service.UploadFileService;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -68,15 +69,19 @@ public class FileController {
     /**
      * 删除
      *
-     * @param idList
+     * @param ids
      * @param token
      */
     @DeleteMapping(value = "/list")
-    public void deleteAll(@RequestBody List<String> idList, @RequestHeader(value = "token") String token) {
-        logger.info("删除 idList = {}", JSON.toJSONString(idList));
+    public void deleteAll(@RequestParam(value = "ids") String ids, @RequestHeader(value = "token") String token) {
+        logger.info("删除 idList = {}", JSON.toJSONString(ids));
         userSessionCommon.assertSessionAndGetUid(token);
-        for (String id : idList) {
-            uploadFileService.delete(id);
+        if (ids == null) {
+            throw new SystemException(500, "参数非法！");
+        }
+        String[] arr = StringUtils.split(ids, ",");
+        for (int i = 0; i < arr.length; i++) {
+            uploadFileService.delete(arr[i]);
         }
     }
 }

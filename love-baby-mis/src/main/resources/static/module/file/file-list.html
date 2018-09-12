@@ -206,7 +206,9 @@
                     'token': $.cookie('token')
                 },
                 datatype: "json",
-                data: JSON.stringify(vals),
+                data: {
+                    ids: vals.join(",")
+                },
                 success: function (data) {
                     if (data.code == 500) {
                         window.location = "/login.html";

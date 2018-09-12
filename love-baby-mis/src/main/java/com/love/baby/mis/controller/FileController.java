@@ -7,12 +7,12 @@ import com.love.baby.common.param.SearchParams;
 import com.love.baby.common.param.SearchParamsDto;
 import com.love.baby.common.util.PageUtil;
 import com.love.baby.mis.service.UploadFileService;
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -73,15 +73,14 @@ public class FileController {
      * @param token
      */
     @DeleteMapping(value = "/list")
-    public void deleteAll(@RequestParam(value = "ids") String ids, @RequestHeader(value = "token") String token) {
+    public void deleteAll(@RequestBody List<String> ids, @RequestHeader(value = "token") String token) {
         logger.info("删除 ids = {}", JSON.toJSONString(ids));
         userSessionCommon.assertSessionAndGetUid(token);
         if (ids == null) {
             throw new SystemException(500, "参数非法！");
         }
-        String[] arr = StringUtils.split(ids, ",");
-        for (int i = 0; i < arr.length; i++) {
-            uploadFileService.delete(arr[i]);
+        for (String id : ids) {
+            uploadFileService.delete(id);
         }
     }
 }

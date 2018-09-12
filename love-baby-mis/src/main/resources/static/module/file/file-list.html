@@ -205,10 +205,9 @@
                 headers: {
                     'token': $.cookie('token')
                 },
+                contentType: "application/json; charset=utf-8",
                 datatype: "json",
-                data: {
-                    ids: vals.join(",")
-                },
+                data:JSON.stringify(vals),
                 success: function (data) {
                     if (data.code == 500) {
                         window.location = "/login.html";

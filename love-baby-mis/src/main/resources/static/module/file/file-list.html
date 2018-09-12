@@ -76,16 +76,15 @@
 
                 });
             },
-            "aoColumnDefs": [{"bSortable": false, "aTargets": [1, 5]}],
+            "aoColumnDefs": [{"bSortable": false, "aTargets": [0, 5]}],
             "aaSorting": [[4, "desc"]],
             "aoColumns": [
                 {
                     "sTitle": "序号&nbsp;<input type='checkbox' id='selectAll'>",
                     "width": "30px",
                     "render": function (data, type, row, meta) {
-                        // 显示行号
                         var startIndex = meta.settings._iDisplayStart;
-                        return "<div align='center'>" + (startIndex + meta.row + 1) + "&nbsp;<input type='checkbox' value='" + data.id + "'></div>";
+                        return "<div align='center'>" + (startIndex + meta.row + 1) + "&nbsp;<input type='checkbox'></div>";
                     }
                 },
                 {
@@ -112,12 +111,6 @@
                         return '<a title="删除" href="javascript:;" onclick="user_delete(this,\'' + data.id + '\')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>';
                     }
                 }
-            ],
-            columns: [
-                {data: 'name'},
-                {data: 'sex.name'},
-                {data: 'avatar'},
-                {data: 'createTime'}
             ],
             language: {
                 "sProcessing": "处理中...",

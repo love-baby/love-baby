@@ -206,9 +206,7 @@
                     'token': $.cookie('token')
                 },
                 datatype: "json",
-                data: {
-                    "idList": vals
-                },
+                data: JSON.stringify(vals),
                 success: function (data) {
                     if (data.code == 500) {
                         window.location = "/login.html";

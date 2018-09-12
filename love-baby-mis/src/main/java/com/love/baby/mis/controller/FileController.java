@@ -72,7 +72,7 @@ public class FileController {
      * @param token
      */
     @DeleteMapping(value = "/list")
-    public void delete(@RequestBody String[] idList, @RequestHeader(value = "token") String token) {
+    public void deleteAll(@RequestBody List<String> idList, @RequestHeader(value = "token") String token) {
         logger.info("删除 idList = {}", JSON.toJSONString(idList));
         userSessionCommon.assertSessionAndGetUid(token);
         for (String id : idList) {

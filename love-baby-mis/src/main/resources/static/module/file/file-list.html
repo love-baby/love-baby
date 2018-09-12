@@ -80,7 +80,7 @@
             "aaSorting": [[4, "desc"]],
             "aoColumns": [
                 {
-                    "sTitle": "序号&nbsp;<input type='checkbox' id='checkall'>",
+                    "sTitle": "序号&nbsp;<input type='checkbox' id='selectAll'>",
                     "width": "30px",
                     "render": function (data, type, row, meta) {
                         // 显示行号
@@ -150,7 +150,13 @@
             $(this).toggleClass('selected');
         });
 
-        //fileTable.rows('.selected').data()
+        $('#selectAll').on('click', function () {
+            if (this.checked) {
+                $("#fileTable tbody input").prop('checked', true);
+            } else {
+                $("#fileTable tbody input").prop('checked', false);
+            }
+        });
 
     });
 

@@ -80,36 +80,30 @@
             "aaSorting": [[4, "desc"]],
             "aoColumns": [
                 {
-                    data : null,
-                    bSortable : false,
-                    className : "text-right",
-                    width : "30px",
-                    render : function(data, type, row, meta) {
+                    "sTitle": "序号",
+                    "width": "30px",
+                    "render": function (data, type, row, meta) {
                         // 显示行号
                         var startIndex = meta.settings._iDisplayStart;
-                        return startIndex + meta.row + 1;
+                        return "<div align='center'>" + (startIndex + meta.row + 1) + "<input type='checkbox'></div>";
                     }
                 },
                 {
                     "mDataProp": "name",
-                    "sTitle": "名称",
-                    "sDefaultContent": "",
-                    "sClass": "center"
+                    "sTitle": "文件名称",
+                    "sDefaultContent": ""
                 }, {
                     "mDataProp": "fileType",
                     "sTitle": " 类型",
-                    "sDefaultContent": "",
-                    "sClass": "center"
+                    "sDefaultContent": ""
                 }, {
                     "mDataProp": "path",
                     "sTitle": "路径",
-                    "sDefaultContent": "",
-                    "sClass": "center"
+                    "sDefaultContent": ""
                 }, {
                     "mDataProp": "createTime",
                     "sTitle": "创建时间",
-                    "sDefaultContent": "",
-                    "sClass": "center"
+                    "sDefaultContent": ""
                 }, {
                     "data": null,
                     "orderable": false,

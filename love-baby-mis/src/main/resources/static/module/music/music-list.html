@@ -60,6 +60,7 @@
             "bProcessing": true,//是否显示取数据时的那个等待提示
             "serverSide": true,//启用服务器端分页
             "sAjaxSource": host + "/music/listAll",
+            "bAutoWidth": true,
             "fnServerData": function (sSource, aoData, fnCallback) {
                 aoData.push(
                     {"name": "searchText", "value": $('#searchText').val()},
@@ -88,7 +89,7 @@
 
                 });
             },
-            "aoColumnDefs": [{"bSortable": false, "aTargets": [0, 5]}],
+            "aoColumnDefs": [{"bSortable": false, "aTargets": [0, 4]}],
             "aaSorting": [[4, "desc"]],
             "aoColumns": [
                 {

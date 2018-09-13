@@ -89,7 +89,7 @@
 
                 });
             },
-            "aoColumnDefs": [{"bSortable": false, "aTargets": [0, 4]}],
+            "aoColumnDefs": [{"bSortable": false, "aTargets": [0, 6]}],
             "aaSorting": [[3, "desc"]],
             "aoColumns": [
                 {
@@ -104,6 +104,16 @@
                 {
                     "mDataProp": "name",
                     "sTitle": "歌名",
+                    "sDefaultContent": "",
+                    "sClass": "center"
+                }, {
+                    "mDataProp": "author.name",
+                    "sTitle": "歌手",
+                    "sDefaultContent": "",
+                    "sClass": "center"
+                }, {
+                    "mDataProp": "album.name",
+                    "sTitle": "专辑",
                     "sDefaultContent": "",
                     "sClass": "center"
                 }, {

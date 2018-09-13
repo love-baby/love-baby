@@ -1,17 +1,22 @@
 package com.love.baby.mis.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.love.baby.common.bean.Album;
+import com.love.baby.common.bean.Author;
+import com.love.baby.common.bean.Music;
 import com.love.baby.common.common.UserSessionCommon;
 import com.love.baby.common.exception.SystemException;
 import com.love.baby.common.param.SearchParams;
 import com.love.baby.common.param.SearchParamsDto;
 import com.love.baby.common.util.PageUtil;
 import com.love.baby.mis.service.MusicService;
+import com.love.baby.mis.vo.MusicVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -48,7 +53,18 @@ public class MusicController {
                 .dateMin(map.get("dateMin"))
                 .sortField(Integer.parseInt(map.get("iSortCol_0")) == 4 ? "create_time" : "create_time")
                 .sort(map.get("sSortDir_0")).build();
-        return musicService.findAll(Integer.parseInt(map.get("iDisplayStart")), Integer.parseInt(map.get("iDisplayLength")), searchParamsDto);
+        PageUtil pageUtil = musicService.findAll(Integer.parseInt(map.get("iDisplayStart")), Integer.parseInt(map.get("iDisplayLength")), searchParamsDto);
+        List<MusicVo> list = new ArrayList<>();
+        pageUtil.getData().forEach(music -> {
+            //查询专辑
+            Album album = new Album();
+            //查询歌手信息
+            Author author = new Author();
+            list.add(new MusicVo(author, album, JSON.parseObject(JSON.toJSONString(music), Music.class)));
+        });
+        pageUtil.setData(list);
+        return pageUtil;
+
     }
 
 

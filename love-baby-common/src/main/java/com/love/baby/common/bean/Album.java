@@ -15,4 +15,5 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Album {
     private String id;
+    private String name;
 }

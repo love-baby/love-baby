@@ -7,6 +7,7 @@ import com.love.baby.mis.config.SystemConfig;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Date;
 
@@ -59,9 +60,9 @@ public class MusicVo {
         this.id = music.getId();
         this.createTime = music.getCreateTime();
         this.name = music.getName();
-        this.path = SystemConfig.web_host + music.getPath();
-        this.coverPath = SystemConfig.web_host + music.getCoverPath();
-        this.lyricsPath = SystemConfig.web_host + music.getLyricsPath();
+        this.path = StringUtils.isBlank(music.getPath()) ? null : SystemConfig.web_host + music.getPath();
+        this.coverPath = StringUtils.isBlank(music.getCoverPath()) ? null : SystemConfig.web_host + music.getCoverPath();
+        this.lyricsPath = StringUtils.isBlank(music.getLyricsPath()) ? null : SystemConfig.web_host + music.getLyricsPath();
         this.author = new AuthorVo(author);
         this.album = new AlbumVo(album);
     }

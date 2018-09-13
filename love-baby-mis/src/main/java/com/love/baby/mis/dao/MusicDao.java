@@ -1,11 +1,12 @@
 package com.love.baby.mis.dao;
 
 import com.love.baby.common.bean.Music;
+import com.love.baby.common.util.BaseDaoUtil;
 import org.springframework.stereotype.Repository;
 
 /**
  * Created by liangbc on 2018/7/4.
  */
 @Repository
-public class MusicDao extends BaseDao<Music> {
+public class MusicDao extends BaseDaoUtil<Music> {
 }

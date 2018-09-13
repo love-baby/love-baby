@@ -1,6 +1,7 @@
 package com.love.baby.web.dao;
 
 import com.love.baby.common.bean.UploadFile;
+import com.love.baby.common.util.BaseDaoUtil;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -9,5 +10,5 @@ import org.springframework.stereotype.Repository;
  * @date 2018/7/18
  */
 @Repository
-public class UploadFileDao extends BaseDao<UploadFile> {
+public class UploadFileDao extends BaseDaoUtil<UploadFile> {
 }

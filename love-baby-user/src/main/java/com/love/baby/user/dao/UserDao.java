@@ -1,6 +1,7 @@
 package com.love.baby.user.dao;
 
 import com.love.baby.common.bean.User;
+import com.love.baby.common.util.BaseDaoUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -14,7 +15,7 @@ import java.util.List;
  * @date 2018/6/27
  */
 @Repository
-public class UserDao extends BaseDao<User> {
+public class UserDao extends BaseDaoUtil<User> {
 
 
     private static Logger logger = LoggerFactory.getLogger(UserDao.class);

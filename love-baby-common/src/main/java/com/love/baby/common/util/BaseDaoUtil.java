@@ -1,7 +1,7 @@
-package com.love.baby.mis.dao;
+package com.love.baby.common.util;
 
+import com.love.baby.common.exception.SystemException;
 import com.love.baby.common.param.SearchParamsDto;
-import com.love.baby.common.util.PageUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,9 +21,9 @@ import java.util.regex.Pattern;
 /**
  * @author 23770
  */
-public abstract class BaseDao<T> {
+public abstract class BaseDaoUtil<T> {
 
-    private static final Logger logger = LoggerFactory.getLogger(BaseDao.class);
+    private static final Logger logger = LoggerFactory.getLogger(BaseDaoUtil.class);
     /**
      * 设置一些操作的常量
      */
@@ -36,7 +36,7 @@ public abstract class BaseDao<T> {
 
     public Class<T> entityClass;
 
-    public BaseDao() {
+    public BaseDaoUtil() {
         ParameterizedType type = (ParameterizedType) getClass().getGenericSuperclass();
         entityClass = (Class<T>) type.getActualTypeArguments()[0];
         logger.info("Dao实现类是：" + entityClass.getName());
@@ -132,7 +132,12 @@ public abstract class BaseDao<T> {
         return pageUtil;
     }
 
-    // 组装SQL
+    /**
+     * 组装SQL
+     *
+     * @param sqlFlag
+     * @return
+     */
     private String makeSql(String sqlFlag) {
         StringBuffer sql = new StringBuffer();
         Field[] fields = entityClass.getDeclaredFields();
@@ -140,7 +145,7 @@ public abstract class BaseDao<T> {
             sql.append(" INSERT INTO " + camel4underline(entityClass.getSimpleName()));
             sql.append("(");
             for (int i = 0; fields != null && i < fields.length; i++) {
-                fields[i].setAccessible(true); // 暴力反射
+                fields[i].setAccessible(true);
                 String column = fields[i].getName();
                 sql.append(camel4underline(column)).append(",");
             }
@@ -154,9 +159,9 @@ public abstract class BaseDao<T> {
         } else if (sqlFlag.equals(SQL_UPDATE)) {
             sql.append(" UPDATE " + camel4underline(entityClass.getSimpleName()) + " SET ");
             for (int i = 0; fields != null && i < fields.length; i++) {
-                fields[i].setAccessible(true); // 暴力反射
+                fields[i].setAccessible(true);
                 String column = fields[i].getName();
-                if (column.equals("id")) { // id 代表主键
+                if (column.equals("id")) {
                     continue;
                 }
                 sql.append(camel4underline(column)).append("=").append("?,");
@@ -169,36 +174,33 @@ public abstract class BaseDao<T> {
 
     }
 
-    // 设置参数
+    /**
+     * 拼接参数
+     *
+     * @param entity
+     * @param sqlFlag
+     * @return
+     * @throws IllegalAccessException
+     */
     private Object[] setArgs(T entity, String sqlFlag) {
         Field[] fields = entityClass.getDeclaredFields();
-        if (sqlFlag.equals(SQL_INSERT)) {
-            Object[] args = new Object[fields.length];
-            for (int i = 0; args != null && i < args.length; i++) {
-                try {
-                    fields[i].setAccessible(true); // 暴力反射
-                    args[i] = fields[i].get(entity);
-                } catch (Exception e) {
-                    logger.error("setArgs Exception", e);
-                }
+        Object[] tempArr = new Object[fields.length];
+        for (int i = 0; tempArr != null && i < tempArr.length; i++) {
+            fields[i].setAccessible(true);
+            try {
+                tempArr[i] = fields[i].get(entity);
+            } catch (IllegalAccessException e) {
+                logger.error("参数拼装失败", e);
+                throw new SystemException(500, "参数拼装失败！");
             }
-            return args;
-        } else if (sqlFlag.equals(SQL_UPDATE)) {
-            Object[] tempArr = new Object[fields.length];
-            for (int i = 0; tempArr != null && i < tempArr.length; i++) {
-                try {
-                    fields[i].setAccessible(true); // 暴力反射
-                    tempArr[i] = fields[i].get(entity);
-                } catch (Exception e) {
-                    logger.error("setArgs Exception", e);
-                }
-            }
+        }
+        if (sqlFlag.equals(SQL_UPDATE)) {
             Object[] args = new Object[fields.length];
-            System.arraycopy(tempArr, 1, args, 0, tempArr.length - 1); // 数组拷贝
+            System.arraycopy(tempArr, 1, args, 0, tempArr.length - 1);
             args[args.length - 1] = tempArr[0];
             return args;
         }
-        return null;
+        return tempArr;
 
     }
 
@@ -210,8 +212,7 @@ public abstract class BaseDao<T> {
      * @return
      */
     private static String camel4underline(String param) {
-
-        if (param == null || param.equals("")) {
+        if (StringUtils.isBlank(param)) {
             return "";
         }
         StringBuilder builder = new StringBuilder(param);

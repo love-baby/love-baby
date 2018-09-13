@@ -6,7 +6,6 @@ import com.love.baby.common.bean.Music;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
@@ -15,7 +14,6 @@ import java.util.Date;
  * @date 2018/7/4
  */
 @Data
-@NoArgsConstructor(force = true)
 @AllArgsConstructor
 @Builder
 public class MusicVo {

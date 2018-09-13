@@ -25,7 +25,7 @@
     <div class="cl pd-5 bg-1 bk-gray mt-20">
          <span class="l">
                     <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
-                    <a href="javascript:;" onclick="user_add('添加用户','/module/user/user-add.html','','510')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加用户</a>
+                    <a href="javascript:;" onclick="user_add('添加用户','/module/user/user-add.html','','510')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加</a>
          </span>
         <span class="r">
                 <div class="text-c"> 日期范围：
@@ -33,7 +33,7 @@
                     -
                     <input type="text" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'dateMin\')}',maxDate:'%y-%M-%d'})" id="dateMax" class="input-text Wdate" style="width:120px;">
                     <input type="text" class="input-text" style="width:250px" placeholder="输入会员名称" id="searchText">
-                    <button type="submit" class="btn btn-success radius" id="btn_search" name="btn_search"><i class="Hui-iconfont">&#xe665;</i> 搜用户</button>
+                    <button type="submit" class="btn btn-success radius" id="btn_search" name="btn_search"><i class="Hui-iconfont">&#xe665;</i> 搜</button>
                 </div>
         </span>
     </div>
@@ -129,7 +129,7 @@
                     "orderable": false,
                     "title": "操作",
                     "render": function (data, type, row, meta) {
-                        return '<a title="编辑" href="javascript:;" onclick="user_edit(\'编辑\',\'/module/user/user-add.html\',\'' + data.id + '\',\'\',500)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>'
+                        return '<a title="编辑" href="javascript:;" onclick="user_edit(\'编辑\',\'/module/user/user-add.html\',\'' + data.id + '\',\'\',510)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>'
                             + '<a title="删除" href="javascript:;" onclick="user_delete(this,\'' + data.id + '\')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>';
                     }
                 }

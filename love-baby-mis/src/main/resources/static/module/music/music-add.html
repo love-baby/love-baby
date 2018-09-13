@@ -58,12 +58,6 @@
                 <input id="avatar" style="display: none">
             </div>
         </div>
-        <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-3"></label>
-            <div class="formControls col-xs-8 col-sm-9">
-                <img id="avatar_img" src="" style="display: none">
-            </div>
-        </div>
         <div class="row cl" style="margin-top: 218px">
             <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
                 <input style="float: right" class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
@@ -121,8 +115,6 @@
             },
             done: function (e, data) {
                 $("#avatar").val(data.result.data[0].path);
-                $("#avatar_img").attr("src", img_host + data.result.data[0].path);
-                $("#avatar_img").css("display","block");
             },
             success: function (result, textStatus, jqXHR) {
                 parent.layer.msg(result.message);
@@ -148,8 +140,6 @@
                             $("input[name='sex'][value=" + data.data.sex + "]").attr("checked", true);
                             $("input[name='sex'][value=" + data.data.sex + "]").parent().addClass("checked");
                             $("#avatar").val(data.data.avatar);
-                            $("#avatar_img").attr("src", img_host + data.data.path);
-                            $("#avatar_img").css("display","block");
                         }
 
                     } else {

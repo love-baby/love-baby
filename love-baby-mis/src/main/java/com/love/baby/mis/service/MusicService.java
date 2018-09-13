@@ -1,6 +1,8 @@
 package com.love.baby.mis.service;
 
 import com.love.baby.common.bean.Music;
+import com.love.baby.common.param.SearchParamsDto;
+import com.love.baby.common.util.PageUtil;
 import com.love.baby.mis.dao.MusicDao;
 import org.springframework.stereotype.Service;
 
@@ -45,5 +47,9 @@ public class MusicService implements BaseService<Music> {
     @Override
     public List<Music> findAll() {
         return musicDao.findAll();
+    }
+
+    public PageUtil findAll(int cursor, int size, SearchParamsDto searchParamsDto) {
+        return musicDao.findAll(cursor, size, searchParamsDto);
     }
 }

@@ -25,15 +25,6 @@
          <span class="l">
                     <a href="javascript:;" onclick="datadeAll()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
          </span>
-        <span class="r">
-                <div class="text-c"> 日期范围：
-                    <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'dateMax\')||\'%y-%M-%d\'}'})" id="dateMin" class="input-text Wdate" style="width:120px;">
-                    -
-                    <input type="text" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'dateMin\')}',maxDate:'%y-%M-%d'})" id="dateMax" class="input-text Wdate" style="width:120px;">
-                    <input type="text" class="input-text" style="width:250px" placeholder="输入会员名称" id="searchText">
-                    <button type="submit" class="btn btn-success radius" id="btn_search" name="btn_search"><i class="Hui-iconfont">&#xe665;</i> 搜用户</button>
-                </div>
-        </span>
     </div>
     <div class="mt-20">
         <table id="fileTable" class="table table-border table-bordered table-hover table-bg table-sort" style="width: 100%">

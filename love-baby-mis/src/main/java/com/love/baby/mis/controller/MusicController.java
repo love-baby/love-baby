@@ -6,7 +6,7 @@ import com.love.baby.common.exception.SystemException;
 import com.love.baby.common.param.SearchParams;
 import com.love.baby.common.param.SearchParamsDto;
 import com.love.baby.common.util.PageUtil;
-import com.love.baby.mis.service.UploadFileService;
+import com.love.baby.mis.service.MusicService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -17,39 +17,40 @@ import java.util.Map;
 
 /**
  * @author liangbc
- * @date 2017/8/8
+ * @date 2018/9/13
  */
 @RestController
-@RequestMapping("/file")
-public class FileController {
+@RequestMapping("/music")
+public class MusicController {
 
-    private static Logger logger = LoggerFactory.getLogger(FileController.class);
-
-    @Resource
-    private UploadFileService uploadFileService;
+    private static Logger logger = LoggerFactory.getLogger(MusicController.class);
 
     @Resource
     private UserSessionCommon userSessionCommon;
 
+    @Resource
+    private MusicService musicService;
+
     /**
-     * 获取所有用户
+     * 获取所有音乐
      *
      * @return
      */
     @PostMapping("/listAll")
     public PageUtil listAll(@RequestHeader(value = "token") String token, @RequestBody SearchParams[] searchParams) {
         String uId = userSessionCommon.assertSessionAndGetUid(token);
-        logger.info("获取文件 token = {},uId = {},searchParams = {}", token, uId, JSON.toJSONString(searchParams));
+        logger.info("获取所有音乐 token = {},uId = {},searchParams = {}", token, uId, JSON.toJSONString(searchParams));
         Map<String, String> map = SearchParams.findAllparams(searchParams);
-        logger.info("获取所有用户搜索参数  Map = {}", JSON.toJSONString(map));
+        logger.info("获取所有获取所有音乐搜索参数  Map = {}", JSON.toJSONString(map));
         SearchParamsDto searchParamsDto = SearchParamsDto.builder()
                 .searchText(map.get("searchText"))
                 .dateMax(map.get("dateMax"))
                 .dateMin(map.get("dateMin"))
                 .sortField(Integer.parseInt(map.get("iSortCol_0")) == 4 ? "create_time" : "create_time")
                 .sort(map.get("sSortDir_0")).build();
-        return uploadFileService.findAll(Integer.parseInt(map.get("iDisplayStart")), Integer.parseInt(map.get("iDisplayLength")), searchParamsDto);
+        return musicService.findAll(Integer.parseInt(map.get("iDisplayStart")), Integer.parseInt(map.get("iDisplayLength")), searchParamsDto);
     }
+
 
     /**
      * 删除
@@ -61,7 +62,7 @@ public class FileController {
     public void delete(@PathVariable String id, @RequestHeader(value = "token") String token) {
         logger.info("删除 id = {}", JSON.toJSONString(id));
         userSessionCommon.assertSessionAndGetUid(token);
-        uploadFileService.delete(id);
+        musicService.delete(id);
     }
 
 
@@ -79,7 +80,7 @@ public class FileController {
             throw new SystemException(500, "参数非法！");
         }
         for (String id : ids) {
-            uploadFileService.delete(id);
+            musicService.delete(id);
         }
     }
 }

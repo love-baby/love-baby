@@ -3,6 +3,7 @@ package com.love.baby.mis.vo;
 import com.love.baby.common.bean.Album;
 import com.love.baby.common.bean.Author;
 import com.love.baby.common.bean.Music;
+import com.love.baby.mis.config.SystemConfig;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -58,9 +59,9 @@ public class MusicVo {
         this.id = music.getId();
         this.createTime = music.getCreateTime();
         this.name = music.getName();
-        this.path = music.getPath();
-        this.coverPath = music.getCoverPath();
-        this.lyricsPath = music.getLyricsPath();
+        this.path = SystemConfig.web_host + music.getPath();
+        this.coverPath = SystemConfig.web_host + music.getCoverPath();
+        this.lyricsPath = SystemConfig.web_host + music.getLyricsPath();
         this.author = new AuthorVo(author);
         this.album = new AlbumVo(album);
     }

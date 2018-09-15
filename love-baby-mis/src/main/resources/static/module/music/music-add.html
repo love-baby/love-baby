@@ -111,7 +111,7 @@
         if (id != "" && id != null) {
             $.ajax({
                 type: "GET",
-                url: host + "/user/" + id,
+                url: host + "/music/" + id,
                 headers: {
                     'token': $.cookie('token')
                 },
@@ -122,10 +122,8 @@
                     } else if (data.code == 200) {
                         if (data.data != null) {
                             $("#name").val(data.data.name);
-                            $("#pwd").val(data.data.pwd);
-                            $("input[name='sex'][value=" + data.data.sex + "]").attr("checked", true);
-                            $("input[name='sex'][value=" + data.data.sex + "]").parent().addClass("checked");
-                            $("#avatar").val(data.data.avatar);
+                            $("#path").val(data.data.path);
+                            $("#author").val(data.data.author == null ? "" : data.data.author.name);
                         }
 
                     } else {

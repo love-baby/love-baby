@@ -32,7 +32,7 @@ public class FileController {
     private UserSessionCommon userSessionCommon;
 
     /**
-     * 获取所有用户
+     * 获取所有
      *
      * @return
      */

@@ -6,6 +6,7 @@ import com.love.baby.common.exception.SystemException;
 import com.love.baby.mis.config.SystemConfig;
 import com.love.baby.mis.service.MusicService;
 import com.love.baby.mis.service.UploadFileService;
+import org.eclipse.jetty.util.security.Credential;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -92,6 +93,7 @@ public class ToolCotroller {
             fileMeta.put("fileType", file.getContentType());
             fileMeta.put("id", UUID.randomUUID().toString().replaceAll("-", ""));
             try {
+                //文件存放目录
                 String path = SystemConfig.systemPath + File.separator + "upload" + File.separator + LocalDate.now();
                 File filePath = new File(path);
                 if (!filePath.exists() && !filePath.isDirectory()) {
@@ -100,9 +102,14 @@ public class ToolCotroller {
                         throw new SystemException(500, "创建目标文件所在目录失败");
                     }
                 }
+                //文件类型
                 String type = file.getContentType();
+                //原始文件类型
                 String originFileName = file.getOriginalFilename();
-                path = path + File.separator + System.currentTimeMillis() + "_" + originFileName;
+                //文件后缀
+                String suffix = originFileName.substring(originFileName.lastIndexOf(".") + 1);
+                //文件最后存放位置的全路径
+                path = path + File.separator + System.currentTimeMillis() + "_" + Credential.MD5.digest(originFileName) + suffix;
                 BufferedOutputStream buffStream = new BufferedOutputStream(new FileOutputStream(path));
                 buffStream.write(file.getBytes());
                 buffStream.close();

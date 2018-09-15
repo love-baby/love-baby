@@ -16,9 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author liangbc
@@ -37,7 +35,7 @@ public class MusicController {
     private MusicService musicService;
 
     /**
-     * 获取所有音乐
+     * 获取所有
      *
      * @return
      */
@@ -83,7 +81,7 @@ public class MusicController {
 
 
     /**
-     * 删除
+     * 删除集合
      *
      * @param ids
      * @param token
@@ -98,5 +96,55 @@ public class MusicController {
         for (String id : ids) {
             musicService.delete(id);
         }
+    }
+
+
+    /**
+     * 获取详情
+     *
+     * @param token
+     * @return
+     */
+    @GetMapping("/${id}")
+    public MusicVo userInfo(@RequestHeader(value = "token") String token, @PathVariable String id) {
+        logger.info("获取音乐信息 Id = {} ", id);
+        String userId = userSessionCommon.assertSessionAndGetUid(token);
+        Music music = musicService.findById(id);
+        if (music == null) {
+            return null;
+        }
+        //查询专辑
+        Album album = new Album();
+        //查询歌手信息
+        Author author = new Author();
+        return new MusicVo(author, album, JSON.parseObject(JSON.toJSONString(music), Music.class));
+    }
+
+    /**
+     * 添加
+     *
+     * @param token
+     * @param music
+     */
+    @PutMapping("")
+    public void create(@RequestHeader(value = "token") String token, @RequestBody Music music) {
+        logger.info("添加歌曲 music = {}", JSON.toJSON(music));
+        music.setCreateTime(new Date());
+        music.setId(UUID.randomUUID().toString().replaceAll("-", ""));
+        String userId = userSessionCommon.assertSessionAndGetUid(token);
+        musicService.save(music);
+    }
+
+    /**
+     * 修改
+     *
+     * @param token
+     * @param music
+     */
+    @PutMapping("/update")
+    public void update(@RequestHeader(value = "token") String token, @RequestBody Music music) {
+        logger.info("添加歌曲 music = {}", JSON.toJSON(music));
+        String userId = userSessionCommon.assertSessionAndGetUid(token);
+        musicService.save(music);
     }
 }

@@ -86,12 +86,12 @@
         $('#fileupload').fileupload({
             dataType: 'json',
             singleFileUploads: false,
-            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+            acceptFileTypes: /(\.|\/)(mp3|avi|aac|mpg|mpeg|wav|flac|ape)$/i,
             maxFileSize: 5 * 1024 * 1024,
             minFileSize: 5,
             messages: {
                 maxFileSize: '文件最大不能大于5M',
-                acceptFileTypes: '只能上传图片类型文件',
+                acceptFileTypes: '只能上传音乐类型文件',
             },
             processfail: function (e, data) {
                 var currentFile = data.files[data.index];
@@ -100,7 +100,7 @@
                 }
             },
             done: function (e, data) {
-                $("#avatar").val(data.result.data[0].path);
+                $("#path").val(data.result.data[0].path);
             },
             success: function (result, textStatus, jqXHR) {
                 parent.layer.msg(result.message);
@@ -111,7 +111,7 @@
         if (id != "" && id != null) {
             $.ajax({
                 type: "GET",
-                url: host + "/user/userInfo/" + id,
+                url: host + "/user/" + id,
                 headers: {
                     'token': $.cookie('token')
                 },
@@ -161,23 +161,22 @@
             focusCleanup: true,
             success: "valid",
             submitHandler: function () {
-                var user = {
+                var music = {
                     "name": $("#name").val(),
-                    "pwd": $("#pwd").val(),
-                    "sex": $("input[name='sex']:checked").val(),
-                    "avatar": $("#avatar").val()
+                    "author": $("#author").val(),
+                    "path": $("#path").val()
                 };
-                var url = host + "/user";
+                var url = host + "/music";
                 if (id != "" && id != null) {
-                    url = host + "/user/update";
-                    user.id = id;
+                    url = host + "/music/update";
+                    music.id = id;
                 }
                 $.ajax({
                     async: false,
                     type: "PUT",
                     url: url,
                     contentType: "application/json; charset=utf-8",
-                    data: JSON.stringify(user),
+                    data: JSON.stringify(music),
                     dataType: "json",
                     headers: {
                         'token': $.cookie('token')

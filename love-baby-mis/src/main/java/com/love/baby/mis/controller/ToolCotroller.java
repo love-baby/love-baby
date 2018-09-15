@@ -107,7 +107,7 @@ public class ToolCotroller {
                 //原始文件类型
                 String originFileName = file.getOriginalFilename();
                 //文件后缀
-                String suffix = originFileName.substring(originFileName.lastIndexOf(".") + 1);
+                String suffix = originFileName.substring(originFileName.lastIndexOf("."));
                 //文件最后存放位置的全路径
                 path = path + File.separator + System.currentTimeMillis() + "_" + DigestUtils.md5DigestAsHex(originFileName.getBytes()) + suffix;
                 BufferedOutputStream buffStream = new BufferedOutputStream(new FileOutputStream(path));

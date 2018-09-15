@@ -6,9 +6,9 @@ import com.love.baby.common.exception.SystemException;
 import com.love.baby.mis.config.SystemConfig;
 import com.love.baby.mis.service.MusicService;
 import com.love.baby.mis.service.UploadFileService;
-import org.eclipse.jetty.util.security.Credential;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -109,7 +109,7 @@ public class ToolCotroller {
                 //文件后缀
                 String suffix = originFileName.substring(originFileName.lastIndexOf(".") + 1);
                 //文件最后存放位置的全路径
-                path = path + File.separator + System.currentTimeMillis() + "_" + Credential.MD5.digest(originFileName) + suffix;
+                path = path + File.separator + System.currentTimeMillis() + "_" + DigestUtils.md5DigestAsHex(originFileName.getBytes()) + suffix;
                 BufferedOutputStream buffStream = new BufferedOutputStream(new FileOutputStream(path));
                 buffStream.write(file.getBytes());
                 buffStream.close();

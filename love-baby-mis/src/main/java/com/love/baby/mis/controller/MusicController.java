@@ -105,7 +105,7 @@ public class MusicController {
      * @param token
      * @return
      */
-    @GetMapping("/${id}")
+    @GetMapping("/{id}")
     public MusicVo music(@RequestHeader(value = "token") String token, @PathVariable String id) {
         logger.info("获取音乐信息 Id = {} ", id);
         String userId = userSessionCommon.assertSessionAndGetUid(token);

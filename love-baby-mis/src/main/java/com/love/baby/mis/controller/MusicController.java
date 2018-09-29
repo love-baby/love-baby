@@ -11,11 +11,13 @@ import com.love.baby.common.param.SearchParamsDto;
 import com.love.baby.common.util.PageUtil;
 import com.love.baby.mis.service.MusicService;
 import com.love.baby.mis.vo.MusicVo;
+import com.mpatric.mp3agic.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -106,7 +108,7 @@ public class MusicController {
      * @return
      */
     @GetMapping("/{id}")
-    public MusicVo music(@RequestHeader(value = "token") String token, @PathVariable String id) {
+    public MusicVo music(@RequestHeader(value = "token") String token, @PathVariable String id) throws InvalidDataException, IOException, UnsupportedTagException {
         logger.info("获取音乐信息 Id = {} ", id);
         String userId = userSessionCommon.assertSessionAndGetUid(token);
         Music music = musicService.findById(id);
@@ -117,6 +119,21 @@ public class MusicController {
         Album album = new Album();
         //查询歌手信息
         Author author = new Author();
+
+        Mp3File mp3file = new Mp3File(music.getPath());
+        if (mp3file.hasId3v1Tag()) {
+            ID3v1 id3v1 = mp3file.getId3v1Tag();
+            music.setName(id3v1.getTitle());
+            music.setAlbumId(id3v1.getAlbum());
+            music.setAuthorId(id3v1.getArtist());
+        }
+        if (mp3file.hasId3v2Tag()) {
+            ID3v2 id3v2Tag = mp3file.getId3v2Tag();
+            music.setName(id3v2Tag.getTitle());
+            music.setAlbumId(id3v2Tag.getAlbum());
+            music.setAuthorId(id3v2Tag.getArtist());
+        }
+        musicService.save(music);
         return new MusicVo(author, album, JSON.parseObject(JSON.toJSONString(music), Music.class));
     }
 
@@ -129,9 +146,9 @@ public class MusicController {
     @PutMapping("")
     public void create(@RequestHeader(value = "token") String token, @RequestBody Music music) {
         logger.info("添加歌曲 music = {}", JSON.toJSON(music));
+        String userId = userSessionCommon.assertSessionAndGetUid(token);
         music.setCreateTime(new Date());
         music.setId(UUID.randomUUID().toString().replaceAll("-", ""));
-        String userId = userSessionCommon.assertSessionAndGetUid(token);
         musicService.save(music);
     }
 

@@ -75,11 +75,6 @@
             <artifactId>hystrix-javanica</artifactId>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>com.mpatric</groupId>-->
-            <!--<artifactId>mp3agic</artifactId>-->
-            <!--<version>0.9.1</version>-->
-        <!--</dependency>-->
         <!-- jetty -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

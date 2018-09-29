@@ -17,6 +17,7 @@ import org.jaudiotagger.audio.mp3.MP3File;
 import org.jaudiotagger.tag.TagException;
 import org.jaudiotagger.tag.id3.AbstractID3v2Tag;
 import org.jaudiotagger.tag.id3.ID3v1Tag;
+import org.jaudiotagger.tag.id3.ID3v24Frames;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -130,18 +131,18 @@ public class MusicController {
         if (mp3File.hasID3v1Tag()) {
             ID3v1Tag id3v1 = mp3File.getID3v1Tag();
             logger.info("id3v1 = {}", JSON.toJSON(id3v1));
-            music.setName(id3v1.getFirstTitle());
-//            music.setAlbumId(id3v1.getAlbum().get());
-//            music.setAuthorId(id3v1.getArtist());
+            music.setName(id3v1.getFirst(ID3v24Frames.FRAME_ID_TITLE));
+            music.setAlbumId(id3v1.getFirst(ID3v24Frames.FRAME_ID_ALBUM));
+            music.setAuthorId(id3v1.getFirst(ID3v24Frames.FRAME_ID_ARTIST));
         }
         if (mp3File.hasID3v2Tag()) {
             AbstractID3v2Tag id3v2Tag = mp3File.getID3v2Tag();
             logger.info("id3v2Tag = {}", JSON.toJSON(id3v2Tag));
-//            music.setName(id3v2Tag.getFirst());
-//            music.setAlbumId(id3v2Tag.getAlbum());
-//            music.setAuthorId(id3v2Tag.getArtist());
+            music.setName(id3v2Tag.getFirst(ID3v24Frames.FRAME_ID_TITLE));
+            music.setAlbumId(id3v2Tag.getFirst(ID3v24Frames.FRAME_ID_ALBUM));
+            music.setAuthorId(id3v2Tag.getFirst(ID3v24Frames.FRAME_ID_ARTIST));
         }
-        //musicService.update(music);
+        musicService.update(music);
         return new MusicVo(author, album, JSON.parseObject(JSON.toJSONString(music), Music.class));
     }
 

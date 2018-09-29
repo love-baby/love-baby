@@ -133,6 +133,9 @@ public class MusicController {
         music.setAlbumId(tag.getFirst(FieldKey.ALBUM));
         music.setAuthorId(tag.getFirst(FieldKey.ARTIST));
         musicService.update(music);
+
+        album.setName(music.getAlbumId());
+        author.setName(music.getAuthorId());
         return new MusicVo(author, album, JSON.parseObject(JSON.toJSONString(music), Music.class));
     }
 

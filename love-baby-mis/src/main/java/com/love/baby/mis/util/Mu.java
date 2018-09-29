@@ -15,7 +15,7 @@ public class Mu {
         try {
 
 
-            AudioFile audioFile = AudioFileIO.read(new File("F://audios/差一点_庄心妍.flac"));
+            AudioFile audioFile = AudioFileIO.read(new File("F://audios/Hands Free_Keke Palmer.mp3"));
             Tag tag = audioFile.getTag();
             String a = tag.getFirst(FieldKey.ARTIST);
             String b = tag.getFirst(FieldKey.ALBUM);

@@ -15,7 +15,7 @@ public class Mu {
         try {
 
 
-            AudioFile audioFile = AudioFileIO.read(new File("F://audios/Hands Free_Keke Palmer.mp3"));
+            AudioFile audioFile = AudioFileIO.read(new File("F://audios/走马 (Cover 陈粒)_音乐热搜.m4a"));
             Tag tag = audioFile.getTag();
             String a = tag.getFirst(FieldKey.ARTIST);
             String b = tag.getFirst(FieldKey.ALBUM);

@@ -57,6 +57,8 @@ public class MusicVo {
     private String description;
 
     public MusicVo(Author author, Album album, Music music) {
+        album.setName(music.getAlbumId());
+        author.setName(music.getAuthorId());
         this.id = music.getId();
         this.createTime = music.getCreateTime();
         this.name = music.getName();

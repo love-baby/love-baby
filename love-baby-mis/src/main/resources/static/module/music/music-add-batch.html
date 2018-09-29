@@ -104,6 +104,36 @@
             },
             success: function (result) {
                 parent.layer.msg(result.message);
+
+                $.each(result.data, function (index, vaule, arr) {
+
+                    var music = {
+                        "path": vaule.path
+                    };
+
+                    $.ajax({
+                        async: false,
+                        type: "PUT",
+                        url: host + "/music",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(music),
+                        dataType: "json",
+                        headers: {
+                            'token': $.cookie('token')
+                        },
+                        success: function (data) {
+                            if (data.code == 200) {
+                                parent.layer.msg("提交成功");
+                            } else {
+                                parent.layer.msg(data.message);
+                            }
+                        },
+                        error: function () {
+                            parent.layer.msg("提交成功");
+                        }
+                    });
+                })
+
             }
         });
     });

@@ -133,7 +133,7 @@ public class MusicController {
             music.setAlbumId(id3v2Tag.getAlbum());
             music.setAuthorId(id3v2Tag.getArtist());
         }
-        musicService.save(music);
+        //musicService.save(music);
         return new MusicVo(author, album, JSON.parseObject(JSON.toJSONString(music), Music.class));
     }
 

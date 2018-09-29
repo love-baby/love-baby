@@ -1,0 +1,113 @@
+<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="Bookmark" href="favicon.ico">
+    <link rel="Shortcut Icon" href="favicon.ico"/>
+
+    <link rel="stylesheet" type="text/css" href="/lib/h-ui/css/H-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/lib/h-ui.admin/css/H-ui.admin.css"/>
+    <link rel="stylesheet" type="text/css" href="/lib/iconfont/1.0.8/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="/lib/h-ui.admin/skin/default/skin.css" id="skin"/>
+    <link rel="stylesheet" type="text/css" href="/lib/h-ui.admin/css/style.css"/>
+
+    <title>添加</title>
+    <style type="text/css">
+
+    </style>
+
+</head>
+<body>
+<article class="cl pd-20">
+    <label class="mt-20">批量上传</label>
+    <div class="cl pd-5 bg-1 bk-gray">
+        <input id="fileupload_one_submit" type="file" name="files[]" data-url="/tool/fileUpload" multiple/>
+        <div style="width: 100%;margin-top: 5px;float: left">
+            <div style="width: 20%;float: left;text-align: center" id="fileupload_one_submit_file_name">
+
+            </div>
+            <div style="width: 80%;float: left">
+                <div id="progress_fileupload_one_submit" style="background-color: #5bc0de;text-align: left;width: 0px;"></div>
+            </div>
+        </div>
+    </div>
+</article>
+
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="/lib/util.js"></script>
+<script type="text/javascript" src="https://js.love-baby.vip/jquery.min.js"></script>
+<script type="text/javascript" src="https://js.love-baby.vip/jquery.cookie.js"></script>
+<script type="text/javascript" src="/lib/layer/layer.js"></script>
+<script type="text/javascript" src="https://js.love-baby.vip/H-ui.js"></script>
+<script type="text/javascript" src="/lib/h-ui.admin/js/H-ui.admin.js"></script>
+<script type="text/javascript" src="/lib/My97DatePicker/WdatePicker.js"></script>
+
+
+<!--/_footer /作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+
+<!--表单验证-->
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+
+<!--上传文件-->
+<script src="/lib/jquery-file-upload-9.22.0/js/vendor/jquery.ui.widget.js"></script>
+<script src="/lib/jquery-file-upload-9.22.0/js/jquery.iframe-transport.js"></script>
+<script src="/lib/jquery-file-upload-9.22.0/js/jquery.fileupload.js"></script>
+<script src="/lib/jquery-file-upload-9.22.0/js/jquery.fileupload-process.js"></script>
+<script src="/lib/jquery-file-upload-9.22.0/js/jquery.fileupload-validate.js"></script>
+
+
+<script type="text/javascript">
+    $(function () {
+        //多文件一次提交
+        $('#fileupload_one_submit').fileupload({
+            dataType: 'json',
+            singleFileUploads: false,
+            maxFileSize: 100 * 1024 * 1024,//文件大小
+            minFileSize: 5,
+            maxNumberOfFiles: 5,//最大文件数量
+            messages: {
+                maxFileSize: '文件最大不能大于5M',
+                maxNumberOfFiles: '上传的文件数量超过允许的最大值'
+            },
+            processfail: function (e, data) {//验证失败
+                var currentFile = data.files[data.index];
+                if (data.files.error && currentFile.error) {
+                    parent.layer.msg(currentFile.error);
+                    console.log("错误" + currentFile.error);
+                    return;
+                }
+            },
+            start: function (e, data) {//开始上传
+                $("#fileupload_one_submit_file_name").empty();
+                $.each(data.files, function (index, file) {
+                    $("#fileupload_one_submit_file_name").append("<div title='" + file.fileName + "' style='text-align: left;white-space: nowrap; overflow: hidden;text-overflow: ellipsis;'>" + (index + 1) + "、" + file.name + "</div>");
+                });
+            },
+            progressall: function (e, data) {//进度条事件
+                var progress = parseInt(data.loaded / data.total * 100);
+                $('#progress_fileupload_one_submit').css('width', progress + '%').text(progress + "%");
+            },
+            done: function (e, data) {//上传完成之后的操作
+                $("#fileupload_one_submit_file_name").empty();
+                $.each(data.result.data, function (index, file) {
+                    $("#fileupload_one_submit_file_name").append("<div title='" + file.fileName + "' style='text-align: left;white-space: nowrap; overflow: hidden;text-overflow: ellipsis;'>" + (index + 1) + "、" + file.fileName + "</div>");
+                });
+            },
+            success: function (result) {
+                parent.layer.msg(result.message);
+            }
+        });
+    });
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

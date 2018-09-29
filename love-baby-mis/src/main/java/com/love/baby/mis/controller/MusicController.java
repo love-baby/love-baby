@@ -11,7 +11,12 @@ import com.love.baby.common.param.SearchParamsDto;
 import com.love.baby.common.util.PageUtil;
 import com.love.baby.mis.service.MusicService;
 import com.love.baby.mis.vo.MusicVo;
-import com.mpatric.mp3agic.*;
+import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
+import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
+import org.jaudiotagger.audio.mp3.MP3File;
+import org.jaudiotagger.tag.TagException;
+import org.jaudiotagger.tag.id3.AbstractID3v2Tag;
+import org.jaudiotagger.tag.id3.ID3v1Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -108,7 +113,7 @@ public class MusicController {
      * @return
      */
     @GetMapping("/{id}")
-    public MusicVo music(@RequestHeader(value = "token") String token, @PathVariable String id) throws InvalidDataException, IOException, UnsupportedTagException {
+    public MusicVo music(@RequestHeader(value = "token") String token, @PathVariable String id) throws IOException, InvalidAudioFrameException, TagException, ReadOnlyFileException {
         logger.info("获取音乐信息 Id = {} ", id);
         String userId = userSessionCommon.assertSessionAndGetUid(token);
         Music music = musicService.findById(id);
@@ -120,20 +125,23 @@ public class MusicController {
         //查询歌手信息
         Author author = new Author();
 
-        Mp3File mp3file = new Mp3File(music.getPath());
-        if (mp3file.hasId3v1Tag()) {
-            ID3v1 id3v1 = mp3file.getId3v1Tag();
-            music.setName(id3v1.getTitle());
-            music.setAlbumId(id3v1.getAlbum());
-            music.setAuthorId(id3v1.getArtist());
+        MP3File mp3File = new MP3File(music.getPath());
+
+        if (mp3File.hasID3v1Tag()) {
+            ID3v1Tag id3v1 = mp3File.getID3v1Tag();
+            logger.info("id3v1 = {}", JSON.toJSON(id3v1));
+            music.setName(id3v1.getFirstTitle());
+//            music.setAlbumId(id3v1.getAlbum().get());
+//            music.setAuthorId(id3v1.getArtist());
         }
-        if (mp3file.hasId3v2Tag()) {
-            ID3v2 id3v2Tag = mp3file.getId3v2Tag();
-            music.setName(id3v2Tag.getTitle());
-            music.setAlbumId(id3v2Tag.getAlbum());
-            music.setAuthorId(id3v2Tag.getArtist());
+        if (mp3File.hasID3v2Tag()) {
+            AbstractID3v2Tag id3v2Tag = mp3File.getID3v2Tag();
+            logger.info("id3v2Tag = {}", JSON.toJSON(id3v2Tag));
+//            music.setName(id3v2Tag.getFirst());
+//            music.setAlbumId(id3v2Tag.getAlbum());
+//            music.setAuthorId(id3v2Tag.getArtist());
         }
-        musicService.update(music);
+        //musicService.update(music);
         return new MusicVo(author, album, JSON.parseObject(JSON.toJSONString(music), Music.class));
     }
 

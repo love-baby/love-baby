@@ -35,4 +35,8 @@ public class UploadFile {
      * 文件类型
      */
     private String fileType;
+    /**
+     * 文件MD5值
+     */
+    private String md5;
 }

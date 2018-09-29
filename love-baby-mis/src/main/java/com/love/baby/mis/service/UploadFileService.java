@@ -74,4 +74,9 @@ public class UploadFileService implements BaseService<UploadFile> {
     public PageUtil findAll(int cursor, int size, SearchParamsDto searchUserParams) {
         return uploadFileDao.findAll(cursor, size, searchUserParams);
     }
+
+
+    public UploadFile findByMd5(String md5) {
+        return uploadFileDao.findByMd5(md5);
+    }
 }

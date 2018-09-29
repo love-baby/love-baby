@@ -6,9 +6,9 @@ import com.love.baby.common.exception.SystemException;
 import com.love.baby.mis.config.SystemConfig;
 import com.love.baby.mis.service.MusicService;
 import com.love.baby.mis.service.UploadFileService;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,10 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -83,7 +80,7 @@ public class ToolCotroller {
      * @throws IOException
      */
     @RequestMapping(value = "/fileUpload", method = RequestMethod.POST)
-    public List<Map> fileUpload(@RequestParam(value = "files[]") MultipartFile[] multipartfiles) throws SystemException {
+    public List<Map> fileUpload(@RequestParam(value = "files[]") MultipartFile[] multipartfiles) throws SystemException, IOException {
         List<Map> list = new ArrayList<>();
         for (MultipartFile file : multipartfiles) {
             logger.info(file.getOriginalFilename() + " fileUpload! ");
@@ -92,6 +89,14 @@ public class ToolCotroller {
             fileMeta.put("fileSize", file.getSize() / 1024 + " Kb");
             fileMeta.put("fileType", file.getContentType());
             fileMeta.put("id", UUID.randomUUID().toString().replaceAll("-", ""));
+
+            String md5 = DigestUtils.md5Hex(file.getBytes());
+            UploadFile uploadFile = uploadFileService.findByMd5(md5);
+            if (uploadFile != null) {
+                fileMeta.put("path", uploadFile.getPath());
+                list.add(fileMeta);
+                continue;
+            }
             try {
                 //文件存放目录
                 String path = SystemConfig.systemPath + File.separator + "upload" + File.separator + LocalDate.now();
@@ -109,16 +114,17 @@ public class ToolCotroller {
                 //文件后缀
                 String suffix = originFileName.substring(originFileName.lastIndexOf("."));
                 //文件最后存放位置的全路径
-                path = path + File.separator + System.currentTimeMillis() + "_" + DigestUtils.md5DigestAsHex(originFileName.getBytes()) + suffix;
+                path = path + File.separator + System.currentTimeMillis() + "_" + DigestUtils.md5Hex(originFileName.getBytes()) + suffix;
                 BufferedOutputStream buffStream = new BufferedOutputStream(new FileOutputStream(path));
                 buffStream.write(file.getBytes());
                 buffStream.close();
-                UploadFile uploadFile = UploadFile.builder()
+                uploadFile = UploadFile.builder()
                         .id(fileMeta.get("id").toString())
                         .createTime(new Date())
                         .name(originFileName)
                         .path(path)
                         .fileType(type)
+                        .md5(md5)
                         .build();
                 uploadFileService.save(uploadFile);
                 fileMeta.put("path", path);

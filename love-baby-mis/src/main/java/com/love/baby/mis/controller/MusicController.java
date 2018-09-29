@@ -10,18 +10,23 @@ import com.love.baby.common.param.SearchParams;
 import com.love.baby.common.param.SearchParamsDto;
 import com.love.baby.common.util.PageUtil;
 import com.love.baby.mis.service.MusicService;
+import com.love.baby.mis.service.UploadFileService;
 import com.love.baby.mis.vo.MusicVo;
+import org.apache.commons.lang.StringUtils;
+import org.jaudiotagger.audio.AudioFile;
+import org.jaudiotagger.audio.AudioFileIO;
+import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
-import org.jaudiotagger.audio.mp3.MP3File;
+import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.TagException;
-import org.jaudiotagger.tag.id3.AbstractID3v2Tag;
-import org.jaudiotagger.tag.id3.ID3v24Frames;
+import org.jaudiotagger.tag.TagField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
@@ -40,6 +45,9 @@ public class MusicController {
 
     @Resource
     private MusicService musicService;
+
+    @Resource
+    private UploadFileService uploadFileService;
 
     /**
      * 获取所有
@@ -113,7 +121,7 @@ public class MusicController {
      * @return
      */
     @GetMapping("/{id}")
-    public MusicVo music(@RequestHeader(value = "token") String token, @PathVariable String id) throws IOException, InvalidAudioFrameException, TagException, ReadOnlyFileException {
+    public MusicVo music(@RequestHeader(value = "token") String token, @PathVariable String id) throws IOException, InvalidAudioFrameException, TagException, ReadOnlyFileException, CannotReadException {
         logger.info("获取音乐信息 Id = {} ", id);
         String userId = userSessionCommon.assertSessionAndGetUid(token);
         Music music = musicService.findById(id);
@@ -124,12 +132,21 @@ public class MusicController {
         Album album = new Album();
         //查询歌手信息
         Author author = new Author();
-        MP3File mp3File = new MP3File(music.getPath());
-        if (mp3File.hasID3v2Tag()) {
-            AbstractID3v2Tag id3v2Tag = mp3File.getID3v2Tag();
-            music.setName(id3v2Tag.getFirst(ID3v24Frames.FRAME_ID_TITLE));
-            music.setAlbumId(id3v2Tag.getFirst(ID3v24Frames.FRAME_ID_ALBUM));
-            music.setAuthorId(id3v2Tag.getFirst(ID3v24Frames.FRAME_ID_ARTIST));
+
+        AudioFile audioFile = AudioFileIO.read(new File(music.getPath()));
+        Tag tag = audioFile.getTag();
+        Iterator<TagField> it = tag.getFields();
+        while (it.hasNext()) {
+            TagField tagField = it.next();
+            if (StringUtils.equals(tagField.getId(),"TITLE")) {
+                music.setName(tagField.toString());
+            }
+            if (StringUtils.equals(tagField.getId(),"ALBUM")) {
+                music.setAlbumId(tagField.toString());
+            }
+            if (StringUtils.equals(tagField.getId(),"ARTIST")) {
+                music.setAuthorId(tagField.toString());
+            }
         }
         musicService.update(music);
         return new MusicVo(author, album, JSON.parseObject(JSON.toJSONString(music), Music.class));

@@ -133,7 +133,7 @@ public class MusicController {
             music.setAlbumId(id3v2Tag.getAlbum());
             music.setAuthorId(id3v2Tag.getArtist());
         }
-        //musicService.save(music);
+        musicService.save(music);
         return new MusicVo(author, album, JSON.parseObject(JSON.toJSONString(music), Music.class));
     }
 
@@ -162,6 +162,6 @@ public class MusicController {
     public void update(@RequestHeader(value = "token") String token, @RequestBody Music music) {
         logger.info("添加歌曲 music = {}", JSON.toJSON(music));
         String userId = userSessionCommon.assertSessionAndGetUid(token);
-        musicService.save(music);
+        musicService.update(music);
     }
 }

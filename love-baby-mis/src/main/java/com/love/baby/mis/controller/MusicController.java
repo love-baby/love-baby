@@ -10,17 +10,15 @@ import com.love.baby.common.param.SearchParams;
 import com.love.baby.common.param.SearchParamsDto;
 import com.love.baby.common.util.PageUtil;
 import com.love.baby.mis.service.MusicService;
-import com.love.baby.mis.service.UploadFileService;
 import com.love.baby.mis.vo.MusicVo;
-import org.apache.commons.lang.StringUtils;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
+import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.TagException;
-import org.jaudiotagger.tag.TagField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -45,9 +43,6 @@ public class MusicController {
 
     @Resource
     private MusicService musicService;
-
-    @Resource
-    private UploadFileService uploadFileService;
 
     /**
      * 获取所有
@@ -132,22 +127,11 @@ public class MusicController {
         Album album = new Album();
         //查询歌手信息
         Author author = new Author();
-
         AudioFile audioFile = AudioFileIO.read(new File(music.getPath()));
         Tag tag = audioFile.getTag();
-        Iterator<TagField> it = tag.getFields();
-        while (it.hasNext()) {
-            TagField tagField = it.next();
-            if (StringUtils.equals(tagField.getId(),"TITLE")) {
-                music.setName(tagField.toString());
-            }
-            if (StringUtils.equals(tagField.getId(),"ALBUM")) {
-                music.setAlbumId(tagField.toString());
-            }
-            if (StringUtils.equals(tagField.getId(),"ARTIST")) {
-                music.setAuthorId(tagField.toString());
-            }
-        }
+        music.setName(tag.getFirst(FieldKey.TITLE));
+        music.setAlbumId(tag.getFirst(FieldKey.ALBUM));
+        music.setAuthorId(tag.getFirst(FieldKey.ARTIST));
         musicService.update(music);
         return new MusicVo(author, album, JSON.parseObject(JSON.toJSONString(music), Music.class));
     }

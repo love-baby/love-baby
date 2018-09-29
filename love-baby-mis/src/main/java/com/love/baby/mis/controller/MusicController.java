@@ -130,14 +130,12 @@ public class MusicController {
 
         if (mp3File.hasID3v1Tag()) {
             ID3v1Tag id3v1 = mp3File.getID3v1Tag();
-            logger.info("id3v1 = {}", JSON.toJSON(id3v1));
             music.setName(id3v1.getFirst(ID3v24Frames.FRAME_ID_TITLE));
             music.setAlbumId(id3v1.getFirst(ID3v24Frames.FRAME_ID_ALBUM));
             music.setAuthorId(id3v1.getFirst(ID3v24Frames.FRAME_ID_ARTIST));
         }
         if (mp3File.hasID3v2Tag()) {
             AbstractID3v2Tag id3v2Tag = mp3File.getID3v2Tag();
-            logger.info("id3v2Tag = {}", JSON.toJSON(id3v2Tag));
             music.setName(id3v2Tag.getFirst(ID3v24Frames.FRAME_ID_TITLE));
             music.setAlbumId(id3v2Tag.getFirst(ID3v24Frames.FRAME_ID_ALBUM));
             music.setAuthorId(id3v2Tag.getFirst(ID3v24Frames.FRAME_ID_ARTIST));

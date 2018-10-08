@@ -161,12 +161,16 @@ public class MusicController {
     public void update(@RequestHeader(value = "token") String token, @RequestBody Music music) throws TagException, ReadOnlyFileException, CannotReadException, InvalidAudioFrameException, IOException, CannotWriteException {
         logger.info("修改歌曲 music = {}", JSON.toJSON(music));
         String userId = userSessionCommon.assertSessionAndGetUid(token);
-        AudioFile audioFile = AudioFileIO.read(new File(music.getPath()));
+        Music musicOld = musicService.findById(music.getId());
+        musicOld.setName(music.getName());
+        musicOld.setAlbumId(music.getAlbumId());
+        musicOld.setAuthorId(music.getAuthorId());
+        AudioFile audioFile = AudioFileIO.read(new File(musicOld.getPath()));
         Tag tag = audioFile.getTag();
-        tag.setField(FieldKey.TITLE, music.getName());
-        tag.setField(FieldKey.ALBUM, music.getAlbumId());
-        tag.setField(FieldKey.ARTIST, music.getAuthorId());
+        tag.setField(FieldKey.TITLE, musicOld.getName());
+        tag.setField(FieldKey.ALBUM, musicOld.getAlbumId());
+        tag.setField(FieldKey.ARTIST, musicOld.getAuthorId());
         audioFile.commit();
-        musicService.update(music);
+        musicService.update(musicOld);
     }
 }

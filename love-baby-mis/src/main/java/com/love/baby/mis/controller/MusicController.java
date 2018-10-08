@@ -162,9 +162,9 @@ public class MusicController {
         logger.info("修改歌曲 music = {}", JSON.toJSON(music));
         String userId = userSessionCommon.assertSessionAndGetUid(token);
         Music musicOld = musicService.findById(music.getId());
-        musicOld.setName(music.getName());
-        musicOld.setAlbumId(music.getAlbumId());
-        musicOld.setAuthorId(music.getAuthorId());
+        musicOld.setName(music.getName() == null ? "" : music.getName());
+        musicOld.setAlbumId(music.getAlbumId() == null ? "" : music.getAlbumId());
+        musicOld.setAuthorId(music.getAuthorId() == null ? "" : music.getAuthorId());
         AudioFile audioFile = AudioFileIO.read(new File(musicOld.getPath()));
         Tag tag = audioFile.getTag();
         tag.setField(FieldKey.TITLE, musicOld.getName());

@@ -37,6 +37,14 @@
                 <input placeholder="歌手" type="text" class="input-text" value="" placeholder="" id="author" name="author">
             </div>
         </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>专辑：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input placeholder="专辑" type="text" class="input-text" value="" placeholder="" id="album" name="album">
+            </div>
+        </div>
+
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-3">文件：</label>
             <div class="formControls col-xs-8 col-sm-9">
@@ -124,6 +132,7 @@
                             $("#name").val(data.data.name);
                             $("#path").val(data.data.path);
                             $("#author").val(data.data.author == null ? "" : data.data.author.name);
+                            $("#album").val(data.data.album == null ? "" : data.data.album.name);
                         }
 
                     } else {
@@ -161,7 +170,8 @@
             submitHandler: function () {
                 var music = {
                     "name": $("#name").val(),
-                    "author": $("#author").val(),
+                    "authorId": $("#author").val(),
+                    "albumId":$("#album").val(),
                     "path": $("#path").val()
                 };
                 var url = host + "/music";

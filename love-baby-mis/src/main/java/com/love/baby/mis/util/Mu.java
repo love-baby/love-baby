@@ -15,7 +15,7 @@ public class Mu {
         try {
 
 
-            AudioFile audioFile = AudioFileIO.read(new File("C:\\Users\\23770\\Downloads\\北岛诗+-+9277.mp3"));
+            AudioFile audioFile = AudioFileIO.read(new File("D:\\IdeaProjects\\jaudiotagger\\testdata\\test14.m4a"));
             Tag tag = audioFile.getTag();
 
             String a = tag.getFirst(FieldKey.ARTIST);

@@ -10,6 +10,7 @@ import com.love.baby.common.param.SearchParams;
 import com.love.baby.common.param.SearchParamsDto;
 import com.love.baby.common.util.PageUtil;
 import com.love.baby.mis.service.MusicService;
+import com.love.baby.mis.service.UploadFileService;
 import com.love.baby.mis.vo.MusicVo;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
@@ -44,6 +45,9 @@ public class MusicController {
 
     @Resource
     private MusicService musicService;
+
+    @Resource
+    private UploadFileService uploadFileService;
 
     /**
      * 获取所有
@@ -128,7 +132,8 @@ public class MusicController {
         Album album = new Album();
         //查询歌手信息
         Author author = new Author();
-        AudioFile audioFile = AudioFileIO.read(new File(music.getPath()));
+        File file = new File(music.getPath());
+        AudioFile audioFile = AudioFileIO.read(file);
         Tag tag = audioFile.getTag();
         music.setName(tag.getFirst(FieldKey.TITLE));
         music.setAlbumId(tag.getFirst(FieldKey.ALBUM));

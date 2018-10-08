@@ -15,8 +15,9 @@ public class Mu {
         try {
 
 
-            AudioFile audioFile = AudioFileIO.read(new File("F://audios/走马 (Cover 陈粒)_音乐热搜.m4a"));
+            AudioFile audioFile = AudioFileIO.read(new File("C:\\Users\\23770\\Downloads\\北岛诗+-+9277.mp3"));
             Tag tag = audioFile.getTag();
+
             String a = tag.getFirst(FieldKey.ARTIST);
             String b = tag.getFirst(FieldKey.ALBUM);
             String c = tag.getFirst(FieldKey.TITLE);

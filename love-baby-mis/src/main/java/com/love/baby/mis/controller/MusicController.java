@@ -14,6 +14,7 @@ import com.love.baby.mis.vo.MusicVo;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
+import org.jaudiotagger.audio.exceptions.CannotWriteException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.FieldKey;
@@ -132,7 +133,6 @@ public class MusicController {
         music.setName(tag.getFirst(FieldKey.TITLE));
         music.setAlbumId(tag.getFirst(FieldKey.ALBUM));
         music.setAuthorId(tag.getFirst(FieldKey.ARTIST));
-        musicService.update(music);
         return new MusicVo(author, album, JSON.parseObject(JSON.toJSONString(music), Music.class));
     }
 
@@ -158,9 +158,15 @@ public class MusicController {
      * @param music
      */
     @PutMapping("/update")
-    public void update(@RequestHeader(value = "token") String token, @RequestBody Music music) {
-        logger.info("添加歌曲 music = {}", JSON.toJSON(music));
+    public void update(@RequestHeader(value = "token") String token, @RequestBody Music music) throws TagException, ReadOnlyFileException, CannotReadException, InvalidAudioFrameException, IOException, CannotWriteException {
+        logger.info("修改歌曲 music = {}", JSON.toJSON(music));
         String userId = userSessionCommon.assertSessionAndGetUid(token);
+        AudioFile audioFile = AudioFileIO.read(new File(music.getPath()));
+        Tag tag = audioFile.getTag();
+        tag.setField(FieldKey.TITLE, music.getName());
+        tag.setField(FieldKey.ALBUM, music.getAlbumId());
+        tag.setField(FieldKey.ARTIST, music.getAuthorId());
+        audioFile.commit();
         musicService.update(music);
     }
 }

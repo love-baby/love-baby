@@ -92,7 +92,7 @@ public abstract class BaseDaoUtil<T> {
      * @param searchParamsDto
      * @return
      */
-    public PageUtil findAll(int cursor, int size, SearchParamsDto searchParamsDto, String filterSql) {
+    public PageUtil findAll(int cursor, int size, SearchParamsDto searchParamsDto, String filterSql, List filterParams) {
         String sql = "select * from " + camel4underline(entityClass.getSimpleName()) + " where 1 = 1 ";
         String sqlCount = "select count(1) from " + camel4underline(entityClass.getSimpleName()) + " where 1 = 1 ";
         List params = new ArrayList();
@@ -100,6 +100,8 @@ public abstract class BaseDaoUtil<T> {
         if (StringUtils.isNotBlank(filterSql)) {
             sql += filterSql;
             sqlCount += filterSql;
+            params.addAll(filterParams);
+            paramsCount.addAll(filterParams);
         }
         if (StringUtils.isNotBlank(searchParamsDto.getDateMin())) {
             sql += " and create_time >= ?";

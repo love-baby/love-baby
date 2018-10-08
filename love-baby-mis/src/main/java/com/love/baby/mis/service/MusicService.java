@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -52,9 +53,12 @@ public class MusicService implements BaseService<Music> {
 
     public PageUtil findAll(int cursor, int size, SearchParamsDto searchParamsDto) {
         String filterSql = null;
+        List filterParams = new ArrayList();
         if (StringUtils.isNotBlank(searchParamsDto.getSearchText())) {
-            filterSql = " and ( name = '" + searchParamsDto.getSearchText() + "' or author_id = '" + searchParamsDto.getSearchText() + "' )";
+            filterSql = " and ( name = ? or author_id = ? )";
+            filterParams.add(searchParamsDto.getSearchText());
+            filterParams.add(searchParamsDto.getSearchText());
         }
-        return musicDao.findAll(cursor, size, searchParamsDto, filterSql);
+        return musicDao.findAll(cursor, size, searchParamsDto, filterSql, filterParams);
     }
 }

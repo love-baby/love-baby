@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -73,10 +74,12 @@ public class UserService implements BaseService<User> {
 
     public PageUtil findAll(int cursor, int size, SearchParamsDto searchParamsDto) {
         String filterSql = null;
+        List filterParams = new ArrayList();
         if (StringUtils.isNotBlank(searchParamsDto.getSearchText())) {
-            filterSql = " and name = '" + searchParamsDto.getSearchText() +"'";
+            filterSql = " and name = ?";
+            filterParams.add(searchParamsDto.getSearchText());
         }
-        return userDao.findAll(cursor, size, searchParamsDto, filterSql);
+        return userDao.findAll(cursor, size, searchParamsDto, filterSql,filterParams);
     }
 }
 

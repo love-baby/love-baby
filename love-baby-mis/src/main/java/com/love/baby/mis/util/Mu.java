@@ -15,7 +15,7 @@ public class Mu {
         try {
 
 
-            AudioFile audioFile = AudioFileIO.read(new File("D:\\IdeaProjects\\jaudiotagger\\testdata\\test14.m4a"));
+            AudioFile audioFile = AudioFileIO.read(new File("D:\\IdeaProjects\\jaudiotagger\\testdata\\那个人_周延英 (英子-effie).wav"));
             Tag tag = audioFile.getTag();
 
             String a = tag.getFirst(FieldKey.ARTIST);
@@ -24,10 +24,12 @@ public class Mu {
             String d =  tag.getFirst(FieldKey.COMMENT);
             String e = tag.getFirst(FieldKey.YEAR);
             String f =  tag.getFirst(FieldKey.TRACK);
-            String g = tag.getFirst(FieldKey.DISC_NO);
-            String h = tag.getFirst(FieldKey.COMPOSER);
-            String i = tag.getFirst(FieldKey.ARTIST_SORT);
 
+
+            tag.setField(FieldKey.TITLE, "标题");
+            tag.setField(FieldKey.ALBUM, "专辑");
+            tag.setField(FieldKey.ARTIST, "作者");
+            audioFile.commit();
 
         } catch (Exception e) {
             e.printStackTrace();

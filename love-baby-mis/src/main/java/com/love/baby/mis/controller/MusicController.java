@@ -170,12 +170,13 @@ public class MusicController {
         musicOld.setName(music.getName() == null ? "" : music.getName());
         musicOld.setAlbumId(music.getAlbumId() == null ? "" : music.getAlbumId());
         musicOld.setAuthorId(music.getAuthorId() == null ? "" : music.getAuthorId());
+        musicService.update(musicOld);
+
         AudioFile audioFile = AudioFileIO.read(new File(musicOld.getPath()));
         Tag tag = audioFile.getTag();
         tag.setField(FieldKey.TITLE, musicOld.getName());
         tag.setField(FieldKey.ALBUM, musicOld.getAlbumId());
         tag.setField(FieldKey.ARTIST, musicOld.getAuthorId());
         audioFile.commit();
-        musicService.update(musicOld);
     }
 }

@@ -100,8 +100,6 @@ public abstract class BaseDaoUtil<T> {
         if (StringUtils.isNotBlank(filterSql)) {
             sql += filterSql;
             sqlCount += filterSql;
-            params.add(searchParamsDto.getSearchText());
-            paramsCount.add(searchParamsDto.getSearchText());
         }
         if (StringUtils.isNotBlank(searchParamsDto.getDateMin())) {
             sql += " and create_time >= ?";

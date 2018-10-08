@@ -74,7 +74,7 @@ public class UserService implements BaseService<User> {
     public PageUtil findAll(int cursor, int size, SearchParamsDto searchParamsDto) {
         String filterSql = null;
         if (StringUtils.isNotBlank(searchParamsDto.getSearchText())) {
-            filterSql = " and name = " + searchParamsDto.getSearchText();
+            filterSql = " and name = '" + searchParamsDto.getSearchText() +"'";
         }
         return userDao.findAll(cursor, size, searchParamsDto, filterSql);
     }

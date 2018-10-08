@@ -4,6 +4,7 @@ import com.love.baby.common.bean.Music;
 import com.love.baby.common.param.SearchParamsDto;
 import com.love.baby.common.util.PageUtil;
 import com.love.baby.mis.dao.MusicDao;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -50,6 +51,10 @@ public class MusicService implements BaseService<Music> {
     }
 
     public PageUtil findAll(int cursor, int size, SearchParamsDto searchParamsDto) {
-        return musicDao.findAll(cursor, size, searchParamsDto);
+        String filterSql = null;
+        if (StringUtils.isNotBlank(searchParamsDto.getSearchText())) {
+            filterSql = " and ( name = " + searchParamsDto.getSearchText() + " or author_id = " + searchParamsDto.getSearchText() + " )";
+        }
+        return musicDao.findAll(cursor, size, searchParamsDto, filterSql);
     }
 }

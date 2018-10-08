@@ -4,6 +4,7 @@ import com.love.baby.common.bean.User;
 import com.love.baby.common.param.SearchParamsDto;
 import com.love.baby.common.util.PageUtil;
 import com.love.baby.user.dao.UserDao;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -71,7 +72,11 @@ public class UserService implements BaseService<User> {
 
 
     public PageUtil findAll(int cursor, int size, SearchParamsDto searchParamsDto) {
-        return userDao.findAll(cursor, size, searchParamsDto);
+        String filterSql = null;
+        if (StringUtils.isNotBlank(searchParamsDto.getSearchText())) {
+            filterSql = " and name = " + searchParamsDto.getSearchText();
+        }
+        return userDao.findAll(cursor, size, searchParamsDto, filterSql);
     }
 }
 

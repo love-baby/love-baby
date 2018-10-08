@@ -15,10 +15,11 @@ public class Mu {
         try {
 
 
-            AudioFile audioFile = AudioFileIO.read(new File("D:\\IdeaProjects\\jaudiotagger\\testdata\\那个人_周延英 (英子-effie).wav"));
+            AudioFile audioFile = AudioFileIO.read(new File("C:\\Users\\23770\\Downloads\\1538664002512_daf029f987159d0a33788d109274049c.mp3"));
             Tag tag = audioFile.getTag();
 
             String a = tag.getFirst(FieldKey.ARTIST);
+            System.out.println(new String(a.getBytes(),"GBK"));
             String b = tag.getFirst(FieldKey.ALBUM);
             String c = tag.getFirst(FieldKey.TITLE);
             String d =  tag.getFirst(FieldKey.COMMENT);
@@ -26,9 +27,9 @@ public class Mu {
             String f =  tag.getFirst(FieldKey.TRACK);
 
 
-            tag.setField(FieldKey.TITLE, "标题");
-            tag.setField(FieldKey.ALBUM, "专辑");
-            tag.setField(FieldKey.ARTIST, "作者");
+            tag.setField(FieldKey.TITLE, "叫姐姐");
+            tag.setField(FieldKey.ALBUM, "112312");
+            tag.setField(FieldKey.ARTIST, "112321321");
             audioFile.commit();
 
         } catch (Exception e) {

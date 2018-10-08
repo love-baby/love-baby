@@ -5,6 +5,7 @@ import com.love.baby.common.bean.UploadFile;
 import com.love.baby.common.param.SearchParamsDto;
 import com.love.baby.common.util.PageUtil;
 import com.love.baby.mis.dao.UploadFileDao;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -71,8 +72,12 @@ public class UploadFileService implements BaseService<UploadFile> {
     }
 
 
-    public PageUtil findAll(int cursor, int size, SearchParamsDto searchUserParams) {
-        return uploadFileDao.findAll(cursor, size, searchUserParams);
+    public PageUtil findAll(int cursor, int size, SearchParamsDto searchParamsDto) {
+        String filterSql = null;
+        if (StringUtils.isNotBlank(searchParamsDto.getSearchText())) {
+            filterSql = " and name = " + searchParamsDto.getSearchText();
+        }
+        return uploadFileDao.findAll(cursor, size, searchParamsDto, filterSql);
     }
 
 

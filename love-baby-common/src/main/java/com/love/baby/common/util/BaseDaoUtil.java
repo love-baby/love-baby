@@ -92,14 +92,14 @@ public abstract class BaseDaoUtil<T> {
      * @param searchParamsDto
      * @return
      */
-    public PageUtil findAll(int cursor, int size, SearchParamsDto searchParamsDto) {
-        String sql = "select * from " + camel4underline(entityClass.getSimpleName()) + " where 1 = 1";
-        String sqlCount = "select count(1) from " + camel4underline(entityClass.getSimpleName()) + " where 1 = 1";
+    public PageUtil findAll(int cursor, int size, SearchParamsDto searchParamsDto, String filterSql) {
+        String sql = "select * from " + camel4underline(entityClass.getSimpleName()) + " where 1 = 1 ";
+        String sqlCount = "select count(1) from " + camel4underline(entityClass.getSimpleName()) + " where 1 = 1 ";
         List params = new ArrayList();
         List paramsCount = new ArrayList();
-        if (StringUtils.isNotBlank(searchParamsDto.getSearchText())) {
-            sql += " and name = ?";
-            sqlCount += " and name = ?";
+        if (StringUtils.isNotBlank(filterSql)) {
+            sql += filterSql;
+            sqlCount += filterSql;
             params.add(searchParamsDto.getSearchText());
             paramsCount.add(searchParamsDto.getSearchText());
         }

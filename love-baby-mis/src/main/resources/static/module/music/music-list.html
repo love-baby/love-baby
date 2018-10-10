@@ -14,7 +14,8 @@
     <link rel="stylesheet" type="text/css" href="/lib/iconfont/1.0.8/iconfont.css"/>
     <link rel="stylesheet" type="text/css" href="/lib/h-ui.admin/skin/default/skin.css" id="skin"/>
     <link rel="stylesheet" type="text/css" href="/lib/h-ui.admin/css/style.css"/>
-    <link rel="stylesheet" href="/lib/MPlayer/css/mplayer.css">
+    <!--音乐播放器-->
+    <link rel="stylesheet" href="https://css.love-baby.vip/mplayer.min.css">
 
 
     <title>音乐列表 - 音乐管理</title>
@@ -294,11 +295,11 @@
         </table>
     </div>
 </div>
-
-<script src="/lib/MPlayer/js/mplayer.js"></script>
-<script src="/lib/MPlayer/js/mplayer-list.js"></script>
-<script src="/lib/MPlayer/js/mplayer-functions.js"></script>
-<script src="/lib/MPlayer/js/jquery.nstSlider.min.js"></script>
+<!--音乐播发器-->
+<script src="https://js.love-baby.vip/mplayer.min.js"></script>
+<!--<script src="/lib/MPlayer/js/mplayer-list.js"></script>-->
+<script src="https://js.love-baby.vip/mplayer-functions.js"></script>
+<script src="https://js.love-baby.vip/jquery.nstSlider.min.js"></script>
 <script>
     var modeText = ['顺序播放','单曲循环','随机播放','列表循环'];
     var player = new MPlayer({
@@ -307,7 +308,7 @@
         // 播放列表
         songList: mplayer_song,
         // 专辑图片错误时显示的图片
-        defaultImg: 'img/mplayer_error.png',
+        defaultImg: 'https://images.love-baby.vip/mplayer_error.png',
         // 自动播放
         autoPlay: true,
         // 播放模式(0->顺序播放,1->单曲循环,2->随机播放,3->列表循环(默认))

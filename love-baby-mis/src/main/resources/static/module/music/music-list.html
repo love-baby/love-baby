@@ -16,9 +16,8 @@
     <link rel="stylesheet" type="text/css" href="/lib/h-ui.admin/css/style.css"/>
     <!--音乐播放器-->
     <link rel="stylesheet" href="https://css.love-baby.vip/mplayer.min.css">
-
-
     <title>音乐列表 - 音乐管理</title>
+
 </head>
 <body>
 <article class="cl pl-20 pr-20 pt-5">
@@ -50,12 +49,15 @@
 <script type="text/javascript" src="/lib/layer/layer.js"></script>
 <script type="text/javascript" src="https://js.love-baby.vip/H-ui.js"></script>
 <script type="text/javascript" src="/lib/h-ui.admin/js/H-ui.admin.js"></script>
+<script type="text/javascript" src="/lib/1.0.8/iconfont.js"></script>
 
 
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript" src="https://js.love-baby.vip/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/lib/My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="/lib/util.js"></script>
+
+
 <script type="text/javascript">
     $(function () {
         $('#userTable').DataTable({
@@ -135,7 +137,8 @@
                     "title": "操作",
                     "render": function (data, type, row, meta) {
                         return '<a title="编辑" href="javascript:;" onclick="edit(\'编辑\',\'/module/music/music-add.html\',\'' + data.id + '\',\'\',550)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>'
-                            + '<a title="删除" href="javascript:;" onclick="deleteById(this,\'' + data.id + '\')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>';
+                            + '<a title="删除" href="javascript:;" onclick="deleteById(this,\'' + data.id + '\')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>'
+                            + '<a title="试听" href="javascript:;" onclick="audition(this,\'' + data.id + '\')" class="ml-5" style="text-decoration:none"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-xxx"></use></svg></a>';
                     }
                 }
             ],
@@ -241,6 +244,11 @@
             });
         });
     }
+
+    function audition(obj, id) {
+        alert("试听");
+    }
+
 </script>
 <!--/请在上方写此页面业务相关的脚本-->
 

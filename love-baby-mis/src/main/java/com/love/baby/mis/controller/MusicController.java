@@ -9,6 +9,7 @@ import com.love.baby.common.exception.SystemException;
 import com.love.baby.common.param.SearchParams;
 import com.love.baby.common.param.SearchParamsDto;
 import com.love.baby.common.util.PageUtil;
+import com.love.baby.mis.config.SystemConfig;
 import com.love.baby.mis.service.MusicService;
 import com.love.baby.mis.service.UploadFileService;
 import com.love.baby.mis.vo.MusicVo;
@@ -140,7 +141,7 @@ public class MusicController {
             music.setAlbumId(tag.getFirst(FieldKey.ALBUM));
             music.setAuthorId(tag.getFirst(FieldKey.ARTIST));
         } catch (Exception e) {
-            logger.error("解析文件失败",e);
+            logger.error("解析文件失败", e);
         }
         return new MusicVo(author, album, JSON.parseObject(JSON.toJSONString(music), Music.class));
     }
@@ -182,5 +183,29 @@ public class MusicController {
         tag.setField(FieldKey.ALBUM, musicOld.getAlbumId());
         tag.setField(FieldKey.ARTIST, musicOld.getAuthorId());
         audioFile.commit();
+    }
+
+
+    /**
+     * 试听
+     *
+     * @param token
+     * @return
+     */
+    @GetMapping("/audition/{id}")
+    public Map audition(@RequestHeader(value = "token") String token, @PathVariable String id) {
+        logger.info("获取音乐信息 Id = {} ", id);
+        userSessionCommon.assertSessionAndGetUid(token);
+        Music music = musicService.findById(id);
+        if (music == null) {
+            return null;
+        }
+        Map m = new HashMap();
+        m.put("name", music.getName());
+        m.put("singer", music.getAuthorId());
+        m.put("img", "https://images.love-baby.vip/20181010180902.png");
+        m.put("src", SystemConfig.web_host + music.getPath());
+        m.put("lrc", "");
+        return m;
     }
 }

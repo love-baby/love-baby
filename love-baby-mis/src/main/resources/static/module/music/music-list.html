@@ -320,8 +320,7 @@
                     window.location = "/login.html";
                 } else if (data.code == 200) {
                     if (data.data != null) {
-                        mplayer_song[0].push(data.data);
-                        player.play(mplayer_song);
+                        player.addSong(data.data);
                     }
                 } else {
                     parent.layer.msg(data.message);

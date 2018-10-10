@@ -133,11 +133,15 @@ public class MusicController {
         //查询歌手信息
         Author author = new Author();
         File file = new File(music.getPath());
-        AudioFile audioFile = AudioFileIO.read(file);
-        Tag tag = audioFile.getTag();
-        music.setName(tag.getFirst(FieldKey.TITLE));
-        music.setAlbumId(tag.getFirst(FieldKey.ALBUM));
-        music.setAuthorId(tag.getFirst(FieldKey.ARTIST));
+        try {
+            AudioFile audioFile = AudioFileIO.read(file);
+            Tag tag = audioFile.getTag();
+            music.setName(tag.getFirst(FieldKey.TITLE));
+            music.setAlbumId(tag.getFirst(FieldKey.ALBUM));
+            music.setAuthorId(tag.getFirst(FieldKey.ARTIST));
+        } catch (Exception e) {
+            logger.error("解析文件失败",e);
+        }
         return new MusicVo(author, album, JSON.parseObject(JSON.toJSONString(music), Music.class));
     }
 

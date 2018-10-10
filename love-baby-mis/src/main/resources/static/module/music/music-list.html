@@ -321,6 +321,7 @@
                 } else if (data.code == 200) {
                     if (data.data != null) {
                         mplayer_song[0].push(data.data);
+                        $(document.body).append(player.audio);
                         setEffects(player);
                     }
                 } else {
@@ -441,7 +442,6 @@
             console.log('播放模式已切换为：' + mode);
         });
     });
-
 
     $(document.body).append(player.audio); // 测试用
 

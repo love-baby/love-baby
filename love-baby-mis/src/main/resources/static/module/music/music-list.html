@@ -321,8 +321,7 @@
                 } else if (data.code == 200) {
                     if (data.data != null) {
                         mplayer_song[0].push(data.data);
-                        initMusic();
-                        setEffects(player);
+                        player.play(mplayer_song);
                     }
                 } else {
                     parent.layer.msg(data.message);

@@ -9,12 +9,11 @@ import com.love.baby.common.exception.SystemException;
 import com.love.baby.common.param.SearchParams;
 import com.love.baby.common.param.SearchParamsDto;
 import com.love.baby.common.util.PageUtil;
-import com.love.baby.common.util.QiNiuUtil;
+import com.love.baby.mis.async.AsyncTaskService;
 import com.love.baby.mis.config.SystemConfig;
 import com.love.baby.mis.service.MusicService;
-import com.love.baby.mis.service.UploadFileService;
 import com.love.baby.mis.vo.MusicVo;
-import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
@@ -30,7 +29,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.*;
 
@@ -51,7 +49,7 @@ public class MusicController {
     private MusicService musicService;
 
     @Resource
-    private UploadFileService uploadFileService;
+    private AsyncTaskService asyncTaskService;
 
     /**
      * 获取所有
@@ -203,16 +201,18 @@ public class MusicController {
         if (music == null) {
             return null;
         }
-        File f = new File(music.getPath());
-        FileInputStream input = new FileInputStream(f);
-        byte[] uploadBytes = new byte[input.available()];
-        String suffix = f.getPath().substring(f.getPath().lastIndexOf("."));
-        QiNiuUtil.fileUpload(uploadBytes, QiNiuUtil.Bucket.MUSIC, DigestUtils.md5Hex(uploadBytes) + suffix);
+        String src = SystemConfig.web_host + music.getPath();
+        //判断是否上传七牛
+        if (StringUtils.isBlank(music.getQiNiuUrl())) {
+            asyncTaskService.executeQiNiuUploadAsyncTask(music);
+        } else {
+            src = music.getQiNiuUrl();
+        }
         Map m = new HashMap();
         m.put("name", music.getName());
         m.put("singer", music.getAuthorId());
         m.put("img", "https://images.love-baby.vip/20181010180902.png");
-        m.put("src", SystemConfig.web_host + music.getPath());
+        m.put("src", src);
         m.put("lrc", "");
         return m;
     }

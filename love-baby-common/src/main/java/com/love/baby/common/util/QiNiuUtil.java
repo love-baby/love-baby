@@ -29,7 +29,7 @@ public class QiNiuUtil {
     }
 
 
-    public static void fileUpload(byte[] uploadBytes, String bucket, String key) {
+    public static String fileUpload(byte[] uploadBytes, String bucket, String key) {
         if (StringUtils.isBlank(bucket)) {
             throw new SystemException(500, "bucket参数非法！");
         }
@@ -48,6 +48,7 @@ public class QiNiuUtil {
             //解析上传成功的结果
             DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
             logger.info("上传结果 putRet = {}", JSON.toJSON(putRet));
+            return arr[1] + "/" + putRet.key;
         } catch (QiniuException ex) {
             Response r = ex.response;
             logger.error(r.toString());
@@ -57,6 +58,6 @@ public class QiNiuUtil {
                 logger.error("上传文件出错", ex2);
             }
         }
-
+        return null;
     }
 }

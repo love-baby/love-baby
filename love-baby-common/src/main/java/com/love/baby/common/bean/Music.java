@@ -49,7 +49,11 @@ public class Music {
      */
     private String lyricsPath;
     /**
-     *描述
+     * 描述
      */
     private String description;
+    /**
+     * 七牛访问连接
+     */
+    private String qiNiuUrl;
 }

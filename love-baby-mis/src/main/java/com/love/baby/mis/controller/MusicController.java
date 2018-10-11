@@ -9,10 +9,12 @@ import com.love.baby.common.exception.SystemException;
 import com.love.baby.common.param.SearchParams;
 import com.love.baby.common.param.SearchParamsDto;
 import com.love.baby.common.util.PageUtil;
+import com.love.baby.common.util.QiNiuUtil;
 import com.love.baby.mis.config.SystemConfig;
 import com.love.baby.mis.service.MusicService;
 import com.love.baby.mis.service.UploadFileService;
 import com.love.baby.mis.vo.MusicVo;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
@@ -28,6 +30,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.*;
 
@@ -193,13 +196,17 @@ public class MusicController {
      * @return
      */
     @GetMapping("/audition/{id}")
-    public Map audition(@RequestHeader(value = "token") String token, @PathVariable String id) {
+    public Map audition(@RequestHeader(value = "token") String token, @PathVariable String id) throws IOException {
         logger.info("获取音乐信息 Id = {} ", id);
         userSessionCommon.assertSessionAndGetUid(token);
         Music music = musicService.findById(id);
         if (music == null) {
             return null;
         }
+        File f = new File(music.getPath());
+        FileInputStream input = new FileInputStream(f);
+        byte[] uploadBytes = new byte[input.available()];
+        QiNiuUtil.fileUpload(uploadBytes, QiNiuUtil.Bucket.MUSIC, DigestUtils.md5Hex(uploadBytes));
         Map m = new HashMap();
         m.put("name", music.getName());
         m.put("singer", music.getAuthorId());

@@ -99,8 +99,15 @@ public class ToolCotroller {
         return list;
     }
 
+    /**
+     * 七牛鉴权接口
+     * @param token
+     * @param userip
+     * @param authfrom
+     */
     @GetMapping(value = "/cdnauth")
-    public void cdnauth(@RequestHeader(value = "token") String token) {
+    public void cdnauth(@RequestParam(value = "token") String token, @RequestHeader(value = "userip") String userip, @RequestHeader(value = "authfrom") String authfrom) {
+        logger.info("文件鉴权 token = {},userip = {},authfrom = {}", token, userip, authfrom);
         userSessionCommon.assertSessionAndGetUid(token);
     }
 

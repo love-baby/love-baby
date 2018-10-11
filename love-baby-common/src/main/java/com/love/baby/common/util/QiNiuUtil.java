@@ -36,7 +36,7 @@ public class QiNiuUtil {
         if (StringUtils.isBlank(key)) {
             throw new SystemException(500, "key参数非法！");
         }
-        Configuration cfg = new Configuration(Zone.zone0());
+        Configuration cfg = new Configuration(Zone.zone1());
         UploadManager uploadManager = new UploadManager(cfg);
         String accessKey = "61DvPxqmhMIEIVk4QtHzUQ15i6ZoqycECFm7PZY9";
         String secretKey = "MYFjE43xF15_Rq606H1XuWxDezWchfb0W16xnb5C";

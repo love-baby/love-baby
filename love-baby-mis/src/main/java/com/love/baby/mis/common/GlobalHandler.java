@@ -40,7 +40,7 @@ public class GlobalHandler implements ResponseBodyAdvice<Object> {
      */
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
-        logger.info("全局统一封装 body = {}", JSON.toJSONString(body));
+        logger.info("全局统一封装 path = {},body = {}", request.getURI().getPath(), JSON.toJSONString(body));
         //鉴权服务
         if (StringUtils.indexOf(request.getURI().getPath(), "cdnauth") > 0) {
             return body;

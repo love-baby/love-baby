@@ -1,6 +1,7 @@
 package com.love.baby.mis.common;
 
 import com.alibaba.fastjson.JSON;
+import com.love.baby.common.annotation.NoWapperResponse;
 import com.love.baby.mis.util.RenderInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -11,6 +12,8 @@ import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
+
+import java.util.Objects;
 
 /**
  * 全局数据格式返回拦截器
@@ -41,8 +44,8 @@ public class GlobalHandler implements ResponseBodyAdvice<Object> {
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
         logger.info("全局统一封装 path = {},body = {}", request.getURI().getPath(), JSON.toJSONString(body));
-        //鉴权服务
-        if (StringUtils.indexOf(request.getURI().getPath(), "cdnauth") > 0) {
+        //不需要进行结果包装
+        if (Objects.nonNull(returnType.getMethodAnnotation(NoWapperResponse.class))) {
             return body;
         }
         RenderInfo<Object> renderInfo = new RenderInfo<>();

@@ -1,5 +1,6 @@
 package com.love.baby.mis.controller;
 
+import com.love.baby.common.annotation.NoWapperResponse;
 import com.love.baby.common.bean.UploadFile;
 import com.love.baby.common.common.UserSessionCommon;
 import com.love.baby.common.exception.SystemException;
@@ -106,6 +107,7 @@ public class ToolCotroller {
      * @param authfrom
      */
     @GetMapping(value = "/cdnauth")
+    @NoWapperResponse
     public Integer cdnauth(@RequestParam(value = "token") String token, @RequestHeader(value = "userip") String userip, @RequestHeader(value = "authfrom") String authfrom) {
         logger.info("文件鉴权 token = {},userip = {},authfrom = {}", token, userip, authfrom);
         userSessionCommon.assertSessionAndGetUid(token);

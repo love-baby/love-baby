@@ -206,7 +206,7 @@ public class MusicController {
         if (StringUtils.isBlank(music.getQiNiuUrl())) {
             asyncTaskService.executeQiNiuUploadAsyncTask(music);
         } else {
-            src = music.getQiNiuUrl();
+            src = music.getQiNiuUrl() + "?token=" + token;
         }
         Map m = new HashMap();
         m.put("name", music.getName());

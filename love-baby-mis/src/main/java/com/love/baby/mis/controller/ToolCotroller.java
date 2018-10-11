@@ -9,6 +9,8 @@ import com.love.baby.mis.service.UploadFileService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -109,14 +111,14 @@ public class ToolCotroller {
      */
     @GetMapping(value = "/cdnauth")
     @NoWapperResponse
-    public Integer cdnauth(@RequestParam(value = "token") String token, @RequestHeader(value = "userip") String userip, @RequestHeader(value = "authfrom") String authfrom) {
+    public ResponseEntity cdnauth(@RequestParam(value = "token") String token, @RequestHeader(value = "userip") String userip, @RequestHeader(value = "authfrom") String authfrom) {
         logger.info("文件鉴权 token = {},userip = {},authfrom = {}", token, userip, authfrom);
         try {
             userSessionCommon.assertSessionAndGetUid(token);
         } catch (Exception e) {
-            logger.info("文件鉴权失败");
-            return 401;
+            logger.error("文件鉴权失败");
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
-        return 200;
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

@@ -206,7 +206,8 @@ public class MusicController {
         File f = new File(music.getPath());
         FileInputStream input = new FileInputStream(f);
         byte[] uploadBytes = new byte[input.available()];
-        QiNiuUtil.fileUpload(uploadBytes, QiNiuUtil.Bucket.MUSIC, DigestUtils.md5Hex(uploadBytes));
+        String suffix = f.getPath().substring(f.getPath().lastIndexOf("."));
+        QiNiuUtil.fileUpload(uploadBytes, QiNiuUtil.Bucket.MUSIC, DigestUtils.md5Hex(uploadBytes) + suffix);
         Map m = new HashMap();
         m.put("name", music.getName());
         m.put("singer", music.getAuthorId());

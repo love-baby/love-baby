@@ -22,10 +22,10 @@ public class QiNiuUtil {
     private static Logger logger = LoggerFactory.getLogger(QiNiuUtil.class);
 
     public class Bucket {
-        public static final String MUSIC = "music|music.love-baby.vip";
-        public static final String LOVE_BABY_IMG = "love-baby-img|images.love-baby.vip";
-        public static final String WEB_CSS = "web-css|css.love-baby.vip";
-        public static final String WEB_JS = "web-js|js.love-baby.vip";
+        public static final String MUSIC = "music|http://music.love-baby.vip";
+        public static final String LOVE_BABY_IMG = "love-baby-img|https://images.love-baby.vip";
+        public static final String WEB_CSS = "web-css|https://css.love-baby.vip";
+        public static final String WEB_JS = "web-js|https://js.love-baby.vip";
     }
 
 

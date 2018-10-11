@@ -114,6 +114,7 @@ public class ToolCotroller {
         try {
             userSessionCommon.assertSessionAndGetUid(token);
         } catch (Exception e) {
+            logger.info("文件鉴权失败");
             return 401;
         }
         return 200;

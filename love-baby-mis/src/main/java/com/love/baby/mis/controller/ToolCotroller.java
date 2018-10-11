@@ -1,16 +1,14 @@
 package com.love.baby.mis.controller;
 
 import com.love.baby.common.bean.UploadFile;
+import com.love.baby.common.common.UserSessionCommon;
 import com.love.baby.common.exception.SystemException;
 import com.love.baby.mis.config.SystemConfig;
 import com.love.baby.mis.service.UploadFileService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -34,6 +32,9 @@ public class ToolCotroller {
     @Resource
     private UploadFileService uploadFileService;
 
+    @Resource
+    private UserSessionCommon userSessionCommon;
+
 
     /**
      * 上传文件
@@ -41,7 +42,7 @@ public class ToolCotroller {
      * @param multipartfiles
      * @throws IOException
      */
-    @RequestMapping(value = "/fileUpload", method = RequestMethod.POST)
+    @PostMapping(value = "/fileUpload")
     public List<Map> fileUpload(@RequestParam(value = "files[]") MultipartFile[] multipartfiles) throws SystemException, IOException {
         List<Map> list = new ArrayList<>();
         for (MultipartFile file : multipartfiles) {
@@ -97,4 +98,10 @@ public class ToolCotroller {
         }
         return list;
     }
+
+    @GetMapping(value = "/cdnauth")
+    public void cdnauth(@RequestHeader(value = "token") String token) {
+        userSessionCommon.assertSessionAndGetUid(token);
+    }
+
 }

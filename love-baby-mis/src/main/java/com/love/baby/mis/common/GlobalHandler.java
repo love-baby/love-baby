@@ -39,8 +39,12 @@ public class GlobalHandler implements ResponseBodyAdvice<Object> {
      * @return
      */
     @Override
-    public RenderInfo beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
+    public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
         logger.info("全局统一封装 body = {}", JSON.toJSONString(body));
+        //鉴权服务
+        if (StringUtils.indexOf(request.getURI().getPath(), "cdnauth") > 0) {
+            return body;
+        }
         RenderInfo<Object> renderInfo = new RenderInfo<>();
         if (body instanceof RenderInfo) {
             renderInfo = JSON.parseObject(JSON.toJSONString(body), RenderInfo.class);

@@ -39,4 +39,8 @@ public class UploadFile {
      * 文件MD5值
      */
     private String md5;
+    /**
+     * 七牛访问连接
+     */
+    private String qiNiuUrl;
 }

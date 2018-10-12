@@ -4,6 +4,7 @@ import com.love.baby.common.annotation.NoWapperResponse;
 import com.love.baby.common.bean.UploadFile;
 import com.love.baby.common.common.UserSessionCommon;
 import com.love.baby.common.exception.SystemException;
+import com.love.baby.common.util.QiNiuUtil;
 import com.love.baby.mis.config.SystemConfig;
 import com.love.baby.mis.service.UploadFileService;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -56,7 +57,8 @@ public class ToolCotroller {
             fileMeta.put("fileType", file.getContentType());
             fileMeta.put("id", UUID.randomUUID().toString().replaceAll("-", ""));
 
-            String md5 = DigestUtils.md5Hex(file.getBytes());
+            byte[] fileBytes = file.getBytes();
+            String md5 = DigestUtils.md5Hex(fileBytes);
             UploadFile uploadFile = uploadFileService.findByMd5(md5);
             if (uploadFile != null) {
                 fileMeta.put("path", uploadFile.getPath());
@@ -82,8 +84,9 @@ public class ToolCotroller {
                 //文件最后存放位置的全路径
                 path = path + File.separator + System.currentTimeMillis() + "_" + DigestUtils.md5Hex(originFileName.getBytes()) + suffix;
                 BufferedOutputStream buffStream = new BufferedOutputStream(new FileOutputStream(path));
-                buffStream.write(file.getBytes());
+                buffStream.write(fileBytes);
                 buffStream.close();
+                String qiNiuUrl = QiNiuUtil.fileUpload(fileBytes, QiNiuUtil.Bucket.MUSIC, DigestUtils.md5Hex(fileBytes) + suffix);
                 uploadFile = UploadFile.builder()
                         .id(fileMeta.get("id").toString())
                         .createTime(new Date())
@@ -91,9 +94,11 @@ public class ToolCotroller {
                         .path(path)
                         .fileType(type)
                         .md5(md5)
+                        .qiNiuUrl(qiNiuUrl)
                         .build();
                 uploadFileService.save(uploadFile);
                 fileMeta.put("path", path);
+                fileMeta.put("qiNiuUrl", qiNiuUrl);
             } catch (IOException e) {
                 logger.error("上传失败", e);
             }

@@ -9,6 +9,7 @@ import com.love.baby.common.exception.SystemException;
 import com.love.baby.common.param.SearchParams;
 import com.love.baby.common.param.SearchParamsDto;
 import com.love.baby.common.util.PageUtil;
+import com.love.baby.common.util.QiNiuUtil;
 import com.love.baby.mis.async.AsyncTaskService;
 import com.love.baby.mis.config.SystemConfig;
 import com.love.baby.mis.service.MusicService;
@@ -204,9 +205,13 @@ public class MusicController {
         String src = SystemConfig.web_host + music.getPath();
         //判断是否上传七牛
         if (StringUtils.isBlank(music.getQiNiuUrl())) {
-            asyncTaskService.executeQiNiuUploadAsyncTask(music);
+            //上传到七牛
+            //asyncTaskService.executeQiNiuUploadAsyncTask(music);
         } else {
-            src = music.getQiNiuUrl() + "?token=" + token;
+            //回源鉴权防盗链
+            //src = music.getQiNiuUrl() + "?token=" + token;
+            //生成时间戳防盗链
+            src = QiNiuUtil.getAntiLeechAccessUrlBasedOnTimestamp(music.getQiNiuUrl(), 3600);
         }
         Map m = new HashMap();
         m.put("name", music.getName());

@@ -10,9 +10,16 @@ import com.qiniu.storage.Configuration;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
+import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * Created by liangbc on 2018/10/11.
@@ -20,6 +27,14 @@ import org.slf4j.LoggerFactory;
 public class QiNiuUtil {
 
     private static Logger logger = LoggerFactory.getLogger(QiNiuUtil.class);
+
+    private static String accessKey = "61DvPxqmhMIEIVk4QtHzUQ15i6ZoqycECFm7PZY9";
+    private static String secretKey = "MYFjE43xF15_Rq606H1XuWxDezWchfb0W16xnb5C";
+    /**
+     * 防盗链key 备用 05b8cdb97fbabe88e88982a94698d78813aa589b
+     */
+    private static String encryptKey = "809907b8b1b86b8a4998529a80abb48b1c9a3388";
+
 
     public class Bucket {
         public static final String MUSIC = "music|http://music.love-baby.vip";
@@ -38,8 +53,7 @@ public class QiNiuUtil {
         }
         Configuration cfg = new Configuration(Zone.zone1());
         UploadManager uploadManager = new UploadManager(cfg);
-        String accessKey = "61DvPxqmhMIEIVk4QtHzUQ15i6ZoqycECFm7PZY9";
-        String secretKey = "MYFjE43xF15_Rq606H1XuWxDezWchfb0W16xnb5C";
+
         Auth auth = Auth.create(accessKey, secretKey);
         String[] arr = StringUtils.split(bucket, "|");
         String upToken = auth.uploadToken(arr[0]);
@@ -60,4 +74,42 @@ public class QiNiuUtil {
         }
         return null;
     }
+
+
+    /**
+     * 生成资源基于CDN时间戳防盗链的访问外链
+     *
+     * @param
+     * @param
+     * @throws MalformedURLException
+     * @throws UnsupportedEncodingException
+     * @throws NoSuchAlgorithmException
+     */
+    public static String getAntiLeechAccessUrlBasedOnTimestamp(String url, int durationInSeconds) {
+        try {
+            URL urlObj = new URL(url);
+            String path = urlObj.getPath();
+            long timestampNow = System.currentTimeMillis() / 1000 + durationInSeconds;
+            String expireHex = Long.toHexString(timestampNow);
+            String toSignStr = String.format("%s%s%s", encryptKey, path, expireHex);
+            String signedStr = md5ToLower(toSignStr);
+            if (urlObj.getQuery() != null) {
+                return String.format("%s&sign=%s&t=%s", url, signedStr, expireHex);
+            } else {
+                return String.format("%s?sign=%s&t=%s", url, signedStr, expireHex);
+            }
+
+        } catch (Exception e) {
+            logger.error("防盗链生成失败", e);
+            return null;
+        }
+    }
+
+    private static String md5ToLower(String src) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        MessageDigest digest = MessageDigest.getInstance("MD5");
+        digest.update(src.getBytes("utf-8"));
+        byte[] md5Bytes = digest.digest();
+        return Hex.encodeHexString(md5Bytes);
+    }
+
 }

@@ -58,13 +58,16 @@ public class ToolCotroller {
             fileMeta.put("id", UUID.randomUUID().toString().replaceAll("-", ""));
 
             byte[] fileBytes = file.getBytes();
+            //判断是否上传过，上传过就不上传了
             String md5 = DigestUtils.md5Hex(fileBytes);
             UploadFile uploadFile = uploadFileService.findByMd5(md5);
             if (uploadFile != null) {
                 fileMeta.put("path", uploadFile.getPath());
+                fileMeta.put("qiNiuUrl", uploadFile.getQiNiuUrl());
                 list.add(fileMeta);
                 continue;
             }
+
             try {
                 //文件存放目录
                 String path = SystemConfig.systemPath + File.separator + "upload" + File.separator + LocalDate.now();

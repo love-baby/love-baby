@@ -20,6 +20,7 @@
         <module>love-baby-user</module>
         <module>love-baby-web</module>
         <module>love-baby-mis</module>
+        <module>love-baby-tool</module>
     </modules>
     <properties>
         <spring-cloud.version>Finchley.RELEASE</spring-cloud.version>

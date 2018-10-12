@@ -3,6 +3,7 @@ package com.love.baby.common.util;
 import com.alibaba.fastjson.JSON;
 import com.google.gson.Gson;
 import com.love.baby.common.exception.SystemException;
+import com.qiniu.cdn.CdnManager;
 import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;
 import com.qiniu.http.Response;
@@ -10,7 +11,6 @@ import com.qiniu.storage.Configuration;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
-import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +18,6 @@ import org.slf4j.LoggerFactory;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
@@ -85,31 +84,13 @@ public class QiNiuUtil {
      * @throws UnsupportedEncodingException
      * @throws NoSuchAlgorithmException
      */
-    public static String getAntiLeechAccessUrlBasedOnTimestamp(String url, int durationInSeconds) {
+    public static String createTimestampAntiLeechUrl(String url, int durationInSeconds) {
         try {
             URL urlObj = new URL(url);
-            String path = urlObj.getPath();
-            long timestampNow = System.currentTimeMillis() / 1000 + durationInSeconds;
-            String expireHex = Long.toHexString(timestampNow);
-            String toSignStr = String.format("%s%s%s", encryptKey, path, expireHex);
-            String signedStr = md5ToLower(toSignStr);
-            if (urlObj.getQuery() != null) {
-                return String.format("%s&sign=%s&t=%s", url, signedStr, expireHex);
-            } else {
-                return String.format("%s?sign=%s&t=%s", url, signedStr, expireHex);
-            }
-
+            return CdnManager.createTimestampAntiLeechUrl(urlObj, encryptKey, durationInSeconds);
         } catch (Exception e) {
             logger.error("防盗链生成失败", e);
             return null;
         }
     }
-
-    private static String md5ToLower(String src) throws UnsupportedEncodingException, NoSuchAlgorithmException {
-        MessageDigest digest = MessageDigest.getInstance("MD5");
-        digest.update(src.getBytes("utf-8"));
-        byte[] md5Bytes = digest.digest();
-        return Hex.encodeHexString(md5Bytes);
-    }
-
 }

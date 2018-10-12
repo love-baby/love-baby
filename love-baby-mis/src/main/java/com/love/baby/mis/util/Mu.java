@@ -1,7 +1,5 @@
 package com.love.baby.mis.util;
 
-import com.love.baby.common.util.QiNiuUtil;
-
 /**
  * Created by liangbc on 2018/9/29.
  */
@@ -30,8 +28,6 @@ public class Mu {
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
-        System.out.println(QiNiuUtil.getAntiLeechAccessUrlBasedOnTimestamp("http://music.love-baby.vip/18d629f9db5deac0eae7113067426a0e.mp3",60));;
-
     }
 
 

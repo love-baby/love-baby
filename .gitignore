@@ -32,5 +32,9 @@ love-baby.iml
 logs/
 love-baby-common/target/
 love-baby-mis/love-baby-mis.iml
+love-baby-tool/love-baby-tool.iml
 love-baby-web/logs/
 love-baby-web/target/
+love-baby-mis/src/test/
+love-baby-user/src/test/
+love-baby-web/src/test/

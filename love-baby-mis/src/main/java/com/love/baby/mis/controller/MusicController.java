@@ -211,7 +211,7 @@ public class MusicController {
             //回源鉴权防盗链
             //src = music.getQiNiuUrl() + "?token=" + token;
             //生成时间戳防盗链
-            src = QiNiuUtil.createTimestampAntiLeechUrl(music.getQiNiuUrl(), 360);
+            src = QiNiuUtil.getAntiLeechAccessUrlBasedOnTimestamp(music.getQiNiuUrl(), 360);
         }
         Map m = new HashMap();
         m.put("name", music.getName());

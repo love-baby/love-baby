@@ -1,8 +1,8 @@
 package com.love.baby.tool.controller;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,11 +12,11 @@ import java.util.Map;
  *
  * @author 23770
  */
-@Controller
+@RestController
 @RequestMapping("/index")
 public class IndexController {
 
-    @GetMapping(value = "/index")
+    @GetMapping(value = "")
     public Map index() {
         Map m = new HashMap();
         m.put("a","a");

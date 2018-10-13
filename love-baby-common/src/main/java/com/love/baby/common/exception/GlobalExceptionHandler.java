@@ -1,6 +1,5 @@
-package com.love.baby.tool.exception;
+package com.love.baby.common.exception;
 
-import com.love.baby.common.exception.SystemException;
 import com.love.baby.common.util.RenderInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

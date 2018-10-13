@@ -7,7 +7,7 @@ package com.love.baby.common.exception;
 public class SystemException extends RuntimeException {
 
     private Integer errorCode;
-    private String customMessage;//个性化信息
+    private String customMessage;
 
     public SystemException(Integer errorCode, String customMessage) {
         super(customMessage);

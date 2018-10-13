@@ -5,7 +5,7 @@ import com.love.baby.common.api.UserRpcService;
 import com.love.baby.common.bean.User;
 import com.love.baby.common.dto.UserDto;
 import com.love.baby.common.param.SearchParamsDto;
-import com.love.baby.common.util.PageUtil;
+import com.love.baby.common.common.bean.PageUtil;
 import com.love.baby.user.service.UserService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

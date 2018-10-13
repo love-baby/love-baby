@@ -3,7 +3,7 @@ package com.love.baby.mis.service;
 import com.alibaba.fastjson.JSON;
 import com.love.baby.common.bean.UploadFile;
 import com.love.baby.common.param.SearchParamsDto;
-import com.love.baby.common.util.PageUtil;
+import com.love.baby.common.common.bean.PageUtil;
 import com.love.baby.mis.dao.UploadFileDao;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;

@@ -2,7 +2,7 @@ package com.love.baby.common.api;
 
 import com.love.baby.common.dto.UserDto;
 import com.love.baby.common.param.SearchParamsDto;
-import com.love.baby.common.util.PageUtil;
+import com.love.baby.common.common.bean.PageUtil;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

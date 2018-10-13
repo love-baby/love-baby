@@ -1,10 +1,15 @@
 package com.love.baby.common.exception;
 
-import com.love.baby.common.util.RenderInfo;
+import com.love.baby.common.common.bean.RenderInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.ConversionNotSupportedException;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.http.converter.HttpMessageNotWritableException;
+import org.springframework.web.HttpMediaTypeNotAcceptableException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -70,9 +75,39 @@ public class GlobalExceptionHandler {
         return resultFormat(ex);
     }
 
+    //400错误
+    @ExceptionHandler({MissingServletRequestParameterException.class})
+    public RenderInfo requestMissingServletRequest(MissingServletRequestParameterException ex) {
+        return resultFormat(ex);
+    }
+
+    //405错误
+    @ExceptionHandler({HttpRequestMethodNotSupportedException.class})
+    public RenderInfo request405(HttpRequestMethodNotSupportedException ex) {
+        return resultFormat(ex);
+    }
+
+    //406错误
+    @ExceptionHandler({HttpMediaTypeNotAcceptableException.class})
+    public RenderInfo request406(HttpMediaTypeNotAcceptableException ex) {
+        return resultFormat(ex);
+    }
+
+    //500错误
+    @ExceptionHandler({ConversionNotSupportedException.class, HttpMessageNotWritableException.class})
+    public RenderInfo server500(RuntimeException ex) {
+        return resultFormat(ex);
+    }
+
+    //栈溢出
+    @ExceptionHandler({StackOverflowError.class})
+    public RenderInfo requestStackOverflow(StackOverflowError ex) {
+        return resultFormat(ex);
+    }
+
     //系统自定义异常
-    @ExceptionHandler({SystemException.class})
-    public RenderInfo requestStackOverflow(SystemException ex) {
+    @ExceptionHandler({com.love.baby.common.exception.SystemException.class})
+    public RenderInfo requestStackOverflow(com.love.baby.common.exception.SystemException ex) {
         return resultFormat(ex);
     }
 

@@ -1,8 +1,7 @@
-package com.love.baby.mis.common;
+package com.love.baby.common.common;
 
 import com.alibaba.fastjson.JSON;
-import com.love.baby.common.annotation.NoWapperResponse;
-import com.love.baby.common.util.RenderInfo;
+import com.love.baby.common.common.bean.RenderInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,14 +12,12 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
-import java.util.Objects;
-
 /**
  * 全局数据格式返回拦截器
  *
  * @author 23770
  */
-@RestControllerAdvice(basePackages = "com.love.baby.mis.controller")
+@RestControllerAdvice(basePackages = "com.love.baby")
 public class GlobalHandler implements ResponseBodyAdvice<Object> {
 
     private static Logger logger = LoggerFactory.getLogger(GlobalHandler.class);
@@ -42,12 +39,8 @@ public class GlobalHandler implements ResponseBodyAdvice<Object> {
      * @return
      */
     @Override
-    public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
-        logger.info("全局统一封装 path = {},body = {}", request.getURI().getPath(), JSON.toJSONString(body));
-        //不需要进行结果包装
-        if (Objects.nonNull(returnType.getMethodAnnotation(NoWapperResponse.class))) {
-            return body;
-        }
+    public RenderInfo beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
+        logger.info("全局统一封装 body = {}", JSON.toJSONString(body));
         RenderInfo<Object> renderInfo = new RenderInfo<>();
         if (body instanceof RenderInfo) {
             renderInfo = JSON.parseObject(JSON.toJSONString(body), RenderInfo.class);

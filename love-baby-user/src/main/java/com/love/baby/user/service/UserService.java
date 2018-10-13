@@ -2,7 +2,7 @@ package com.love.baby.user.service;
 
 import com.love.baby.common.bean.User;
 import com.love.baby.common.param.SearchParamsDto;
-import com.love.baby.common.util.PageUtil;
+import com.love.baby.common.common.bean.PageUtil;
 import com.love.baby.user.dao.UserDao;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;

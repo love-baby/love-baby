@@ -7,7 +7,7 @@ import com.love.baby.common.dto.UserDto;
 import com.love.baby.common.exception.SystemException;
 import com.love.baby.common.param.SearchParams;
 import com.love.baby.common.param.SearchParamsDto;
-import com.love.baby.common.util.PageUtil;
+import com.love.baby.common.common.bean.PageUtil;
 import com.love.baby.mis.config.SystemConfig;
 import com.love.baby.mis.service.UserService;
 import com.love.baby.mis.vo.UserVo;

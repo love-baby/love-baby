@@ -3,7 +3,7 @@ package com.love.baby.mis.service;
 import com.love.baby.common.api.UserRpcService;
 import com.love.baby.common.dto.UserDto;
 import com.love.baby.common.param.SearchParamsDto;
-import com.love.baby.common.util.PageUtil;
+import com.love.baby.common.common.bean.PageUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

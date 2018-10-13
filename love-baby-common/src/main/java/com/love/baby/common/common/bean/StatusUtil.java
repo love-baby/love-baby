@@ -1,4 +1,4 @@
-package com.love.baby.common.util;
+package com.love.baby.common.common.bean;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

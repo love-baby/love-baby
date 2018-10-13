@@ -5,7 +5,7 @@ import com.love.baby.common.common.UserSessionCommon;
 import com.love.baby.common.exception.SystemException;
 import com.love.baby.common.param.SearchParams;
 import com.love.baby.common.param.SearchParamsDto;
-import com.love.baby.common.util.PageUtil;
+import com.love.baby.common.common.bean.PageUtil;
 import com.love.baby.mis.service.UploadFileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

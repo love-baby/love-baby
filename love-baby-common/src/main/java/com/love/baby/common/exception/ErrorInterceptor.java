@@ -1,4 +1,4 @@
-package com.love.baby.user.config;
+package com.love.baby.common.exception;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;

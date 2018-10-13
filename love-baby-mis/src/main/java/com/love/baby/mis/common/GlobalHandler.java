@@ -2,7 +2,7 @@ package com.love.baby.mis.common;
 
 import com.alibaba.fastjson.JSON;
 import com.love.baby.common.annotation.NoWapperResponse;
-import com.love.baby.mis.util.RenderInfo;
+import com.love.baby.common.util.RenderInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

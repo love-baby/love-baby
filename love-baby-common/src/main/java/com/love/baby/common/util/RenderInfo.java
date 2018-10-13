@@ -1,4 +1,4 @@
-package com.love.baby.mis.util;
+package com.love.baby.common.util;
 
 import lombok.Data;
 

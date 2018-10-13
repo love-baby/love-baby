@@ -1,7 +1,7 @@
 package com.love.baby.tool.exception;
 
 import com.love.baby.common.exception.SystemException;
-import com.love.baby.tool.util.RenderInfo;
+import com.love.baby.common.util.RenderInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.ConversionNotSupportedException;

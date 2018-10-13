@@ -1,4 +1,4 @@
-package com.love.baby.tool.common;
+package com.love.baby.common.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.love.baby.common.util.RenderInfo;
@@ -9,7 +9,6 @@ import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 /**
@@ -17,7 +16,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
  *
  * @author 23770
  */
-@RestControllerAdvice(basePackages = "com.love.baby.tool.controller")
 public class GlobalHandler implements ResponseBodyAdvice<Object> {
 
     private static Logger logger = LoggerFactory.getLogger(GlobalHandler.class);

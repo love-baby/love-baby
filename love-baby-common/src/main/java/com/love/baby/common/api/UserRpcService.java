@@ -1,8 +1,9 @@
 package com.love.baby.common.api;
 
+import com.love.baby.common.annotation.NoWapperResponse;
+import com.love.baby.common.common.bean.PageUtil;
 import com.love.baby.common.dto.UserDto;
 import com.love.baby.common.param.SearchParamsDto;
-import com.love.baby.common.common.bean.PageUtil;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,7 @@ public interface UserRpcService {
      * @return
      */
     @PostMapping(value = "/listAll/{cursor}/{size}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @NoWapperResponse
     PageUtil listAll(@PathVariable Integer cursor, @PathVariable Integer size, @RequestBody SearchParamsDto searchParamsDto);
 
     /**
@@ -29,6 +31,7 @@ public interface UserRpcService {
      * @return
      */
     @GetMapping(value = "/findByName", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @NoWapperResponse
     UserDto findByName(@RequestParam(value = "name") String name);
 
     /**
@@ -37,6 +40,7 @@ public interface UserRpcService {
      * @param userDto
      */
     @PutMapping(value = "/create", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @NoWapperResponse
     UserDto create(@RequestBody UserDto userDto);
 
     /**
@@ -46,6 +50,7 @@ public interface UserRpcService {
      * @return
      */
     @GetMapping(value = "/findById", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @NoWapperResponse
     UserDto findById(@RequestParam(value = "id") String id);
 
     /**
@@ -55,6 +60,7 @@ public interface UserRpcService {
      * @return
      */
     @PutMapping(value = "/update", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @NoWapperResponse
     UserDto update(@RequestBody UserDto userDto);
 
     /**
@@ -64,6 +70,7 @@ public interface UserRpcService {
      * @return
      */
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @NoWapperResponse
     void delete(@RequestParam(value = "id") String id);
 
 }

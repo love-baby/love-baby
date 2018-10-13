@@ -1,6 +1,7 @@
 package com.love.baby.user.rpc;
 
 import com.alibaba.fastjson.JSON;
+import com.love.baby.common.annotation.NoWapperResponse;
 import com.love.baby.common.api.UserRpcService;
 import com.love.baby.common.bean.User;
 import com.love.baby.common.dto.UserDto;
@@ -27,6 +28,7 @@ public class UserRpcController implements UserRpcService {
 
     @Override
     @PostMapping(value = "/listAll/{cursor}/{size}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @NoWapperResponse
     public PageUtil listAll(@PathVariable Integer cursor, @PathVariable Integer size, @RequestBody SearchParamsDto searchParamsDto) {
         List<UserDto> list = new ArrayList<>();
         PageUtil pageUtil = userService.findAll(cursor, size, searchParamsDto);
@@ -37,6 +39,7 @@ public class UserRpcController implements UserRpcService {
 
     @Override
     @GetMapping(value = "/findByName", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @NoWapperResponse
     public UserDto findByName(@RequestParam(value = "name") String name) {
         User user = userService.findByName(name);
         if (user == null) {
@@ -47,6 +50,7 @@ public class UserRpcController implements UserRpcService {
 
     @Override
     @PutMapping(value = "/create", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @NoWapperResponse
     public UserDto create(@RequestBody UserDto userDto) {
         userService.save(new User(userDto));
         return userDto;
@@ -54,6 +58,7 @@ public class UserRpcController implements UserRpcService {
 
     @Override
     @GetMapping(value = "/findById", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @NoWapperResponse
     public UserDto findById(@RequestParam(value = "id") String id) {
         User user = userService.findById(id);
         if (user == null) {
@@ -64,6 +69,7 @@ public class UserRpcController implements UserRpcService {
 
     @Override
     @PutMapping(value = "/update", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @NoWapperResponse
     public UserDto update(@RequestBody UserDto userDto) {
         userService.update(new User(userDto));
         return userDto;
@@ -71,6 +77,7 @@ public class UserRpcController implements UserRpcService {
 
     @Override
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @NoWapperResponse
     public void delete(@PathVariable String id) {
         userService.delete(id);
     }

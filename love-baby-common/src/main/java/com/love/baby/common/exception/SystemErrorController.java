@@ -1,4 +1,4 @@
-package com.love.baby.tool.controller;
+package com.love.baby.common.exception;
 
 import com.alibaba.fastjson.JSON;
 import com.love.baby.common.util.RenderInfo;
@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+
 
 /**
  * 全局的404

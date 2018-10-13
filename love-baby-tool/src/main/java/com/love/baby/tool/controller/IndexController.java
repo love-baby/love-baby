@@ -16,7 +16,7 @@ import java.util.Map;
 @RequestMapping("/index")
 public class IndexController {
 
-    @GetMapping(value = "/")
+    @GetMapping(value = "/index")
     public Map index() {
         Map m = new HashMap();
         m.put("a","a");

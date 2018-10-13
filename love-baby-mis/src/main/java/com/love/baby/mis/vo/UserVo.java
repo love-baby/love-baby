@@ -1,7 +1,7 @@
 package com.love.baby.mis.vo;
 
-import com.love.baby.common.dto.UserDto;
 import com.love.baby.common.common.bean.StatusUtil;
+import com.love.baby.common.dto.UserDto;
 import com.love.baby.mis.config.SystemConfig;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

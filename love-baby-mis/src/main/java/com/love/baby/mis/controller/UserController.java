@@ -142,6 +142,7 @@ public class UserController {
         if (userDto == null) {
             throw new SystemException(500, "登录失败,用户不存在");
         }
+        logger.info("userDto = {}",JSON.toJSON(userDto));
         if (!StringUtils.equals(userDto.getPwd(), pwd)) {
             throw new SystemException(500, "登录失败,密码错误");
         }

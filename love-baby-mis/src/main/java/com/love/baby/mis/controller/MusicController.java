@@ -10,7 +10,7 @@ import com.love.baby.common.common.bean.PageUtil;
 import com.love.baby.common.exception.SystemException;
 import com.love.baby.common.param.SearchParams;
 import com.love.baby.common.param.SearchParamsDto;
-import com.love.baby.common.util.InMemoryMultipartFile;
+import com.love.baby.common.util.MultipartFileUtil;
 import com.love.baby.common.util.QiNiuUtil;
 import com.love.baby.mis.async.AsyncTaskService;
 import com.love.baby.mis.config.SystemConfig;
@@ -219,7 +219,7 @@ public class MusicController {
 
             File file = new File(music.getPath());
             InputStream input = new FileInputStream(file);
-            MultipartFile multipartFile = new InMemoryMultipartFile("filename.tmp", new byte[input.available()]);
+            MultipartFile multipartFile = new MultipartFileUtil("filename.tmp", new byte[input.available()]);
             conversionRpcService.wavConversionMp3(multipartFile);
             logger.info("执行转换任务结束");
         } else {

@@ -8,28 +8,18 @@ import java.io.*;
  *
  * @author Pierantonio Cangianiello
  */
-public class InMemoryMultipartFile implements MultipartFile {
+public class MultipartFileUtil implements MultipartFile {
 
     private final String name;
     private final String originalFileName;
     private final String contentType;
     private final byte[] payload;
 
-    public InMemoryMultipartFile(String originalFileName, byte[] payload) {
+    public MultipartFileUtil(String originalFileName, byte[] payload) {
         this.originalFileName = originalFileName;
         this.payload = payload;
         this.name = "file";
         this.contentType = "application/octet-stream";
-    }
-
-    public InMemoryMultipartFile(String name, String originalFileName, String contentType, byte[] payload) {
-        if (payload == null) {
-            throw new IllegalArgumentException("Payload cannot be null.");
-        }
-        this.name = name;
-        this.originalFileName = originalFileName;
-        this.contentType = contentType;
-        this.payload = payload;
     }
 
     @Override

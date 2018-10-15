@@ -47,7 +47,7 @@ public class ConverService {
      */
     public byte[] conversion(String source) {
         File file = new File(source);
-        String outputPath = file.getParentFile().getPath() + ".mp3";
+        String outputPath = file.getParentFile().getPath() + File.separator + System.currentTimeMillis() + ".mp3";
         logger.info("path = {}", outputPath);
         String cmd = "ffmpeg -i " + source + " -f mp3 -acodec libmp3lame -y " + outputPath;
         CmdUtil.execCmd(cmd, new File(SystemConfig.SystemTempPath + "/cmd"));

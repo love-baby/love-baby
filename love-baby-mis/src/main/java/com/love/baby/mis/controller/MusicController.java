@@ -215,6 +215,7 @@ public class MusicController {
             logger.info("执行转换任务");
             FileInputStream input = new FileInputStream(new File(music.getPath()));
             byte[] bytes = new byte[input.available()];
+            logger.info("bytes = {}", bytes.length);
             conversionRpcService.wavConversionMp3(bytes);
             logger.info("执行转换任务结束");
         } else {

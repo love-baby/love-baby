@@ -2,7 +2,7 @@ package com.love.baby.tool.rpc;
 
 import com.love.baby.common.annotation.NoWapperResponse;
 import com.love.baby.common.api.ConversionRpcService;
-import com.love.baby.tool.service.ConversionService;
+import com.love.baby.tool.service.ConverService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,29 +21,29 @@ import javax.annotation.Resource;
 public class ConversionRpcController implements ConversionRpcService {
 
     @Resource
-    private ConversionService conversionService;
+    private ConverService converService;
 
     @PostMapping(value = "/wavConversionMp3", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @NoWapperResponse
     @Override
     public byte[] wavConversionMp3(byte[] bytes) {
-        String path = conversionService.cacheTemp(bytes, ".wav");
-        return  conversionService.conversion(path);
+        String path = converService.cacheTemp(bytes, ".wav");
+        return  converService.conversion(path);
     }
 
     @PostMapping(value = "/flacConversionMp3", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @NoWapperResponse
     @Override
     public byte[] flacConversionMp3(byte[] bytes) {
-        String path = conversionService.cacheTemp(bytes, ".flac");
-        return  conversionService.conversion(path);
+        String path = converService.cacheTemp(bytes, ".flac");
+        return  converService.conversion(path);
     }
 
     @PostMapping(value = "/apeConversionMp3", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @NoWapperResponse
     @Override
     public byte[] apeConversionMp3(byte[] bytes) {
-        String path = conversionService.cacheTemp(bytes, ".ape");
-        return  conversionService.conversion(path);
+        String path = converService.cacheTemp(bytes, ".ape");
+        return  converService.conversion(path);
     }
 }

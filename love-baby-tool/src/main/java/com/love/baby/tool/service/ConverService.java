@@ -14,9 +14,9 @@ import java.io.*;
  * @date 2018/10/15
  */
 @Service
-public class ConversionService {
+public class ConverService {
 
-    private static Logger logger = LoggerFactory.getLogger(ConversionService.class);
+    private static Logger logger = LoggerFactory.getLogger(ConverService.class);
 
     /**
      * 缓存文件

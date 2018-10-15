@@ -27,7 +27,7 @@ public class ConverService {
      */
     public String cacheTemp(MultipartFile file) {
         logger.info("缓存文件");
-        String path = SystemConfig.SystemTempPath + System.currentTimeMillis() + "_" + file.getOriginalFilename();
+        String path = SystemConfig.SystemTempPath + file.getOriginalFilename();
         try {
             BufferedOutputStream buffStream = new BufferedOutputStream(new FileOutputStream(path));
             buffStream.write(file.getBytes());

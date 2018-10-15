@@ -4,6 +4,7 @@ import com.love.baby.common.annotation.NoWapperResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author liangbc
@@ -20,7 +21,7 @@ public interface ConversionRpcService {
      */
     @PostMapping(value = "/wavConversionMp3", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @NoWapperResponse
-    byte[] wavConversionMp3(byte[] bytes);
+    byte[] wavConversionMp3(@RequestParam(value = "bytes") byte[] bytes);
 
 
     /**
@@ -31,7 +32,7 @@ public interface ConversionRpcService {
      */
     @PostMapping(value = "/flacConversionMp3", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @NoWapperResponse
-    byte[] flacConversionMp3(byte[] bytes);
+    byte[] flacConversionMp3(@RequestParam(value = "bytes") byte[] bytes);
 
     /**
      * ape 转 mp3
@@ -41,7 +42,7 @@ public interface ConversionRpcService {
      */
     @PostMapping(value = "/apeConversionMp3", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @NoWapperResponse
-    byte[] apeConversionMp3(byte[] bytes);
+    byte[] apeConversionMp3(@RequestParam(value = "bytes") byte[] bytes);
 }
 
 

@@ -214,9 +214,7 @@ public class MusicController {
             //asyncTaskService.executeQiNiuUploadAsyncTask(music);
             logger.info("执行转换任务");
             FileInputStream input = new FileInputStream(new File(music.getPath()));
-            byte[] bytes = new byte[input.available()];
-            logger.info("bytes = {}", bytes.length);
-            conversionRpcService.wavConversionMp3(bytes);
+            conversionRpcService.wavConversionMp3(input);
             logger.info("执行转换任务结束");
         } else {
             //回源鉴权防盗链

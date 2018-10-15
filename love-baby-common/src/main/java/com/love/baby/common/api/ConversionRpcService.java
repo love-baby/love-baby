@@ -6,6 +6,8 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.io.FileInputStream;
+
 /**
  * @author liangbc
  * @date 2018/10/15
@@ -16,33 +18,33 @@ public interface ConversionRpcService {
     /**
      * wav 转 mp3
      *
-     * @param bytes
+     * @param input
      * @return
      */
     @PostMapping(value = "/wavConversionMp3", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @NoWapperResponse
-    byte[] wavConversionMp3(@RequestParam(value = "bytes") byte[] bytes);
+    byte[] wavConversionMp3(@RequestParam(value = "input") FileInputStream input);
 
 
     /**
      * flac 转 mp3
      *
-     * @param bytes
+     * @param input
      * @return
      */
     @PostMapping(value = "/flacConversionMp3", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @NoWapperResponse
-    byte[] flacConversionMp3(@RequestParam(value = "bytes") byte[] bytes);
+    byte[] flacConversionMp3(@RequestParam(value = "input") FileInputStream input);
 
     /**
      * ape 转 mp3
      *
-     * @param bytes
+     * @param input
      * @return
      */
     @PostMapping(value = "/apeConversionMp3", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @NoWapperResponse
-    byte[] apeConversionMp3(@RequestParam(value = "bytes") byte[] bytes);
+    byte[] apeConversionMp3(@RequestParam(value = "input") FileInputStream input);
 }
 
 

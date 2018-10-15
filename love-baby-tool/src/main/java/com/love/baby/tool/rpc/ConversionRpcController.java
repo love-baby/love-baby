@@ -33,7 +33,7 @@ public class ConversionRpcController implements ConversionRpcService {
     @PostMapping(value = "/wavConversionMp3", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @NoWapperResponse
     @Override
-    public ResponseEntity<byte[]> wavConversionMp3(@Param("file") MultipartFile file, HttpServletResponse response) throws IOException {
+    public ResponseEntity<byte[]> wavConversionMp3(@Param("file") MultipartFile file) throws IOException {
         String path = converService.cacheTemp(file);
         byte[] bytes = converService.conversion(path);
         return responseEntity(bytes);
@@ -42,7 +42,7 @@ public class ConversionRpcController implements ConversionRpcService {
     @PostMapping(value = "/flacConversionMp3", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @NoWapperResponse
     @Override
-    public ResponseEntity<byte[]> flacConversionMp3(@Param("file") MultipartFile file, HttpServletResponse response) throws IOException {
+    public ResponseEntity<byte[]> flacConversionMp3(@Param("file") MultipartFile file) throws IOException {
         String path = converService.cacheTemp(file);
         byte[] bytes = converService.conversion(path);
         return responseEntity(bytes);
@@ -51,7 +51,7 @@ public class ConversionRpcController implements ConversionRpcService {
     @PostMapping(value = "/apeConversionMp3", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @NoWapperResponse
     @Override
-    public ResponseEntity<byte[]> apeConversionMp3(@Param("file") MultipartFile file, HttpServletResponse response) throws IOException {
+    public ResponseEntity<byte[]> apeConversionMp3(@Param("file") MultipartFile file) throws IOException {
         String path = converService.cacheTemp(file);
         byte[] bytes = converService.conversion(path);
         return responseEntity(bytes);

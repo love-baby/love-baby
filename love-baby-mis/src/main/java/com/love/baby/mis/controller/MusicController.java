@@ -37,7 +37,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -212,7 +211,7 @@ public class MusicController {
      * @return
      */
     @GetMapping("/audition/{id}")
-    public Map audition(@RequestHeader(value = "token") String token, @PathVariable String id, HttpServletResponse response) throws IOException {
+    public Map audition(@RequestHeader(value = "token") String token, @PathVariable String id) throws IOException {
         logger.info("获取音乐信息 Id = {} ", id);
         userSessionCommon.assertSessionAndGetUid(token);
         Music music = musicService.findById(id);
@@ -233,7 +232,7 @@ public class MusicController {
             UploadFile uploadFile = uploadFileService.findByMd5(md5);
             logger.info("uploadFile = {}", JSON.toJSON(uploadFile));
             MultipartFile multipartFile = new MultipartFileUtil(file.getName(), uploadBytes, uploadFile.getFileType());
-            ResponseEntity<byte[]> a = conversionRpcService.wavConversionMp3(multipartFile, response);
+            ResponseEntity<byte[]> a = conversionRpcService.wavConversionMp3(multipartFile);
             if (a.getStatusCode() == HttpStatus.OK) {
                 logger.info("成功");
             } else {

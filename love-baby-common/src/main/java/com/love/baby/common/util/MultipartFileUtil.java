@@ -15,11 +15,11 @@ public class MultipartFileUtil implements MultipartFile {
     private final String contentType;
     private final byte[] payload;
 
-    public MultipartFileUtil(String originalFileName, byte[] payload) {
+    public MultipartFileUtil(String originalFileName, byte[] payload,String contentType) {
         this.originalFileName = originalFileName;
         this.payload = payload;
         this.name = "file";
-        this.contentType = "application/octet-stream";
+        this.contentType = contentType;
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.love.baby.common.api.ConversionRpcService;
 import com.love.baby.common.bean.Album;
 import com.love.baby.common.bean.Author;
 import com.love.baby.common.bean.Music;
+import com.love.baby.common.bean.UploadFile;
 import com.love.baby.common.common.UserSessionCommon;
 import com.love.baby.common.common.bean.PageUtil;
 import com.love.baby.common.exception.SystemException;
@@ -15,7 +16,9 @@ import com.love.baby.common.util.QiNiuUtil;
 import com.love.baby.mis.async.AsyncTaskService;
 import com.love.baby.mis.config.SystemConfig;
 import com.love.baby.mis.service.MusicService;
+import com.love.baby.mis.service.UploadFileService;
 import com.love.baby.mis.vo.MusicVo;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
@@ -59,6 +62,9 @@ public class MusicController {
 
     @Resource
     private ConversionRpcService conversionRpcService;
+
+    @Resource
+    private UploadFileService uploadFileService;
 
     /**
      * 获取所有
@@ -220,7 +226,10 @@ public class MusicController {
             File file = new File(music.getPath());
             InputStream input = new FileInputStream(file);
             logger.info("file.getName = {}", file.getName());
-            MultipartFile multipartFile = new MultipartFileUtil(file.getName(), new byte[input.available()]);
+            byte[] bytys = new byte[input.available()];
+            String md5 = DigestUtils.md5Hex(bytys);
+            UploadFile uploadFile = uploadFileService.findByMd5(md5);
+            MultipartFile multipartFile = new MultipartFileUtil(file.getName(), bytys, uploadFile.getFileType());
             conversionRpcService.wavConversionMp3(multipartFile);
             logger.info("执行转换任务结束");
         } else {

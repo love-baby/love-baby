@@ -1,5 +1,6 @@
 package com.love.baby.tool.service;
 
+import com.alibaba.fastjson.JSON;
 import com.love.baby.common.exception.SystemException;
 import com.love.baby.tool.config.SystemConfig;
 import com.love.baby.tool.util.CmdUtil;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author liangbc
@@ -26,7 +29,11 @@ public class ConverService {
      * @return
      */
     public String cacheTemp(MultipartFile file) {
-        logger.info("缓存文件");
+        Map fileMeta = new HashMap();
+        fileMeta.put("fileName", file.getOriginalFilename());
+        fileMeta.put("fileSize", file.getSize() / 1024 + " Kb");
+        fileMeta.put("fileType", file.getContentType());
+        logger.info("缓存文件 fileMeta = {}", JSON.toJSON(fileMeta));
         String path = SystemConfig.SystemTempPath + file.getOriginalFilename();
         try {
             BufferedOutputStream buffStream = new BufferedOutputStream(new FileOutputStream(path));

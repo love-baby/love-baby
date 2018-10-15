@@ -54,9 +54,6 @@ public class ToolCotroller {
     public List<Map> fileUpload(@RequestParam(value = "files[]") MultipartFile[] multipartfiles) throws SystemException, IOException {
         List<Map> list = new ArrayList<>();
         for (MultipartFile file : multipartfiles) {
-            logger.info("测试上传");
-            conversionRpcService.apeConversionMp3(file);
-            logger.info("测试上传");
             logger.info(file.getOriginalFilename() + " fileUpload! ");
             Map fileMeta = new HashMap();
             fileMeta.put("fileName", file.getOriginalFilename());

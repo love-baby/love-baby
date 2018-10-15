@@ -31,7 +31,7 @@ public interface ConversionRpcService {
      */
     @PostMapping(value = "/wavConversionMp3", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @NoWapperResponse
-    ResponseEntity<byte[]> wavConversionMp3(@Param("file") MultipartFile file) throws IOException;
+    ResponseEntity<byte[]> wavConversionMp3(@Param("file") MultipartFile file);
 
 
     /**
@@ -43,7 +43,7 @@ public interface ConversionRpcService {
      */
     @PostMapping(value = "/flacConversionMp3", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @NoWapperResponse
-    ResponseEntity<byte[]> flacConversionMp3(@Param("file") MultipartFile file) throws IOException;
+    ResponseEntity<byte[]> flacConversionMp3(@Param("file") MultipartFile file);
 
     /**
      * ape 转 mp3
@@ -54,7 +54,7 @@ public interface ConversionRpcService {
      */
     @PostMapping(value = "/apeConversionMp3", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @NoWapperResponse
-    ResponseEntity<byte[]> apeConversionMp3(@Param("file") MultipartFile file) throws IOException;
+    ResponseEntity<byte[]> apeConversionMp3(@Param("file") MultipartFile file);
 
     /**
      * RPC 上传文件配置文件

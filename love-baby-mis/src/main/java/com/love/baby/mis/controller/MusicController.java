@@ -219,7 +219,7 @@ public class MusicController {
 
             File file = new File(music.getPath());
             InputStream input = new FileInputStream(file);
-            MultipartFile multipartFile = new MultipartFileUtil("filename.tmp", new byte[input.available()]);
+            MultipartFile multipartFile = new MultipartFileUtil(file.getName(), new byte[input.available()]);
             conversionRpcService.wavConversionMp3(multipartFile);
             logger.info("执行转换任务结束");
         } else {

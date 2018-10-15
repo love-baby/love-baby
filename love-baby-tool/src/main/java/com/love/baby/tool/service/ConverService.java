@@ -6,6 +6,7 @@ import com.love.baby.tool.util.CmdUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 
@@ -21,16 +22,15 @@ public class ConverService {
     /**
      * 缓存文件
      *
-     * @param bytes
-     * @param suffix
+     * @param file
      * @return
      */
-    public String cacheTemp(byte[] bytes, String suffix) {
+    public String cacheTemp(MultipartFile file) {
         logger.info("缓存文件");
-        String path = SystemConfig.SystemTempPath + System.currentTimeMillis() + suffix;
+        String path = SystemConfig.SystemTempPath + System.currentTimeMillis() + "_" + file.getName();
         try {
             BufferedOutputStream buffStream = new BufferedOutputStream(new FileOutputStream(path));
-            buffStream.write(bytes);
+            buffStream.write(file.getBytes());
             buffStream.close();
         } catch (IOException e) {
             logger.error("缓存文件失败", e);

@@ -11,4 +11,9 @@ public class SystemConfig {
      */
     public static final String SystemPath = "/data/resource/love-baby";
 
+    /**
+     * 系统临时目录
+     */
+    public static final String SystemTempPath = "/data/temp/";
+
 }

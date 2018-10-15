@@ -1,14 +1,15 @@
 package com.love.baby.mis.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.love.baby.common.api.ConversionRpcService;
 import com.love.baby.common.bean.Album;
 import com.love.baby.common.bean.Author;
 import com.love.baby.common.bean.Music;
 import com.love.baby.common.common.UserSessionCommon;
+import com.love.baby.common.common.bean.PageUtil;
 import com.love.baby.common.exception.SystemException;
 import com.love.baby.common.param.SearchParams;
 import com.love.baby.common.param.SearchParamsDto;
-import com.love.baby.common.common.bean.PageUtil;
 import com.love.baby.common.util.QiNiuUtil;
 import com.love.baby.mis.async.AsyncTaskService;
 import com.love.baby.mis.config.SystemConfig;
@@ -30,6 +31,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.*;
 
@@ -51,6 +53,9 @@ public class MusicController {
 
     @Resource
     private AsyncTaskService asyncTaskService;
+
+    @Resource
+    private ConversionRpcService conversionRpcService;
 
     /**
      * 获取所有
@@ -207,6 +212,11 @@ public class MusicController {
         if (StringUtils.isBlank(music.getQiNiuUrl())) {
             //上传到七牛
             //asyncTaskService.executeQiNiuUploadAsyncTask(music);
+            logger.info("执行转换任务");
+            FileInputStream input = new FileInputStream(new File(music.getPath()));
+            byte[] bytes = new byte[input.available()];
+            conversionRpcService.wavConversionMp3(bytes);
+            logger.info("执行转换任务结束");
         } else {
             //回源鉴权防盗链
             //src = music.getQiNiuUrl() + "?token=" + token;

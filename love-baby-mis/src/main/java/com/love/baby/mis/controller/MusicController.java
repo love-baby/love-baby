@@ -223,13 +223,17 @@ public class MusicController {
             //asyncTaskService.executeQiNiuUploadAsyncTask(music);
             logger.info("执行转换任务");
 
+
             File file = new File(music.getPath());
             InputStream input = new FileInputStream(file);
+            byte[] uploadBytes = new byte[input.available()];
+
             logger.info("file.getName = {}", file.getName());
-            byte[] bytys = new byte[input.available()];
-            String md5 = DigestUtils.md5Hex(bytys);
+            String md5 = DigestUtils.md5Hex(uploadBytes);
+            logger.info("md5 = {}", md5);
             UploadFile uploadFile = uploadFileService.findByMd5(md5);
-            MultipartFile multipartFile = new MultipartFileUtil(file.getName(), bytys, uploadFile.getFileType());
+            logger.info("uploadFile = {}", JSON.toJSON(uploadFile));
+            MultipartFile multipartFile = new MultipartFileUtil(file.getName(), uploadBytes, uploadFile.getFileType());
             conversionRpcService.wavConversionMp3(multipartFile);
             logger.info("执行转换任务结束");
         } else {

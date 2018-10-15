@@ -21,9 +21,9 @@ public interface ConversionRpcService {
      * @param input
      * @return
      */
-    @PostMapping(value = "/wavConversionMp3", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "/wavConversionMp3", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
     @NoWapperResponse
-    byte[] wavConversionMp3(@RequestParam(value = "input") FileInputStream input);
+    byte[] wavConversionMp3(@RequestParam FileInputStream input);
 
 
     /**
@@ -32,9 +32,9 @@ public interface ConversionRpcService {
      * @param input
      * @return
      */
-    @PostMapping(value = "/flacConversionMp3", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "/flacConversionMp3", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
     @NoWapperResponse
-    byte[] flacConversionMp3(@RequestParam(value = "input") FileInputStream input);
+    byte[] flacConversionMp3(@RequestParam FileInputStream input);
 
     /**
      * ape 转 mp3
@@ -42,9 +42,9 @@ public interface ConversionRpcService {
      * @param input
      * @return
      */
-    @PostMapping(value = "/apeConversionMp3", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "/apeConversionMp3", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
     @NoWapperResponse
-    byte[] apeConversionMp3(@RequestParam(value = "input") FileInputStream input);
+    byte[] apeConversionMp3(@RequestParam FileInputStream input);
 }
 
 

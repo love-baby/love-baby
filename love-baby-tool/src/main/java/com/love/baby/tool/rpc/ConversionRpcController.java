@@ -25,26 +25,26 @@ public class ConversionRpcController implements ConversionRpcService {
     @Resource
     private ConverService converService;
 
-    @PostMapping(value = "/wavConversionMp3", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "/wavConversionMp3", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
     @NoWapperResponse
     @Override
-    public byte[] wavConversionMp3(@RequestParam(value = "input") FileInputStream input) {
+    public byte[] wavConversionMp3(@RequestParam FileInputStream input) {
         String path = converService.cacheTemp(input, ".wav");
         return  converService.conversion(path);
     }
 
-    @PostMapping(value = "/flacConversionMp3", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "/flacConversionMp3", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
     @NoWapperResponse
     @Override
-    public byte[] flacConversionMp3(@RequestParam(value = "input") FileInputStream input) {
+    public byte[] flacConversionMp3(@RequestParam FileInputStream input) {
         String path = converService.cacheTemp(input, ".flac");
         return  converService.conversion(path);
     }
 
-    @PostMapping(value = "/apeConversionMp3", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "/apeConversionMp3", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
     @NoWapperResponse
     @Override
-    public byte[] apeConversionMp3(@RequestParam(value = "input") FileInputStream input) {
+    public byte[] apeConversionMp3(@RequestParam FileInputStream input) {
         String path = converService.cacheTemp(input, ".ape");
         return  converService.conversion(path);
     }

@@ -26,6 +26,7 @@ public class ConverService {
      * @return
      */
     public String cacheTemp(byte[] bytes, String suffix) {
+        logger.info("bytes = {}", bytes.length);
         String path = SystemConfig.SystemTempPath + System.currentTimeMillis() + suffix;
         try {
             BufferedOutputStream buffStream = new BufferedOutputStream(new FileOutputStream(path));

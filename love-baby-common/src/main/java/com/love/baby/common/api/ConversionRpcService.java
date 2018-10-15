@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
  * @author liangbc
  * @date 2018/10/15
  */
-@FeignClient(name = "love-baby-user", path = "/conversion/rpc")
+@FeignClient(name = "love-baby-tool", path = "/conversion/rpc")
 public interface ConversionRpcService {
 
     /**

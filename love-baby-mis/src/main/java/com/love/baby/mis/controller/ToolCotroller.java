@@ -1,6 +1,7 @@
 package com.love.baby.mis.controller;
 
 import com.love.baby.common.annotation.NoWapperResponse;
+import com.love.baby.common.api.ConversionRpcService;
 import com.love.baby.common.bean.UploadFile;
 import com.love.baby.common.common.UserSessionCommon;
 import com.love.baby.common.exception.SystemException;
@@ -39,6 +40,9 @@ public class ToolCotroller {
     @Resource
     private UserSessionCommon userSessionCommon;
 
+    @Resource
+    private ConversionRpcService conversionRpcService;
+
 
     /**
      * 上传文件
@@ -50,6 +54,9 @@ public class ToolCotroller {
     public List<Map> fileUpload(@RequestParam(value = "files[]") MultipartFile[] multipartfiles) throws SystemException, IOException {
         List<Map> list = new ArrayList<>();
         for (MultipartFile file : multipartfiles) {
+            logger.info("测试上传");
+            conversionRpcService.apeConversionMp3(file);
+            logger.info("测试上传");
             logger.info(file.getOriginalFilename() + " fileUpload! ");
             Map fileMeta = new HashMap();
             fileMeta.put("fileName", file.getOriginalFilename());

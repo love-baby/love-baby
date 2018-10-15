@@ -35,10 +35,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -222,15 +219,11 @@ public class MusicController {
             //上传到七牛
             //asyncTaskService.executeQiNiuUploadAsyncTask(music);
             logger.info("执行转换任务");
-
-
             File file = new File(music.getPath());
             InputStream input = new FileInputStream(file);
             byte[] uploadBytes = new byte[input.available()];
-
-            logger.info("file.getName = {}", file.getName());
+            input.read(uploadBytes);
             String md5 = DigestUtils.md5Hex(uploadBytes);
-            logger.info("md5 = {}", md5);
             UploadFile uploadFile = uploadFileService.findByMd5(md5);
             logger.info("uploadFile = {}", JSON.toJSON(uploadFile));
             MultipartFile multipartFile = new MultipartFileUtil(file.getName(), uploadBytes, uploadFile.getFileType());
@@ -250,4 +243,6 @@ public class MusicController {
         m.put("lrc", "");
         return m;
     }
+
+
 }

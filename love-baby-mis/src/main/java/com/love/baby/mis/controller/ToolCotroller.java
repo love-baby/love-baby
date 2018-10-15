@@ -55,10 +55,6 @@ public class ToolCotroller {
         List<Map> list = new ArrayList<>();
         for (MultipartFile file : multipartfiles) {
             logger.info(file.getOriginalFilename() + " fileUpload! ");
-
-            logger.info("cees");
-            conversionRpcService.wavConversionMp3(file);
-
             Map fileMeta = new HashMap();
             fileMeta.put("fileName", file.getOriginalFilename());
             fileMeta.put("fileSize", file.getSize() / 1024 + " Kb");

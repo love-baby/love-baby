@@ -20,7 +20,7 @@ import java.io.IOException;
  * @date 2018/10/15
  */
 @RestController
-@RequestMapping(value = "/conversion/rpc", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@RequestMapping(value = "/conversion/rpc")
 public class ConversionRpcController implements ConversionRpcService {
 
     @Resource

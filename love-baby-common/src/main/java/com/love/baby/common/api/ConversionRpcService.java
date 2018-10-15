@@ -4,9 +4,10 @@ import com.love.baby.common.annotation.NoWapperResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileInputStream;
+import java.io.IOException;
 
 /**
  * @author liangbc
@@ -15,36 +16,41 @@ import java.io.FileInputStream;
 @FeignClient(name = "love-baby-tool", path = "/conversion/rpc")
 public interface ConversionRpcService {
 
+
     /**
      * wav 转 mp3
      *
-     * @param input
+     * @param file
      * @return
+     * @throws IOException
      */
-    @PostMapping(value = "/wavConversionMp3", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/wavConversionMp3", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @NoWapperResponse
-    byte[] wavConversionMp3(@RequestParam FileInputStream input);
+    byte[] wavConversionMp3(@RequestPart(value = "file", required = false) MultipartFile file) throws IOException;
 
 
     /**
      * flac 转 mp3
      *
-     * @param input
+     * @param file
      * @return
+     * @throws IOException
      */
-    @PostMapping(value = "/flacConversionMp3", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/flacConversionMp3", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @NoWapperResponse
-    byte[] flacConversionMp3(@RequestParam FileInputStream input);
+    byte[] flacConversionMp3(@RequestPart(value = "file", required = false) MultipartFile file) throws IOException;
 
     /**
      * ape 转 mp3
      *
-     * @param input
+     * @param file
      * @return
+     * @throws IOException
      */
-    @PostMapping(value = "/apeConversionMp3", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/apeConversionMp3", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @NoWapperResponse
-    byte[] apeConversionMp3(@RequestParam FileInputStream input);
+    byte[] apeConversionMp3(@RequestPart(value = "file", required = false) MultipartFile file) throws IOException;
+
 }
 
 

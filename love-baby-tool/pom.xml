@@ -87,7 +87,6 @@
             <artifactId>spring-rabbit</artifactId>
         </dependency>
 
-
     </dependencies>
 
     <build>

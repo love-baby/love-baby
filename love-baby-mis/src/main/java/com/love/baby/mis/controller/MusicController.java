@@ -15,6 +15,9 @@ import com.love.baby.mis.async.AsyncTaskService;
 import com.love.baby.mis.config.SystemConfig;
 import com.love.baby.mis.service.MusicService;
 import com.love.baby.mis.vo.MusicVo;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItem;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
@@ -28,11 +31,12 @@ import org.jaudiotagger.tag.TagException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.annotation.Resource;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
 import java.util.*;
 
 /**
@@ -213,8 +217,18 @@ public class MusicController {
             //上传到七牛
             //asyncTaskService.executeQiNiuUploadAsyncTask(music);
             logger.info("执行转换任务");
-            FileInputStream input = new FileInputStream(new File(music.getPath()));
-            conversionRpcService.wavConversionMp3(input);
+            File file = new File(music.getPath());
+            FileItem fileItem = new DiskFileItem("mainFile", Files.probeContentType(file.toPath()), false, file.getName(), (int) file.length(), file.getParentFile());
+            try {
+                InputStream input = new FileInputStream(file);
+                OutputStream os = fileItem.getOutputStream();
+                IOUtils.copy(input, os);
+                IOUtils.copy(new FileInputStream(file), fileItem.getOutputStream());
+            } catch (IOException ex) {
+                logger.error("转码失败");
+            }
+            MultipartFile multipartFile = new CommonsMultipartFile(fileItem);
+            conversionRpcService.wavConversionMp3(multipartFile);
             logger.info("执行转换任务结束");
         } else {
             //回源鉴权防盗链

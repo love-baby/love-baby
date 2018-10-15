@@ -21,16 +21,16 @@ public class ConverService {
     /**
      * 缓存文件
      *
-     * @param input
+     * @param bytes
      * @param suffix
      * @return
      */
-    public String cacheTemp(FileInputStream input, String suffix) {
+    public String cacheTemp(byte[] bytes, String suffix) {
         logger.info("缓存文件");
         String path = SystemConfig.SystemTempPath + System.currentTimeMillis() + suffix;
         try {
             BufferedOutputStream buffStream = new BufferedOutputStream(new FileOutputStream(path));
-            buffStream.write(new byte[input.available()]);
+            buffStream.write(bytes);
             buffStream.close();
         } catch (IOException e) {
             logger.error("缓存文件失败", e);

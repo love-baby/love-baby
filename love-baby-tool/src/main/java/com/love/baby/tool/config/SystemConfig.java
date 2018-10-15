@@ -15,5 +15,4 @@ public class SystemConfig {
      * 系统临时目录
      */
     public static final String SystemTempPath = "/data/temp/";
-
 }

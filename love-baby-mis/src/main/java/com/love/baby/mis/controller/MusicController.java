@@ -31,11 +31,17 @@ import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.TagException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.io.*;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 
 /**
@@ -206,7 +212,7 @@ public class MusicController {
      * @return
      */
     @GetMapping("/audition/{id}")
-    public Map audition(@RequestHeader(value = "token") String token, @PathVariable String id) throws IOException {
+    public Map audition(@RequestHeader(value = "token") String token, @PathVariable String id, HttpServletResponse response) throws IOException {
         logger.info("获取音乐信息 Id = {} ", id);
         userSessionCommon.assertSessionAndGetUid(token);
         Music music = musicService.findById(id);
@@ -227,7 +233,12 @@ public class MusicController {
             UploadFile uploadFile = uploadFileService.findByMd5(md5);
             logger.info("uploadFile = {}", JSON.toJSON(uploadFile));
             MultipartFile multipartFile = new MultipartFileUtil(file.getName(), uploadBytes, uploadFile.getFileType());
-            conversionRpcService.wavConversionMp3(multipartFile);
+            ResponseEntity<byte[]> a = conversionRpcService.wavConversionMp3(multipartFile, response);
+            if (a.getStatusCode() == HttpStatus.OK) {
+                logger.info("成功");
+            } else {
+                logger.info("a = {}", JSON.toJSON(a));
+            }
             logger.info("执行转换任务结束");
         } else {
             //回源鉴权防盗链

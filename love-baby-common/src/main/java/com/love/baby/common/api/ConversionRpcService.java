@@ -8,9 +8,11 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
@@ -25,35 +27,38 @@ public interface ConversionRpcService {
      * wav 转 mp3
      *
      * @param file
+     * @param response
      * @return
      * @throws IOException
      */
     @PostMapping(value = "/wavConversionMp3", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @NoWapperResponse
-    byte[] wavConversionMp3(@Param("file") MultipartFile file) throws IOException;
+    ResponseEntity<byte[]> wavConversionMp3(@Param("file") MultipartFile file, HttpServletResponse response) throws IOException;
 
 
     /**
      * flac 转 mp3
      *
      * @param file
+     * @param response
      * @return
      * @throws IOException
      */
     @PostMapping(value = "/flacConversionMp3", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @NoWapperResponse
-    byte[] flacConversionMp3(@Param("file") MultipartFile file) throws IOException;
+    ResponseEntity<byte[]> flacConversionMp3(@Param("file") MultipartFile file, HttpServletResponse response) throws IOException;
 
     /**
      * ape 转 mp3
      *
      * @param file
+     * @param response
      * @return
      * @throws IOException
      */
     @PostMapping(value = "/apeConversionMp3", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @NoWapperResponse
-    byte[] apeConversionMp3(@Param("file") MultipartFile file) throws IOException;
+    ResponseEntity<byte[]> apeConversionMp3(@Param("file") MultipartFile file, HttpServletResponse response) throws IOException;
 
     /**
      * RPC 上传文件配置文件

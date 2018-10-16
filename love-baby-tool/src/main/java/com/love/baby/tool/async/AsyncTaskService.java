@@ -1,5 +1,6 @@
 package com.love.baby.tool.async;
 
+import com.alibaba.fastjson.JSON;
 import com.love.baby.common.dto.QiNiuUploadDto;
 import com.love.baby.common.util.QiNiuUtil;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -20,7 +21,7 @@ public class AsyncTaskService {
     private static Logger logger = LoggerFactory.getLogger(AsyncTaskService.class);
 
     @Async
-    public QiNiuUploadDto executeQiNiuUploadAsyncTask(String path) {
+    public void executeQiNiuUploadAsyncTask(String path) {
         QiNiuUploadDto qiNiuUploadDto = QiNiuUploadDto.builder()
                 .code(QiNiuUploadDto.Code.ERROR).message("上传失败").build();
         File f = new File(path);
@@ -40,6 +41,9 @@ public class AsyncTaskService {
             logger.error("七牛上传失败！", e);
             qiNiuUploadDto.setMessage(e.getMessage());
         }
-        return qiNiuUploadDto;
+        logger.info("处理上传结果 qiNiuUploadDto = {}", JSON.toJSON(qiNiuUploadDto));
+        if (f.delete()) {
+            logger.info("转换后文件删除成功！ f = {}", f.getPath());
+        }
     }
 }

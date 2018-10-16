@@ -67,7 +67,15 @@ public class ConverService {
         logger.info("转换开始 cmd = {}", cmd);
         String r = CmdUtil.execCmd(cmd, new File(SystemConfig.SystemTempPath + "/cmd"));
         logger.info("转换结束 r = {}", r);
-        asyncTaskService.executeQiNiuUploadAsyncTask(outputPath);
+        File f = new File(outputPath);
+        if (f.exists()) {
+            asyncTaskService.executeQiNiuUploadAsyncTask(outputPath);
+        } else {
+            logger.info("文件不存在，转换失败");
+        }
+        if (file.delete()) {
+            logger.info("目标文件删除成功 f = {}", file.getPath());
+        }
     }
 
 }

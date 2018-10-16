@@ -10,6 +10,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ import java.io.FileInputStream;
  * @author 23770
  */
 @Service
+@EnableBinding({MusicConversionStream.class})
 public class AsyncTaskService {
 
     private static Logger logger = LoggerFactory.getLogger(AsyncTaskService.class);

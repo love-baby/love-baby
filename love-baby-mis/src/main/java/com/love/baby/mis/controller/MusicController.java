@@ -242,7 +242,8 @@ public class MusicController {
             String md5 = DigestUtils.md5Hex(uploadBytes);
             UploadFile uploadFile = uploadFileService.findByMd5(md5);
             MultipartFile multipartFile = new MultipartFileUtil(file.getName(), uploadBytes, uploadFile.getFileType());
-            conversionRpcService.wavConversionMp3(multipartFile);
+            //处理转码和上传到七牛上去
+            conversionRpcService.musicConversionMp3(multipartFile);
         } else {
             //回源鉴权防盗链
             //src = music.getQiNiuUrl() + "?token=" + token;

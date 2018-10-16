@@ -2,8 +2,10 @@ package com.love.baby.tool.rpc;
 
 import com.love.baby.common.annotation.NoWapperResponse;
 import com.love.baby.common.api.ConversionRpcService;
-import com.love.baby.tool.service.ConverService;
+import com.love.baby.tool.async.AsyncTaskService;
 import feign.Param;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,32 +24,16 @@ import javax.annotation.Resource;
 @RequestMapping(value = "/conversion/rpc")
 public class ConversionRpcController implements ConversionRpcService {
 
+    private static Logger logger = LoggerFactory.getLogger(ConversionRpcService.class);
+
     @Resource
-    private ConverService converService;
+    private AsyncTaskService asyncTaskService;
 
-    @PostMapping(value = "/wavConversionMp3", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/musicConversionMp3", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @NoWapperResponse
     @Override
-    public void wavConversionMp3(@Param("file") MultipartFile file) {
-        String path = converService.cacheTemp(file);
-        converService.conversion(path);
+    public void musicConversionMp3(@Param("file") MultipartFile file) {
+        logger.info("处理音乐文件事件");
+        asyncTaskService.executeMusicTask(file);
     }
-
-    @PostMapping(value = "/flacConversionMp3", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @NoWapperResponse
-    @Override
-    public void flacConversionMp3(@Param("file") MultipartFile file){
-        String path = converService.cacheTemp(file);
-        converService.conversion(path);
-    }
-
-    @PostMapping(value = "/apeConversionMp3", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @NoWapperResponse
-    @Override
-    public void apeConversionMp3(@Param("file") MultipartFile file){
-        String path = converService.cacheTemp(file);
-        converService.conversion(path);
-    }
-
-
 }

@@ -5,6 +5,7 @@ import com.love.baby.common.exception.SystemException;
 import com.love.baby.tool.async.AsyncTaskService;
 import com.love.baby.tool.config.SystemConfig;
 import com.love.baby.tool.util.CmdUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -61,6 +62,11 @@ public class ConverService {
      * @return
      */
     public void conversion(String source) {
+        if (StringUtils.isBlank(source)) {
+            logger.error("资源文件不存在");
+            return;
+        }
+        logger.error("");
         File file = new File(source);
         String outputPath = file.getParentFile().getPath() + File.separator + System.currentTimeMillis() + ".mp3";
         String cmd = "ffmpeg -i " + source + " -f mp3 -acodec libmp3lame -y " + outputPath;

@@ -20,7 +20,6 @@ import java.io.IOException;
 @FeignClient(name = "love-baby-tool", path = "/conversion/rpc", configuration = ConversionRpcService.MultipartSupportConfig.class)
 public interface ConversionRpcService {
 
-
     /**
      * wav 转 mp3
      *
@@ -28,32 +27,11 @@ public interface ConversionRpcService {
      * @return
      * @throws IOException
      */
-    @PostMapping(value = "/wavConversionMp3", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/musicConversionMp3", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @NoWapperResponse
-    void wavConversionMp3(@Param("file") MultipartFile file);
+    void musicConversionMp3(@Param("file") MultipartFile file);
 
 
-    /**
-     * flac 转 mp3
-     *
-     * @param file
-     * @return
-     * @throws IOException
-     */
-    @PostMapping(value = "/flacConversionMp3", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @NoWapperResponse
-    void flacConversionMp3(@Param("file") MultipartFile file);
-
-    /**
-     * ape 转 mp3
-     *
-     * @param file
-     * @return
-     * @throws IOException
-     */
-    @PostMapping(value = "/apeConversionMp3", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @NoWapperResponse
-    void apeConversionMp3(@Param("file") MultipartFile file);
 
     /**
      * RPC 上传文件配置文件

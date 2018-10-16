@@ -4,8 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.love.baby.common.exception.SystemException;
 import com.love.baby.tool.async.AsyncTaskService;
 import com.love.baby.tool.config.SystemConfig;
-import com.love.baby.tool.util.CmdUtil;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -13,7 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.BufferedOutputStream;
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
@@ -53,35 +50,6 @@ public class ConverService {
             throw new SystemException(500, "缓存文件失败");
         }
         return path;
-    }
-
-    /**
-     * 转换
-     *
-     * @param source
-     * @return
-     */
-    public void conversion(String source) {
-        if (StringUtils.isBlank(source)) {
-            logger.error("资源文件不存在");
-            return;
-        }
-        logger.error("");
-        File file = new File(source);
-        String outputPath = file.getParentFile().getPath() + File.separator + System.currentTimeMillis() + ".mp3";
-        String cmd = "ffmpeg -i " + source + " -f mp3 -acodec libmp3lame -y " + outputPath;
-        logger.info("转换开始 cmd = {}", cmd);
-        String r = CmdUtil.execCmd(cmd, new File(SystemConfig.SystemTempPath + "/cmd"));
-        logger.info("转换结束 r = {}", r);
-        File f = new File(outputPath);
-        if (f.exists()) {
-            asyncTaskService.executeQiNiuUploadAsyncTask(outputPath);
-        } else {
-            logger.info("文件不存在，转换失败");
-        }
-        if (file.delete()) {
-            logger.info("目标文件删除成功 f = {}", file.getPath());
-        }
     }
 
 }

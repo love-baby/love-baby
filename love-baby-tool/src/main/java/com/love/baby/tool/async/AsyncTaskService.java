@@ -3,15 +3,15 @@ package com.love.baby.tool.async;
 import com.alibaba.fastjson.JSON;
 import com.love.baby.common.dto.QiNiuUploadDto;
 import com.love.baby.common.util.QiNiuUtil;
-import com.love.baby.tool.service.ConverService;
+import com.love.baby.tool.config.SystemConfig;
+import com.love.baby.tool.util.CmdUtil;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
 import java.io.File;
 import java.io.FileInputStream;
 
@@ -22,9 +22,6 @@ import java.io.FileInputStream;
 public class AsyncTaskService {
 
     private static Logger logger = LoggerFactory.getLogger(AsyncTaskService.class);
-
-    @Resource
-    private ConverService converService;
 
     /**
      * 上传七牛
@@ -59,13 +56,32 @@ public class AsyncTaskService {
     }
 
     /**
-     * 缓存本地
+     * 转码完成之后上传七牛
      *
-     * @param file
+     * @param source
      */
     @Async
-    public void executeMusicTask(MultipartFile file) {
-        String path = converService.cacheTemp(file);
-        converService.conversion(path);
+    public void executeMusicTask(String source) {
+        if (StringUtils.isBlank(source)) {
+            logger.error("资源文件不存在");
+            return;
+        }
+        logger.error("");
+        File file = new File(source);
+        String outputPath = file.getParentFile().getPath() + File.separator + System.currentTimeMillis() + ".mp3";
+        String cmd = "ffmpeg -i " + source + " -f mp3 -acodec libmp3lame -y " + outputPath;
+        logger.info("转换开始 cmd = {}", cmd);
+        String r = CmdUtil.execCmd(cmd, new File(SystemConfig.SystemTempPath + "/cmd"));
+        logger.info("转换结束 r = {}", r);
+        File f = new File(outputPath);
+        if (f.exists()) {
+            executeQiNiuUploadAsyncTask(outputPath);
+        } else {
+            logger.info("文件不存在，转换失败");
+        }
+        if (file.delete()) {
+            logger.info("目标文件删除成功 f = {}", file.getPath());
+        }
     }
+
 }

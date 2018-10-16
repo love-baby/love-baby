@@ -3,6 +3,7 @@ package com.love.baby.tool.rpc;
 import com.love.baby.common.annotation.NoWapperResponse;
 import com.love.baby.common.api.ConversionRpcService;
 import com.love.baby.tool.async.AsyncTaskService;
+import com.love.baby.tool.service.ConverService;
 import feign.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,12 +29,14 @@ public class ConversionRpcController implements ConversionRpcService {
 
     @Resource
     private AsyncTaskService asyncTaskService;
+    @Resource
+    private ConverService converService;
 
     @PostMapping(value = "/musicConversionMp3", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @NoWapperResponse
     @Override
     public void musicConversionMp3(@Param("file") MultipartFile file) {
         logger.info("处理音乐文件事件");
-        asyncTaskService.executeMusicTask(file);
+        asyncTaskService.executeMusicTask(converService.cacheTemp(file));
     }
 }

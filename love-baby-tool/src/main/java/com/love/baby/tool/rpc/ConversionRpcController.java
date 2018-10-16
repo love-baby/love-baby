@@ -4,10 +4,7 @@ import com.love.baby.common.annotation.NoWapperResponse;
 import com.love.baby.common.api.ConversionRpcService;
 import com.love.baby.tool.service.ConverService;
 import feign.Param;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,34 +28,26 @@ public class ConversionRpcController implements ConversionRpcService {
     @PostMapping(value = "/wavConversionMp3", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @NoWapperResponse
     @Override
-    public ResponseEntity<byte[]> wavConversionMp3(@Param("file") MultipartFile file) {
+    public void wavConversionMp3(@Param("file") MultipartFile file) {
         String path = converService.cacheTemp(file);
-        byte[] bytes = converService.conversion(path);
-        return responseEntity(bytes);
+        converService.conversion(path);
     }
 
     @PostMapping(value = "/flacConversionMp3", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @NoWapperResponse
     @Override
-    public ResponseEntity<byte[]> flacConversionMp3(@Param("file") MultipartFile file){
+    public void flacConversionMp3(@Param("file") MultipartFile file){
         String path = converService.cacheTemp(file);
-        byte[] bytes = converService.conversion(path);
-        return responseEntity(bytes);
+        converService.conversion(path);
     }
 
     @PostMapping(value = "/apeConversionMp3", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @NoWapperResponse
     @Override
-    public ResponseEntity<byte[]> apeConversionMp3(@Param("file") MultipartFile file){
+    public void apeConversionMp3(@Param("file") MultipartFile file){
         String path = converService.cacheTemp(file);
-        byte[] bytes = converService.conversion(path);
-        return responseEntity(bytes);
+        converService.conversion(path);
     }
 
-    private ResponseEntity<byte[]> responseEntity(byte[] bytes){
-        HttpHeaders headers = new HttpHeaders();
-        HttpStatus status = HttpStatus.OK;
-        return new ResponseEntity<>(bytes, headers, status);
-    }
 
 }

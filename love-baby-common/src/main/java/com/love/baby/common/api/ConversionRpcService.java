@@ -8,7 +8,6 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,7 +30,7 @@ public interface ConversionRpcService {
      */
     @PostMapping(value = "/wavConversionMp3", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @NoWapperResponse
-    ResponseEntity<byte[]> wavConversionMp3(@Param("file") MultipartFile file);
+    void wavConversionMp3(@Param("file") MultipartFile file);
 
 
     /**
@@ -43,7 +42,7 @@ public interface ConversionRpcService {
      */
     @PostMapping(value = "/flacConversionMp3", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @NoWapperResponse
-    ResponseEntity<byte[]> flacConversionMp3(@Param("file") MultipartFile file);
+    void flacConversionMp3(@Param("file") MultipartFile file);
 
     /**
      * ape 转 mp3
@@ -54,7 +53,7 @@ public interface ConversionRpcService {
      */
     @PostMapping(value = "/apeConversionMp3", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @NoWapperResponse
-    ResponseEntity<byte[]> apeConversionMp3(@Param("file") MultipartFile file);
+    void apeConversionMp3(@Param("file") MultipartFile file);
 
     /**
      * RPC 上传文件配置文件

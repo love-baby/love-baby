@@ -1,7 +1,9 @@
 package com.love.baby.tool.service;
 
 import com.alibaba.fastjson.JSON;
+import com.love.baby.common.dto.QiNiuUploadDto;
 import com.love.baby.common.exception.SystemException;
+import com.love.baby.tool.async.AsyncTaskService;
 import com.love.baby.tool.config.SystemConfig;
 import com.love.baby.tool.util.CmdUtil;
 import org.slf4j.Logger;
@@ -9,7 +11,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.*;
+import javax.annotation.Resource;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,6 +27,9 @@ import java.util.Map;
 public class ConverService {
 
     private static Logger logger = LoggerFactory.getLogger(ConverService.class);
+
+    @Resource
+    private AsyncTaskService asyncTaskService;
 
     /**
      * 缓存文件
@@ -52,26 +61,15 @@ public class ConverService {
      * @param source
      * @return
      */
-    public byte[] conversion(String source) {
+    public void conversion(String source) {
         File file = new File(source);
         String outputPath = file.getParentFile().getPath() + File.separator + System.currentTimeMillis() + ".mp3";
-        logger.info("path = {}", outputPath);
         String cmd = "ffmpeg -i " + source + " -f mp3 -acodec libmp3lame -y " + outputPath;
-        logger.info("cmd = {}", cmd);
-        CmdUtil.execCmd(cmd, new File(SystemConfig.SystemTempPath + "/cmd"));
-        byte[] bytes = null;
-        try {
-            FileInputStream input = new FileInputStream(new File(outputPath));
-            bytes = new byte[input.available()];
-        } catch (FileNotFoundException e) {
-            logger.error("转换失败", e);
-        } catch (IOException e) {
-            logger.error("转换失败", e);
-        }
-        return bytes;
+        logger.info("转换开始 cmd = {}", cmd);
+        String r = CmdUtil.execCmd(cmd, new File(SystemConfig.SystemTempPath + "/cmd"));
+        logger.info("转换结束 r = {}", r);
+        QiNiuUploadDto qiNiuUploadDto = asyncTaskService.executeQiNiuUploadAsyncTask(outputPath);
+        logger.info("上传七牛处理完成 qiNiuUploadDto = {}", JSON.toJSON(qiNiuUploadDto));
     }
-//    public static void main(String arr[]) {
-//        conversion("D:\\data\\resource\\love-baby\\upload\\2018-07-181531903179551花僮-普通Disco.mp3");
-//    }
 
 }

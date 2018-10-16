@@ -1,7 +1,6 @@
-package com.love.baby.mis.config;
+package com.love.baby.common.config;
 
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -15,7 +14,6 @@ import java.util.concurrent.Executor;
  * @author 23770
  */
 @Configuration
-@ComponentScan("com.love.baby.mis.async")
 @EnableAsync
 public class AsyncTaskConfig implements AsyncConfigurer {
 

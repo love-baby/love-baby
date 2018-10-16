@@ -31,8 +31,6 @@ import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.TagException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -221,24 +219,14 @@ public class MusicController {
         String src = SystemConfig.web_host + music.getPath();
         //判断是否上传七牛
         if (StringUtils.isBlank(music.getQiNiuUrl())) {
-            //上传到七牛
-            //asyncTaskService.executeQiNiuUploadAsyncTask(music);
-            logger.info("执行转换任务");
             File file = new File(music.getPath());
             InputStream input = new FileInputStream(file);
             byte[] uploadBytes = new byte[input.available()];
             input.read(uploadBytes);
             String md5 = DigestUtils.md5Hex(uploadBytes);
             UploadFile uploadFile = uploadFileService.findByMd5(md5);
-            logger.info("uploadFile = {}", JSON.toJSON(uploadFile));
             MultipartFile multipartFile = new MultipartFileUtil(file.getName(), uploadBytes, uploadFile.getFileType());
-            ResponseEntity<byte[]> a = conversionRpcService.wavConversionMp3(multipartFile);
-            if (a.getStatusCode() == HttpStatus.OK) {
-                logger.info("成功");
-            } else {
-                logger.info("a = {}", JSON.toJSON(a));
-            }
-            logger.info("执行转换任务结束");
+            conversionRpcService.wavConversionMp3(multipartFile);
         } else {
             //回源鉴权防盗链
             //src = music.getQiNiuUrl() + "?token=" + token;

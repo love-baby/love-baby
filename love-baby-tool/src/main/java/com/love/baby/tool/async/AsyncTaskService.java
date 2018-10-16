@@ -10,10 +10,8 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -24,21 +22,12 @@ import java.io.FileInputStream;
  * @author 23770
  */
 @Service
-@EnableBinding({MusicConversionStream.class})
 public class AsyncTaskService {
 
     private static Logger logger = LoggerFactory.getLogger(AsyncTaskService.class);
 
     @Resource
     private MusicConversionStream musicConversionStream;
-
-
-    @Scheduled(fixedRate = 5000)
-    public void produceHotDrinks() {
-        QiNiuUploadDto qiNiuUploadDto = QiNiuUploadDto.builder()
-                .code(QiNiuUploadDto.Code.ERROR).message("测试消息发送").build();
-        musicConversionStream.musicConversionOutput().send(MessageBuilder.withPayload(qiNiuUploadDto).build());
-    }
 
     /**
      * 上传七牛

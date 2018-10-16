@@ -32,7 +32,7 @@ public class Mu {
 //        }
 
 
-        System.out.println(QiNiuUtil.getAntiLeechAccessUrlBasedOnTimestamp("http://music.love-baby.vip/output1.mp3",6000));
+        System.out.println(QiNiuUtil.getAntiLeechAccessUrlBasedOnTimestamp("http://music.love-baby.vip/a7b85c94309ab6388e4ebe4f9de1972b.mp3",6000));
     }
 
 

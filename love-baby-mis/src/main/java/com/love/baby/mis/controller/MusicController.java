@@ -193,12 +193,28 @@ public class MusicController {
         musicOld.setAuthorId(music.getAuthorId() == null ? "" : music.getAuthorId());
         musicService.update(musicOld);
 
-        AudioFile audioFile = AudioFileIO.read(new File(musicOld.getPath()));
+        File f = new File(musicOld.getPath());
+
+        FileInputStream input = new FileInputStream(f);
+        byte[] uploadBytes = new byte[input.available()];
+        input.read(uploadBytes);
+        String md5 = DigestUtils.md5Hex(uploadBytes);
+        logger.info("oldMd5 = {}", md5);
+        UploadFile uploadFile = uploadFileService.findByMd5(md5);
+        AudioFile audioFile = AudioFileIO.read(f);
         Tag tag = audioFile.getTag();
         tag.setField(FieldKey.TITLE, musicOld.getName());
         tag.setField(FieldKey.ALBUM, musicOld.getAlbumId());
         tag.setField(FieldKey.ARTIST, musicOld.getAuthorId());
         audioFile.commit();
+
+        input = new FileInputStream(audioFile.getFile());
+        uploadBytes = new byte[input.available()];
+        input.read(uploadBytes);
+        md5 = DigestUtils.md5Hex(uploadBytes);
+        logger.info("newMd5 = {}", md5);
+        uploadFile.setMd5(md5);
+        uploadFileService.update(uploadFile);
     }
 
 

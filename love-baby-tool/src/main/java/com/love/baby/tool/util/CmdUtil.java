@@ -37,7 +37,7 @@ public class CmdUtil {
             bufrIn = new BufferedReader(new InputStreamReader(process.getInputStream(), "UTF-8"));
             bufrError = new BufferedReader(new InputStreamReader(process.getErrorStream(), "UTF-8"));
             // 读取输出
-            String line = null;
+            String line;
             while ((line = bufrIn.readLine()) != null) {
                 result.append(line).append('\n');
             }

@@ -1,7 +1,6 @@
 package com.love.baby.tool.service;
 
 import com.alibaba.fastjson.JSON;
-import com.love.baby.common.dto.QiNiuUploadDto;
 import com.love.baby.common.exception.SystemException;
 import com.love.baby.tool.async.AsyncTaskService;
 import com.love.baby.tool.config.SystemConfig;
@@ -68,8 +67,7 @@ public class ConverService {
         logger.info("转换开始 cmd = {}", cmd);
         String r = CmdUtil.execCmd(cmd, new File(SystemConfig.SystemTempPath + "/cmd"));
         logger.info("转换结束 r = {}", r);
-        QiNiuUploadDto qiNiuUploadDto = asyncTaskService.executeQiNiuUploadAsyncTask(outputPath);
-        logger.info("上传七牛处理完成 qiNiuUploadDto = {}", JSON.toJSON(qiNiuUploadDto));
+        asyncTaskService.executeQiNiuUploadAsyncTask(outputPath);
     }
 
 }

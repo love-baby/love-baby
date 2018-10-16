@@ -15,7 +15,7 @@ public class QiNiuUploadDto {
     /**
      * 状态码
      */
-    private Integer code;
+    private int code;
     /**
      * 消息
      */
@@ -30,8 +30,8 @@ public class QiNiuUploadDto {
     private String qiNiuUrl;
 
     public static class Code {
-        public static final Integer OK = 200;
-        public static final Integer ERROR = 500;
+        public static final int OK = 200;
+        public static final int ERROR = 500;
     }
 
 }

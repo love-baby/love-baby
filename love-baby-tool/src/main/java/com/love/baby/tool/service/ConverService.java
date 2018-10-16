@@ -2,14 +2,12 @@ package com.love.baby.tool.service;
 
 import com.alibaba.fastjson.JSON;
 import com.love.baby.common.exception.SystemException;
-import com.love.baby.tool.async.AsyncTaskService;
 import com.love.baby.tool.config.SystemConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -24,9 +22,6 @@ import java.util.Map;
 public class ConverService {
 
     private static Logger logger = LoggerFactory.getLogger(ConverService.class);
-
-    @Resource
-    private AsyncTaskService asyncTaskService;
 
     /**
      * 缓存文件

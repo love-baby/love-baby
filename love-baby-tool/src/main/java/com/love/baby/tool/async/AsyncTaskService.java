@@ -2,8 +2,8 @@ package com.love.baby.tool.async;
 
 import com.alibaba.fastjson.JSON;
 import com.love.baby.common.dto.QiNiuUploadDto;
-import com.love.baby.common.stream.QiNiuUploadStream;
 import com.love.baby.common.util.QiNiuUtil;
+import com.love.baby.tool.QiNiuUploadStream;
 import com.love.baby.tool.config.SystemConfig;
 import com.love.baby.tool.util.CmdUtil;
 import org.apache.commons.codec.digest.DigestUtils;

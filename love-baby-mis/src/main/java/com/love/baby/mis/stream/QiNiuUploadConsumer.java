@@ -12,10 +12,10 @@ import org.springframework.cloud.stream.annotation.StreamListener;
  * @author liangbc
  * @date 2018/10/16
  */
-@EnableBinding(QiNiuUploadDto.class)
-public class QiNiuUploadServer {
+@EnableBinding(QiNiuUploadStream.class)
+public class QiNiuUploadConsumer {
 
-    private static Logger logger = LoggerFactory.getLogger(QiNiuUploadServer.class);
+    private static Logger logger = LoggerFactory.getLogger(QiNiuUploadConsumer.class);
 
     @StreamListener(QiNiuUploadStream.INPUT_QINIU_UPLOAD_ORDER)
     public void inputQiNiuUploadOrder(QiNiuUploadDto qiNiuUploadDto) {

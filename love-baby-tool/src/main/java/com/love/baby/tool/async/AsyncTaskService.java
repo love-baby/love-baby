@@ -2,7 +2,7 @@ package com.love.baby.tool.async;
 
 import com.alibaba.fastjson.JSON;
 import com.love.baby.common.dto.QiNiuUploadDto;
-import com.love.baby.common.stream.QiNiuUploadStream;
+import com.love.baby.common.stream.MusicConversionStream;
 import com.love.baby.common.util.QiNiuUtil;
 import com.love.baby.tool.config.SystemConfig;
 import com.love.baby.tool.util.CmdUtil;
@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -23,13 +24,21 @@ import java.io.FileInputStream;
  * @author 23770
  */
 @Service
-@EnableBinding({ QiNiuUploadStream.class })
+@EnableBinding({MusicConversionStream.class})
 public class AsyncTaskService {
 
     private static Logger logger = LoggerFactory.getLogger(AsyncTaskService.class);
 
     @Resource
-    private QiNiuUploadStream qiNiuUploadStream;
+    private MusicConversionStream musicConversionStream;
+
+
+    @Scheduled(fixedRate = 5000)
+    public void produceHotDrinks() {
+        QiNiuUploadDto qiNiuUploadDto = QiNiuUploadDto.builder()
+                .code(QiNiuUploadDto.Code.ERROR).message("测试消息发送").build();
+        musicConversionStream.musicConversionOutput().send(MessageBuilder.withPayload(qiNiuUploadDto).build());
+    }
 
     /**
      * 上传七牛
@@ -58,7 +67,7 @@ public class AsyncTaskService {
             qiNiuUploadDto.setMessage(e.getMessage());
         }
         //发送文件处理消息
-        qiNiuUploadStream.outputQiNiuUploadOrder().send(MessageBuilder.withPayload(qiNiuUploadDto).build());
+        musicConversionStream.musicConversionOutput().send(MessageBuilder.withPayload(qiNiuUploadDto).build());
         logger.info("处理上传结果 qiNiuUploadDto = {}", JSON.toJSON(qiNiuUploadDto));
         if (f.delete()) {
             logger.info("转换后文件删除成功！ f = {}", f.getPath());

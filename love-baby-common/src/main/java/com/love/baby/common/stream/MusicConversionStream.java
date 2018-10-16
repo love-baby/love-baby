@@ -9,24 +9,25 @@ import org.springframework.messaging.SubscribableChannel;
  * @author liangbc
  * @date 2018/10/16
  */
-public interface QiNiuUploadStream {
+public interface MusicConversionStream {
 
-    String INPUT_QINIU_UPLOAD_ORDER = "inputQiNiuUploadOrder";
+    String MUSIC_CONVERSION_INPUT = "musicConversionInput";
 
-    String OUTPUT_QINIU_UPLOAD_ORDER = "outputQiNiuUploadOrder";
+    String MUSIC_CONVERSION_OUTPUT = "musicConversionOutput";
 
     /**
      * 输入
+     *
      * @return
      */
-    @Input(INPUT_QINIU_UPLOAD_ORDER)
-    SubscribableChannel inputQiNiuUploadOrder();
+    @Input(MUSIC_CONVERSION_INPUT)
+    SubscribableChannel musicConversionInput();
 
     /**
      * 输出
      *
      * @return
      */
-    @Output(OUTPUT_QINIU_UPLOAD_ORDER)
-    MessageChannel outputQiNiuUploadOrder();
+    @Output(MUSIC_CONVERSION_OUTPUT)
+    MessageChannel musicConversionOutput();
 }

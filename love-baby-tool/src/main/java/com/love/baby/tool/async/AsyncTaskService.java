@@ -66,7 +66,6 @@ public class AsyncTaskService {
             logger.error("资源文件不存在");
             return;
         }
-        logger.error("");
         File file = new File(source);
         String outputPath = file.getParentFile().getPath() + File.separator + System.currentTimeMillis() + ".mp3";
         String cmd = "ffmpeg -i " + source + " -f mp3 -acodec libmp3lame -y " + outputPath;

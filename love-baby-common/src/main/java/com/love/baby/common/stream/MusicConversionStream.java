@@ -1,7 +1,9 @@
 package com.love.baby.common.stream;
 
+import org.springframework.cloud.stream.annotation.Input;
 import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.SubscribableChannel;
 
 /**
  * @author liangbc
@@ -13,6 +15,13 @@ public interface MusicConversionStream {
 
     String MUSIC_CONVERSION_OUTPUT = "music.conversion.output";
 
+    /**
+     * 输入
+     *
+     * @return
+     */
+    @Input(MUSIC_CONVERSION_INPUT)
+    SubscribableChannel musicConversionInput();
 
     /**
      * 输出

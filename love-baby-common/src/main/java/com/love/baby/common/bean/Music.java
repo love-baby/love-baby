@@ -49,6 +49,10 @@ public class Music {
      */
     private String lyricsFilePathId;
     /**
+     * 时间长度
+     */
+    private String time;
+    /**
      * 描述
      */
     private String description;

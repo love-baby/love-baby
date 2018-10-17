@@ -155,7 +155,7 @@ public class MusicController {
         } catch (Exception e) {
             logger.error("解析文件失败", e);
         }
-        return new MusicVo(author, album, music,uploadFile);
+        return new MusicVo(author, album, music, uploadFile);
     }
 
     /**
@@ -187,7 +187,7 @@ public class MusicController {
         musicOld.setName(music.getName() == null ? "" : music.getName());
         musicOld.setAlbumId(music.getAlbumId() == null ? "" : music.getAlbumId());
         musicOld.setAuthorId(music.getAuthorId() == null ? "" : music.getAuthorId());
-        musicService.update(musicOld);
+
 
         UploadFile uploadFile = uploadFileService.findById(musicOld.getFilePathId());
         File f = new File(uploadFile.getPath());
@@ -197,6 +197,14 @@ public class MusicController {
         tag.setField(FieldKey.ALBUM, musicOld.getAlbumId());
         tag.setField(FieldKey.ARTIST, musicOld.getAuthorId());
         audioFile.commit();
+
+        //获取时长
+        int trackLength = audioFile.getAudioHeader().getTrackLength();
+        int min = trackLength / 60;
+        int second = trackLength % 60;
+        String length = min + ":" + second;
+        musicOld.setTime(length);
+        musicService.update(musicOld);
 
         FileInputStream input = new FileInputStream(audioFile.getFile());
         byte[] fileBytes = new byte[input.available()];
@@ -246,7 +254,6 @@ public class MusicController {
             InputStream input = new FileInputStream(file);
             byte[] uploadBytes = new byte[input.available()];
             input.read(uploadBytes);
-            String md5 = DigestUtils.md5Hex(uploadBytes);
             MultipartFile multipartFile = new MultipartFileUtil(file.getName(), uploadBytes, uploadFile.getFileType());
             //处理转码和上传到七牛上去
             conversionRpcService.musicConversionMp3(multipartFile);
@@ -262,6 +269,7 @@ public class MusicController {
         m.put("img", "https://images.love-baby.vip/20181010180902.png");
         m.put("src", src);
         m.put("lrc", "");
+        m.put("time", music.getTime());
         return m;
     }
 

@@ -53,6 +53,10 @@ public class MusicVo {
      */
     private String lyricsPath;
     /**
+     * 时间长度
+     */
+    private String time;
+    /**
      * 描述
      */
     private String description;
@@ -63,6 +67,7 @@ public class MusicVo {
         this.id = music.getId();
         this.createTime = music.getCreateTime();
         this.name = music.getName();
+        this.time = music.getTime();
         this.path = StringUtils.isBlank(musicUploadFile.getPath()) ? null : SystemConfig.web_host + musicUploadFile.getPath();
         this.author = new AuthorVo(author);
         this.album = new AlbumVo(album);

@@ -320,6 +320,15 @@
                     window.location = "/login.html";
                 } else if (data.code == 200) {
                     if (data.data != null) {
+
+                        var lists = player.getCurrentList(true);
+                        var b = false;
+                        $.each(lists, function (index, vaule, arr) {
+                            console.log( JSON.stringify(vaule))
+                            // if(vaule==data.data.name){
+                            //
+                            // }
+                        });
                         player.addSong(data.data);
                     }
                 } else {
@@ -390,6 +399,7 @@
 <script type="application/javascript">
     var modeText = ['顺序播放', '单曲循环', '随机播放', '列表循环'];
     var player = null;
+
     function initMusic() {
         player = new MPlayer({
             // 容器选择器名称

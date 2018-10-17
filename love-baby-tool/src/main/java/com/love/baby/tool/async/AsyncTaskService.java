@@ -6,7 +6,6 @@ import com.love.baby.common.stream.MusicConversionStream;
 import com.love.baby.common.util.QiNiuUtil;
 import com.love.baby.tool.config.SystemConfig;
 import com.love.baby.tool.util.CmdUtil;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,13 +44,13 @@ public class AsyncTaskService {
             FileInputStream input = new FileInputStream(f);
             byte[] uploadBytes = new byte[input.available()];
             input.read(uploadBytes);
-            String md5 = DigestUtils.md5Hex(uploadBytes);
-            qiNiuUploadDto.setMd5(md5);
-            String suffix = f.getPath().substring(f.getPath().lastIndexOf("."));
-            String url = QiNiuUtil.fileUpload(uploadBytes, QiNiuUtil.Bucket.MUSIC, DigestUtils.md5Hex(uploadBytes) + suffix);
+            //获取文件名称
+            String fileName = f.getName();
+            String url = QiNiuUtil.fileUpload(uploadBytes, QiNiuUtil.Bucket.MUSIC, fileName);
             qiNiuUploadDto.setQiNiuUrl(url);
             qiNiuUploadDto.setCode(QiNiuUploadDto.Code.OK);
             qiNiuUploadDto.setMessage("上传成功");
+            qiNiuUploadDto.setMd5(fileName.substring(0, fileName.lastIndexOf(".")));
             logger.info("七牛上传成功");
         } catch (Exception e) {
             logger.error("七牛上传失败！", e);
@@ -77,7 +76,8 @@ public class AsyncTaskService {
             return;
         }
         File file = new File(source);
-        String outputPath = file.getParentFile().getPath() + File.separator + System.currentTimeMillis() + ".mp3";
+        String fileName = file.getName();
+        String outputPath = file.getParentFile().getPath() + File.separator + fileName.substring(0, fileName.lastIndexOf(".")) + ".mp3";
         String cmd = "ffmpeg -i " + source + " -f mp3 -acodec libmp3lame -y " + outputPath;
         logger.info("转换开始 cmd = {}", cmd);
         String r = CmdUtil.execCmd(cmd, new File(SystemConfig.SystemTempPath + "/cmd"));

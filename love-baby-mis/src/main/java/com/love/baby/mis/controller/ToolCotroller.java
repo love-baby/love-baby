@@ -88,7 +88,7 @@ public class ToolCotroller {
                 //文件后缀
                 String suffix = originFileName.substring(originFileName.lastIndexOf("."));
                 //文件最后存放位置的全路径
-                path = path + File.separator + System.currentTimeMillis() + "_" + DigestUtils.md5Hex(originFileName.getBytes()) + suffix;
+                path = path + File.separator + md5 + suffix;
                 BufferedOutputStream buffStream = new BufferedOutputStream(new FileOutputStream(path));
                 buffStream.write(fileBytes);
                 buffStream.close();

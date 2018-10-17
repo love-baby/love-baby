@@ -58,7 +58,7 @@ public class AsyncTaskService {
             qiNiuUploadDto.setMessage(e.getMessage());
         }
         //发送文件处理消息
-        musicConversionStream.musicConversionOutputChannel().send(MessageBuilder.withPayload(qiNiuUploadDto).build());
+        musicConversionStream.musicConversionOutput().send(MessageBuilder.withPayload(qiNiuUploadDto).build());
         logger.info("处理上传结果 qiNiuUploadDto = {}", JSON.toJSON(qiNiuUploadDto));
         if (f.delete()) {
             logger.info("转换后文件删除成功！ f = {}", f.getPath());

@@ -9,9 +9,9 @@ import org.springframework.messaging.MessageChannel;
  */
 public interface MusicConversionStream {
 
-    String MUSIC_CONVERSION_INPUT = "music.conversion.exchange";
+    String MUSIC_CONVERSION_INPUT = "music.conversion.input";
 
-    String MUSIC_CONVERSION_OUTPUT = "music.conversion.exchange";
+    String MUSIC_CONVERSION_OUTPUT = "music.conversion.output";
 
 
     /**

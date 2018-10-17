@@ -83,7 +83,9 @@ public class MusicController {
             Album album = new Album();
             //查询歌手信息
             Author author = new Author();
-            list.add(new MusicVo(author, album, JSON.parseObject(JSON.toJSONString(music), Music.class)));
+            Music musics = JSON.parseObject(JSON.toJSONString(music), Music.class);
+            UploadFile uploadFile = uploadFileService.findById(musics.getFilePathId());
+            list.add(new MusicVo(author, album, musics, uploadFile));
         });
         pageUtil.setData(list);
         return pageUtil;
@@ -142,7 +144,6 @@ public class MusicController {
         Album album = new Album();
         //查询歌手信息
         Author author = new Author();
-
         UploadFile uploadFile = uploadFileService.findById(music.getFilePathId());
         File file = new File(uploadFile.getPath());
         try {
@@ -154,7 +155,7 @@ public class MusicController {
         } catch (Exception e) {
             logger.error("解析文件失败", e);
         }
-        return new MusicVo(author, album, JSON.parseObject(JSON.toJSONString(music), Music.class));
+        return new MusicVo(author, album, music,uploadFile);
     }
 
     /**

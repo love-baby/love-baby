@@ -3,6 +3,7 @@ package com.love.baby.mis.vo;
 import com.love.baby.common.bean.Album;
 import com.love.baby.common.bean.Author;
 import com.love.baby.common.bean.Music;
+import com.love.baby.common.bean.UploadFile;
 import com.love.baby.mis.config.SystemConfig;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -56,15 +57,13 @@ public class MusicVo {
      */
     private String description;
 
-    public MusicVo(Author author, Album album, Music music) {
+    public MusicVo(Author author, Album album, Music music, UploadFile musicUploadFile) {
         album.setName(music.getAlbumId());
         author.setName(music.getAuthorId());
         this.id = music.getId();
         this.createTime = music.getCreateTime();
         this.name = music.getName();
-        this.path = StringUtils.isBlank(music.getPath()) ? null : SystemConfig.web_host + music.getPath();
-        this.coverPath = StringUtils.isBlank(music.getCoverPath()) ? null : SystemConfig.web_host + music.getCoverPath();
-        this.lyricsPath = StringUtils.isBlank(music.getLyricsPath()) ? null : SystemConfig.web_host + music.getLyricsPath();
+        this.path = StringUtils.isBlank(musicUploadFile.getPath()) ? null : SystemConfig.web_host + musicUploadFile.getPath();
         this.author = new AuthorVo(author);
         this.album = new AlbumVo(album);
     }

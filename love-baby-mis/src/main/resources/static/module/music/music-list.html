@@ -323,9 +323,9 @@
 
                         var lists = player.getCurrentList(true);
                         var b = false;
-                        $.each(lists, function (index, vaule) {
+                        $.each(lists, function (index, vaule,arr) {
                             console.log(JSON.stringify(vaule));
-                            $.each(vaule, function (i, v) {
+                            $.each(vaule, function (i, v,a) {
                                 console.log(JSON.stringify(v));
                                 if (v.name == data.data.name) {
                                     true;

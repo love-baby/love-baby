@@ -92,7 +92,6 @@ public class ToolCotroller {
                 BufferedOutputStream buffStream = new BufferedOutputStream(new FileOutputStream(path));
                 buffStream.write(fileBytes);
                 buffStream.close();
-                String qiNiuUrl = null;//QiNiuUtil.fileUpload(fileBytes, QiNiuUtil.Bucket.MUSIC, DigestUtils.md5Hex(fileBytes) + suffix);
                 uploadFile = UploadFile.builder()
                         .id(fileMeta.get("id").toString())
                         .createTime(new Date())
@@ -100,11 +99,9 @@ public class ToolCotroller {
                         .path(path)
                         .fileType(type)
                         .md5(md5)
-                        .qiNiuUrl(qiNiuUrl)
                         .build();
                 uploadFileService.save(uploadFile);
                 fileMeta.put("path", path);
-                fileMeta.put("qiNiuUrl", qiNiuUrl);
             } catch (IOException e) {
                 logger.error("上传失败", e);
             }

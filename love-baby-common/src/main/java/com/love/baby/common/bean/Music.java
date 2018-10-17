@@ -31,7 +31,7 @@ public class Music {
     /**
      * 地址
      */
-    private String path;
+    private String filePathId;
     /**
      * 作者
      */
@@ -43,17 +43,13 @@ public class Music {
     /**
      * 封面
      */
-    private String coverPath;
+    private String coverFilePathId;
     /**
      * 歌词地址
      */
-    private String lyricsPath;
+    private String lyricsFilePathId;
     /**
      * 描述
      */
     private String description;
-    /**
-     * 七牛访问连接
-     */
-    private String qiNiuUrl;
 }

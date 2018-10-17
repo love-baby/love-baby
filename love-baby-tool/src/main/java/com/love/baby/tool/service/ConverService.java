@@ -3,6 +3,7 @@ package com.love.baby.tool.service;
 import com.alibaba.fastjson.JSON;
 import com.love.baby.common.exception.SystemException;
 import com.love.baby.tool.config.SystemConfig;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -35,8 +36,11 @@ public class ConverService {
         fileMeta.put("fileSize", file.getSize() / 1024 + " Kb");
         fileMeta.put("fileType", file.getContentType());
         logger.info("缓存文件 fileMeta = {}", JSON.toJSON(fileMeta));
-        String path = SystemConfig.SystemTempPath + file.getOriginalFilename();
+        //原始文件类型
+        String originFileName = file.getOriginalFilename();
+        String path = SystemConfig.SystemTempPath;
         try {
+            path = path + DigestUtils.md5Hex(file.getBytes()) + originFileName.substring(originFileName.lastIndexOf("."));
             BufferedOutputStream buffStream = new BufferedOutputStream(new FileOutputStream(path));
             buffStream.write(file.getBytes());
             buffStream.close();

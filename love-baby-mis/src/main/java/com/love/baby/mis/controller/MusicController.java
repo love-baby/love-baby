@@ -13,7 +13,6 @@ import com.love.baby.common.param.SearchParams;
 import com.love.baby.common.param.SearchParamsDto;
 import com.love.baby.common.util.MultipartFileUtil;
 import com.love.baby.common.util.QiNiuUtil;
-import com.love.baby.mis.async.AsyncTaskService;
 import com.love.baby.mis.config.SystemConfig;
 import com.love.baby.mis.service.MusicService;
 import com.love.baby.mis.service.UploadFileService;
@@ -35,10 +34,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -56,9 +52,6 @@ public class MusicController {
 
     @Resource
     private MusicService musicService;
-
-    @Resource
-    private AsyncTaskService asyncTaskService;
 
     @Resource
     private ConversionRpcService conversionRpcService;
@@ -149,7 +142,9 @@ public class MusicController {
         Album album = new Album();
         //查询歌手信息
         Author author = new Author();
-        File file = new File(music.getPath());
+
+        UploadFile uploadFile = uploadFileService.findById(music.getFilePathId());
+        File file = new File(uploadFile.getPath());
         try {
             AudioFile audioFile = AudioFileIO.read(file);
             Tag tag = audioFile.getTag();
@@ -193,14 +188,8 @@ public class MusicController {
         musicOld.setAuthorId(music.getAuthorId() == null ? "" : music.getAuthorId());
         musicService.update(musicOld);
 
-        File f = new File(musicOld.getPath());
-
-        FileInputStream input = new FileInputStream(f);
-        byte[] uploadBytes = new byte[input.available()];
-        input.read(uploadBytes);
-        String md5 = DigestUtils.md5Hex(uploadBytes);
-        logger.info("oldMd5 = {}", md5);
-        UploadFile uploadFile = uploadFileService.findByMd5(md5);
+        UploadFile uploadFile = uploadFileService.findById(music.getFilePathId());
+        File f = new File(uploadFile.getPath());
         AudioFile audioFile = AudioFileIO.read(f);
         Tag tag = audioFile.getTag();
         tag.setField(FieldKey.TITLE, musicOld.getName());
@@ -208,15 +197,31 @@ public class MusicController {
         tag.setField(FieldKey.ARTIST, musicOld.getAuthorId());
         audioFile.commit();
 
-        input = new FileInputStream(audioFile.getFile());
-        uploadBytes = new byte[input.available()];
-        input.read(uploadBytes);
-        md5 = DigestUtils.md5Hex(uploadBytes);
-        logger.info("newMd5 = {}", md5);
-        uploadFile.setMd5(md5);
-        uploadFileService.update(uploadFile);
-    }
+        FileInputStream input = new FileInputStream(audioFile.getFile());
+        byte[] fileBytes = new byte[input.available()];
+        input.read(fileBytes);
+        String md5New = DigestUtils.md5Hex(fileBytes);
 
+        //如果文件发送变化
+        if (!StringUtils.equals(uploadFile.getMd5(), md5New)) {
+            //原文件名
+            String originFileName = f.getName();
+            //后缀
+            String suffix = originFileName.substring(originFileName.lastIndexOf("."));
+            //新文件地址
+            String newPath = f.getParentFile().getPath() + File.separator + md5New + suffix;
+            BufferedOutputStream buffStream = new BufferedOutputStream(new FileOutputStream(newPath));
+            buffStream.write(fileBytes);
+            buffStream.close();
+            uploadFile.setMd5(md5New);
+            uploadFile.setPath(newPath);
+            uploadFileService.update(uploadFile);
+            if (f.delete()) {
+                logger.info("删除旧文件成功 path = {},新文件地址 newPath = {}", f.getPath(), newPath);
+            }
+        }
+
+    }
 
     /**
      * 试听
@@ -232,15 +237,15 @@ public class MusicController {
         if (music == null) {
             return null;
         }
-        String src = SystemConfig.web_host + music.getPath();
+        UploadFile uploadFile = uploadFileService.findById(music.getFilePathId());
+        String src = SystemConfig.web_host + uploadFile.getPath();
         //判断是否上传七牛
-        if (StringUtils.isBlank(music.getQiNiuUrl())) {
-            File file = new File(music.getPath());
+        if (StringUtils.isBlank(uploadFile.getQiNiuUrl())) {
+            File file = new File(uploadFile.getPath());
             InputStream input = new FileInputStream(file);
             byte[] uploadBytes = new byte[input.available()];
             input.read(uploadBytes);
             String md5 = DigestUtils.md5Hex(uploadBytes);
-            UploadFile uploadFile = uploadFileService.findByMd5(md5);
             MultipartFile multipartFile = new MultipartFileUtil(file.getName(), uploadBytes, uploadFile.getFileType());
             //处理转码和上传到七牛上去
             conversionRpcService.musicConversionMp3(multipartFile);
@@ -248,7 +253,7 @@ public class MusicController {
             //回源鉴权防盗链
             //src = music.getQiNiuUrl() + "?token=" + token;
             //生成时间戳防盗链
-            src = QiNiuUtil.getAntiLeechAccessUrlBasedOnTimestamp(music.getQiNiuUrl(), 360);
+            src = QiNiuUtil.getAntiLeechAccessUrlBasedOnTimestamp(uploadFile.getQiNiuUrl(), 360);
         }
         Map m = new HashMap();
         m.put("name", music.getName());

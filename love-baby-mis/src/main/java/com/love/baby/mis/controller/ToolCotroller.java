@@ -102,6 +102,7 @@ public class ToolCotroller {
                         .build();
                 uploadFileService.save(uploadFile);
                 fileMeta.put("path", path);
+                fileMeta.put("filePathId", uploadFile.getId());
             } catch (IOException e) {
                 logger.error("上传失败", e);
             }

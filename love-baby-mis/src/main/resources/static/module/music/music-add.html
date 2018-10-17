@@ -130,7 +130,7 @@
                     } else if (data.code == 200) {
                         if (data.data != null) {
                             $("#name").val(data.data.name);
-                            $("#filePathId").val(data.data.path);
+                            $("#filePathId").val(data.data.filePathId);
                             $("#author").val(data.data.author == null ? "" : data.data.author.name);
                             $("#album").val(data.data.album == null ? "" : data.data.album.name);
                         }

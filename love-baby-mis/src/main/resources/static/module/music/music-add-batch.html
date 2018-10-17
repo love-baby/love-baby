@@ -106,12 +106,9 @@
                 parent.layer.msg(result.message);
 
                 $.each(result.data, function (index, vaule, arr) {
-
                     var music = {
-                        "path": vaule.path,
-                        "qiNiuUrl": vaule.qiNiuUrl
+                        "filePathId": vaule.path
                     };
-
                     $.ajax({
                         async: false,
                         type: "PUT",

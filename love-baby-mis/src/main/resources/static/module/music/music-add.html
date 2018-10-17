@@ -130,7 +130,7 @@
                     } else if (data.code == 200) {
                         if (data.data != null) {
                             $("#name").val(data.data.name);
-                            $("#path").val(data.data.path);
+                            $("#filePathId").val(data.data.path);
                             $("#author").val(data.data.author == null ? "" : data.data.author.name);
                             $("#album").val(data.data.album == null ? "" : data.data.album.name);
                         }
@@ -172,7 +172,7 @@
                     "name": $("#name").val(),
                     "authorId": $("#author").val(),
                     "albumId":$("#album").val(),
-                    "path": $("#path").val()
+                    "filePathId": $("#path").val()
                 };
                 var url = host + "/music";
                 if (id != "" && id != null) {

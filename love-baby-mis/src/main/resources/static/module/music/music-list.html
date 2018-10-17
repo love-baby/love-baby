@@ -323,13 +323,17 @@
 
                         var lists = player.getCurrentList(true);
                         var b = false;
-                        $.each(lists, function (index, vaule, arr) {
-                            console.log( JSON.stringify(vaule))
-                            // if(vaule==data.data.name){
-                            //
-                            // }
+                        $.each(lists, function (index, vaule) {
+                            console.log(JSON.stringify(vaule));
+                            $.each(vaule, function (i, v) {
+                                if (v == data.data.name) {
+                                    true;
+                                }
+                            });
                         });
-                        player.addSong(data.data);
+                        if (!b) {
+                            player.addSong(data.data);
+                        }
                     }
                 } else {
                     parent.layer.msg(data.message);

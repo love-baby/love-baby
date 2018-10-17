@@ -189,7 +189,7 @@ public class MusicController {
         musicOld.setAuthorId(music.getAuthorId() == null ? "" : music.getAuthorId());
         musicService.update(musicOld);
 
-        UploadFile uploadFile = uploadFileService.findById(music.getFilePathId());
+        UploadFile uploadFile = uploadFileService.findById(musicOld.getFilePathId());
         File f = new File(uploadFile.getPath());
         AudioFile audioFile = AudioFileIO.read(f);
         Tag tag = audioFile.getTag();

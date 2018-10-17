@@ -323,13 +323,13 @@
 
                         var lists = player.getCurrentList(true);
                         var b = false;
-                        $.each(lists, function (index, vaule) {
+                        $.each(lists, function (index, vaule, arr) {
                             console.log(JSON.stringify(vaule));
-                            $.each(vaule, function (i, v) {
-                                if (v == data.data.name) {
-                                    true;
-                                }
-                            });
+                            // $.each(vaule, function (i, v) {
+                            //     if (v == data.data.name) {
+                            //         true;
+                            //     }
+                            // });
                         });
                         if (!b) {
                             player.addSong(data.data);
@@ -437,7 +437,7 @@
                 console.log('即将播放' + songName + '，return false;可以取消播放');
             }).on('timeUpdate', function () {
                 var $this = this;
-                console.log('当前歌词：' + $this.getLrc());
+                // console.log('当前歌词：' + $this.getLrc());
             }).on('end', function () {
                 var $this = this;
                 var song = $this.getCurrentSong(true);

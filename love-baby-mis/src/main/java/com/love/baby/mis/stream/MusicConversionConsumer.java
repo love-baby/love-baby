@@ -26,7 +26,7 @@ public class MusicConversionConsumer {
     @Resource
     private UploadFileService uploadFileService;
 
-    @StreamListener(MusicConversionStream.MUSIC_CONVERSION_INPUT)
+    @StreamListener("music_conversion")
     public void inputQiNiuUploadOrder(QiNiuUploadDto qiNiuUploadDto) {
         logger.info("音乐文件处理结果 qiNiuUploadDto = {}", JSON.toJSON(qiNiuUploadDto));
         if (qiNiuUploadDto.getCode() == QiNiuUploadDto.Code.OK) {

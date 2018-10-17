@@ -11,23 +11,19 @@ import org.springframework.messaging.SubscribableChannel;
  */
 public interface MusicConversionStream {
 
-    String MUSIC_CONVERSION_INPUT = "music.conversion.input";
-
-    String MUSIC_CONVERSION_OUTPUT = "music.conversion.output";
-
     /**
      * 输入
      *
      * @return
      */
-    @Input(MUSIC_CONVERSION_INPUT)
-    SubscribableChannel musicConversionInput();
+    @Input("music_conversion")
+    SubscribableChannel musicConversionInputChannel();
 
     /**
      * 输出
      *
      * @return
      */
-    @Output(MUSIC_CONVERSION_OUTPUT)
-    MessageChannel musicConversionOutput();
+    @Output("music_conversion")
+    MessageChannel musicConversionOutputChannel();
 }

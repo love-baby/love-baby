@@ -323,13 +323,14 @@
 
                         var lists = player.getCurrentList(true);
                         var b = false;
-                        $.each(lists, function (index, vaule, arr) {
+                        $.each(lists, function (index, vaule) {
                             console.log(JSON.stringify(vaule));
-                            // $.each(vaule, function (i, v) {
-                            //     if (v == data.data.name) {
-                            //         true;
-                            //     }
-                            // });
+                            $.each(vaule, function (i, v) {
+                                console.log(JSON.stringify(v));
+                                if (v.name == data.data.name) {
+                                    true;
+                                }
+                            });
                         });
                         if (!b) {
                             player.addSong(data.data);

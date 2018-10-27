@@ -24,7 +24,7 @@ public interface UserRpcService {
      *
      * @return
      */
-    @PostMapping(value = "/listAll/{cursor}/{size}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "/listAll/{cursor}/{size}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @NoWapperResponse
     PageUtil listAll(@PathVariable Integer cursor, @PathVariable Integer size, @RequestBody SearchParamsDto searchParamsDto);
 

@@ -2,13 +2,10 @@ package com.love.baby.common.api;
 
 import com.love.baby.common.annotation.NoWapperResponse;
 import com.love.baby.common.common.bean.PageUtil;
+import com.love.baby.common.config.MultipartSupportConfig;
 import com.love.baby.common.dto.UserDto;
 import com.love.baby.common.param.SearchParamsDto;
-import feign.codec.Encoder;
-import feign.form.spring.SpringFormEncoder;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
  * @author liangbc
  * @date 2018/7/24
  */
-@FeignClient(name = "love-baby-user", path = "/user/rpc", configuration = UserRpcService.SupportConfig.class)
+@FeignClient(name = "love-baby-user", path = "/user/rpc", configuration = MultipartSupportConfig.class)
 public interface UserRpcService {
 
     /**
@@ -76,15 +73,4 @@ public interface UserRpcService {
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @NoWapperResponse
     void delete(@RequestParam(value = "id") String id);
-    /**
-     *
-     * @return
-     */
-    @Configuration
-    class SupportConfig {
-        @Bean
-        public Encoder feignFormEncoder() {
-            return new SpringFormEncoder();
-        }
-    }
 }

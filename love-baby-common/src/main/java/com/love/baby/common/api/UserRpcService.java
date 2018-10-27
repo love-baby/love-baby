@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
  * @author liangbc
  * @date 2018/7/24
  */
-@FeignClient(name = "love-baby-user", path = "/user/rpc")
+@FeignClient(name = "love-baby-user", path = "/user/rpc", configuration = ConversionRpcService.MultipartSupportConfig.class)
 public interface UserRpcService {
 
     /**

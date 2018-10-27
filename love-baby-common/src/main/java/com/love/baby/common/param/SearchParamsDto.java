@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
  * @date 2018/8/25
  */
 @Data
-@NoArgsConstructor(force = true)
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class SearchParamsDto {

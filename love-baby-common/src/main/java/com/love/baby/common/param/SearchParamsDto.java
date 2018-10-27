@@ -3,12 +3,14 @@ package com.love.baby.common.param;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author liangbc
  * @date 2018/8/25
  */
 @Data
+@NoArgsConstructor(force = true)
 @AllArgsConstructor
 @Builder
 public class SearchParamsDto {

@@ -118,7 +118,6 @@
                 </configuration>
             </plugin>
 
-            <!--生成启动脚本插件-->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

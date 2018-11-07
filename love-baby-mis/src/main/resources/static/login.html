@@ -7,15 +7,12 @@
     <meta content="width=device-width, initial-scale=1.0, user-scalable=no" name="viewport">
     <meta name="description" content="Slick Admin Admin UI">
     <meta name="keywords" content="水太清则无鱼，人太急则无智">
-    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon"/>
 
     <script src="https://js.love-baby.vip/jquery.min.js"></script>
     <script src="https://js.love-baby.vip/jquery.cookie.js"></script>
     <script src="https://js.love-baby.vip/jquery.form.js"></script>
-
-    <!-- bootstrap css -->
     <link href="https://css.love-baby.vip/bootstrap.min.css" rel="stylesheet">
-
     <!-- custom css -->
     <link href="css/main-min.css" rel="stylesheet">
 
@@ -56,20 +53,6 @@
         </form>
     </div>
 </div>
-<!-- Main Container end -->
 </body>
-<script type="application/javascript">
-    $(document).ready(function () {
-        $("#login_form").ajaxForm(function (data) {
-            if (data.code == 200) {
-                var date = new Date();
-                date.setTime(date.getTime() + (1 * 30 * 24 * 60 * 60 * 1000));//一个月
-                $.cookie('token', data.data.token, {path: "/", expires: date});
-                window.location.replace("index.html");
-            } else {
-                $(".clearfix").html(data.message);
-            }
-        });
-    });
-</script>
+<script type="application/javascript" src="/js/login-min.js"></script>
 </html>

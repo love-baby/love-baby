@@ -175,11 +175,12 @@
                     <!-- 源目录，即需压缩的根目录 -->
                     <sourceDirectory>src/main/resources</sourceDirectory>
                     <outputDirectory>target/classes</outputDirectory>
-                    <!-- 压缩js和css文件 -->
+                    <!-- 压缩所有js和css文件 -->
                     <includes>
                         <include>**/*.js</include>
                         <include>**/*.css</include>
                     </includes>
+
                 </configuration>
             </plugin>
 

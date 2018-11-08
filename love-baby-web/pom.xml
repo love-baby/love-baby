@@ -187,9 +187,15 @@
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>1.2.0</version>
                 <configuration>
-                    <imageName>${project.name}/${project.artifactId}</imageName>
-                    <baseImage>java</baseImage>
                     <maintainer>237702131@qq.com</maintainer>
+                    <baseImage>java</baseImage>
+                    <imageName>${project.name}:${project.version}</imageName>
+                    <skipDockerBuild>false</skipDockerBuild>
+                    <forceTags>true</forceTags>
+                    <imageTags>
+                        <imageTag>${project.version}</imageTag>
+                        <imageTag>latest</imageTag>
+                    </imageTags>
                     <workdir>/ROOT</workdir>
                     <cmd>["java", "-version"]</cmd>
                     <entryPoint>["java", "-jar", "${project.build.finalName}.jar"]</entryPoint>
@@ -218,8 +224,9 @@
                             <goal>tag</goal>
                         </goals>
                         <configuration>
-                            <image>${project.name}/${project.artifactId}:latest</image>
-                            <newName>registry-vpc.cn-hangzhou.aliyuncs.com/love-baby/middleware:${project.version}</newName>
+                            <image>${project.name}:latest</image>
+                            <newName>registry-vpc.cn-qingdao.aliyuncs.com/love-baby/love-baby:${project.version}
+                            </newName>
                         </configuration>
                     </execution>
                     <execution>
@@ -229,7 +236,8 @@
                             <goal>push</goal>
                         </goals>
                         <configuration>
-                            <imageName>registry-vpc.cn-hangzhou.aliyuncs.com/love-baby/middleware:${project.version}</imageName>
+                            <imageName>registry-vpc.cn-qingdao.aliyuncs.com/love-baby/love-baby:${project.version}
+                            </imageName>
                         </configuration>
                     </execution>
                 </executions>

@@ -190,7 +190,7 @@
                     <maintainer>237702131@qq.com</maintainer>
                     <baseImage>java</baseImage>
                     <imageName>
-                        registry-vpc.cn-beijing.aliyuncs.com/${project.groupId}/${artifactId}:${project.version}
+                        registry-vpc.cn-beijing.aliyuncs.com/${project.groupId}/${artifactId}
                     </imageName>
                     <skipDockerBuild>false</skipDockerBuild>
                     <forceTags>true</forceTags>

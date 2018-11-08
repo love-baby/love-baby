@@ -187,15 +187,9 @@
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>1.2.0</version>
                 <configuration>
-                    <imageTags>
-                        <!--可以指定多个标签-->
-                        <imageTag>latest</imageTag>
-                    </imageTags>
-                    <!--覆盖已存在的标签 镜像-->
-                    <forceTags>true</forceTags>
                     <imageName>love-baby-weeb</imageName>
-                    <dockerDirectory>docker</dockerDirectory>
                     <baseImage>java</baseImage>
+                    <maintainer>docker_maven docker_maven@email.com</maintainer>
                     <workdir>/ROOT</workdir>
                     <cmd>["java", "-version"]</cmd>
                     <entryPoint>["java", "-jar", "${project.build.finalName}.jar"]</entryPoint>

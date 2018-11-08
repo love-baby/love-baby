@@ -225,7 +225,7 @@
                         </goals>
                         <configuration>
                             <image>${project.name}:latest</image>
-                            <newName>registry-vpc.cn-qingdao.aliyuncs.com/love-baby/love-baby:${project.version}
+                            <newName>registry.cn-qingdao.aliyuncs.com/love-baby/love-baby:${project.version}
                             </newName>
                         </configuration>
                     </execution>
@@ -236,7 +236,7 @@
                             <goal>push</goal>
                         </goals>
                         <configuration>
-                            <imageName>registry-vpc.cn-qingdao.aliyuncs.com/love-baby/love-baby:${project.version}
+                            <imageName>registry.cn-qingdao.aliyuncs.com/love-baby/love-baby:${project.version}
                             </imageName>
                         </configuration>
                     </execution>

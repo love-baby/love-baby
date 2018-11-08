@@ -14,13 +14,13 @@ cache:
 stages:
 - test
 - build
+- deploy
 
 test app:
   stage: test
   tags:
   - love-baby
   script:
-  - echo "I am test job"
   - mvn test
 
 build app:
@@ -29,3 +29,10 @@ build app:
   - love-baby
   script:
   - mvn  -Dmaven.test.skip=true clean package
+
+deploy app:
+  stage: deploy
+  tags:
+  - love-baby
+  script:
+  - scp

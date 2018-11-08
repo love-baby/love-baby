@@ -182,6 +182,33 @@
             </plugin>
 
 
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>1.2.0</version>
+                <configuration>
+                    <imageTags>
+                        <!--可以指定多个标签-->
+                        <imageTag>latest</imageTag>
+                    </imageTags>
+                    <!--覆盖已存在的标签 镜像-->
+                    <forceTags>true</forceTags>
+                    <imageName>love-baby-weeb</imageName>
+                    <baseImage>java</baseImage>
+                    <workdir>/ROOT</workdir>
+                    <cmd>["java", "-version"]</cmd>
+                    <entryPoint>["java", "-jar", "${project.build.finalName}.jar"]</entryPoint>
+                    <resources>
+                        <resource>
+                            <targetPath>/ROOT</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.jar</include>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>
+
+
         </plugins>
     </build>
 

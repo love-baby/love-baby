@@ -207,40 +207,8 @@
                         </resource>
                     </resources>
                     <serverId>docker-registry</serverId>
+                    <registryUrl>registry-vpc.cn-beijing.aliyuncs.com/liangbc/love-baby</registryUrl>
                 </configuration>
-
-                <executions>
-                    <execution>
-                        <id>build-image</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>build</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>tag-image</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>tag</goal>
-                        </goals>
-                        <configuration>
-                            <image>${project.name}:latest</image>
-                            <newName>registry-vpc.cn-beijing.aliyuncs.com/liangbc/love-baby/congloveling1314@vip.qq.com/${project.name}:${project.version}
-                            </newName>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>push-image</id>
-                        <phase>deploy</phase>
-                        <goals>
-                            <goal>push</goal>
-                        </goals>
-                        <configuration>
-                            <imageName>registry-vpc.cn-beijing.aliyuncs.com/liangbc/love-baby/congloveling1314@vip.qq.com/${project.name}:${project.version}
-                            </imageName>
-                        </configuration>
-                    </execution>
-                </executions>
 
             </plugin>
 

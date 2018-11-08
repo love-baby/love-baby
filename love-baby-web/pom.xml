@@ -218,7 +218,7 @@
                             <goal>tag</goal>
                         </goals>
                         <configuration>
-                            <image>mavendemo:latest</image>
+                            <image>${project.name}/${project.artifactId}:latest</image>
                             <newName>registry-vpc.cn-hangzhou.aliyuncs.com/love-baby/middleware:${project.version}</newName>
                         </configuration>
                     </execution>

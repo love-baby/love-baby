@@ -196,8 +196,6 @@
                     <imageName>love-baby-weeb</imageName>
                     <dockerDirectory>docker</dockerDirectory>
                     <baseImage>java</baseImage>
-                    <dockerHost>registry.cn-beijing.aliyuncs.com/love-baby/love-baby</dockerHost>
-                    <maintainer>docker_maven docker_maven@email.com</maintainer>
                     <workdir>/ROOT</workdir>
                     <cmd>["java", "-version"]</cmd>
                     <entryPoint>["java", "-jar", "${project.build.finalName}.jar"]</entryPoint>

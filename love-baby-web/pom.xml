@@ -187,9 +187,9 @@
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>1.2.0</version>
                 <configuration>
-                    <imageName>love-baby-weeb</imageName>
+                    <imageName>${project.name}/${project.artifactId}</imageName>
                     <baseImage>java</baseImage>
-                    <maintainer>docker_maven docker_maven@email.com</maintainer>
+                    <maintainer>237702131@qq.com</maintainer>
                     <workdir>/ROOT</workdir>
                     <cmd>["java", "-version"]</cmd>
                     <entryPoint>["java", "-jar", "${project.build.finalName}.jar"]</entryPoint>
@@ -201,8 +201,39 @@
                         </resource>
                     </resources>
                 </configuration>
-            </plugin>
 
+                <executions>
+                    <execution>
+                        <id>build-image</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>tag-image</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>tag</goal>
+                        </goals>
+                        <configuration>
+                            <image>mavendemo:latest</image>
+                            <newName>docker.io/love-baby:${project.version}</newName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>push-image</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>push</goal>
+                        </goals>
+                        <configuration>
+                            <imageName>docker.io/love-baby:${project.version}</imageName>
+                        </configuration>
+                    </execution>
+                </executions>
+
+            </plugin>
 
         </plugins>
     </build>

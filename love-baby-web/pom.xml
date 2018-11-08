@@ -189,11 +189,10 @@
                 <configuration>
                     <maintainer>237702131@qq.com</maintainer>
                     <baseImage>java</baseImage>
-                    <imageName>registry-vpc.cn-beijing.aliyuncs.com/liangbc/love-baby:${project.version}</imageName>
+                    <imageName>registry-vpc.cn-beijing.aliyuncs.com/${project.groupId}/${artifactId}:${project.version}</imageName>
                     <skipDockerBuild>false</skipDockerBuild>
                     <forceTags>true</forceTags>
                     <imageTags>
-                        <imageTag>${project.version}</imageTag>
                         <imageTag>latest</imageTag>
                     </imageTags>
                     <workdir>/ROOT</workdir>

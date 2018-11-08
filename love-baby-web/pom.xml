@@ -181,7 +181,7 @@
                 </configuration>
             </plugin>
 
-
+            <!--生成docker镜像，并上传到阿里云-->
             <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
@@ -189,7 +189,9 @@
                 <configuration>
                     <maintainer>237702131@qq.com</maintainer>
                     <baseImage>java</baseImage>
-                    <imageName>registry-vpc.cn-beijing.aliyuncs.com/${project.groupId}/${artifactId}:${project.version}</imageName>
+                    <imageName>
+                        registry-vpc.cn-beijing.aliyuncs.com/${project.groupId}/${artifactId}:${project.version}
+                    </imageName>
                     <skipDockerBuild>false</skipDockerBuild>
                     <forceTags>true</forceTags>
                     <imageTags>
@@ -207,11 +209,8 @@
                     </resources>
                     <serverId>docker-registry</serverId>
                 </configuration>
-
             </plugin>
-
         </plugins>
     </build>
-
 
 </project>

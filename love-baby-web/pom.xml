@@ -189,7 +189,7 @@
                 <configuration>
                     <maintainer>237702131@qq.com</maintainer>
                     <baseImage>java</baseImage>
-                    <imageName>${project.name}:${project.version}</imageName>
+                    <imageName>${project.name}/${project.version}</imageName>
                     <skipDockerBuild>false</skipDockerBuild>
                     <forceTags>true</forceTags>
                     <imageTags>
@@ -207,7 +207,7 @@
                         </resource>
                     </resources>
                     <serverId>docker-registry</serverId>
-                    <registryUrl>registry-vpc.cn-beijing.aliyuncs.com/liangbc/love-baby</registryUrl>
+                    <registryUrl>registry-vpc.cn-beijing.aliyuncs.com</registryUrl>
                 </configuration>
 
             </plugin>

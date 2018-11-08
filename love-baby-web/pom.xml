@@ -193,7 +193,12 @@
                         registry-vpc.cn-beijing.aliyuncs.com/${project.groupId}/${artifactId}
                     </imageName>
                     <skipDockerBuild>false</skipDockerBuild>
+                    <!--build 时强制覆盖 tag，配合 imageTags 使用-->
                     <forceTags>true</forceTags>
+                    <!--build 时，指定 –rm=true 即 build 完成后删除中间容器-->
+                    <rm>true</rm>
+                    <!--build 完成后 push 镜像-->
+                    <pushImage>true</pushImage>
                     <imageTags>
                         <imageTag>latest</imageTag>
                     </imageTags>

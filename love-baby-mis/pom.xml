@@ -206,7 +206,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <repository>spotify/foobar</repository>
+                    <repository> registry-vpc.cn-beijing.aliyuncs.com/${project.groupId}/${artifactId}</repository>
                     <tag>${project.version}</tag>
                     <buildArgs>
                         <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>

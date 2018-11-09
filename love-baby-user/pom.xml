@@ -10,7 +10,6 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.love.baby.user</groupId>
     <artifactId>love-baby-user</artifactId>
     <packaging>jar</packaging>
     <version>1.0.0-SNAPSHOT</version>

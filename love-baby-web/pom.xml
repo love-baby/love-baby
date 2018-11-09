@@ -201,7 +201,7 @@
                     </imageName>
                     <skipDockerBuild>false</skipDockerBuild>
                     <!--build 时强制覆盖 tag，配合 imageTags 使用-->
-                    <!--<forceTags>true</forceTags>-->
+                    <forceTags>true</forceTags>
                     <!--build 完成后 push 镜像-->
                     <pushImage>true</pushImage>
                     <imageTags>

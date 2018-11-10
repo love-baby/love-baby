@@ -45,34 +45,36 @@
 
 
     <!--输出到kafka-->
-    <appender name="KafkaAppender" class="com.github.danielwegener.logback.kafka.KafkaAppender">
-        <encoder class="com.github.danielwegener.logback.kafka.encoding.LayoutKafkaMessageEncoder">
-            <layout class="net.logstash.logback.layout.LogstashLayout">
-                <includeContext>false</includeContext>
-                <includeCallerData>true</includeCallerData>
-                <customFields>{"system":"test"}</customFields>
-                <fieldNames class="net.logstash.logback.fieldnames.ShortenedFieldNames"/>
-            </layout>
-            <charset>UTF-8</charset>
+    <appender name="kafkaAppender" class="com.github.danielwegener.logback.kafka.KafkaAppender">
+        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder" >
+            <customFields>{"appname":"webdemo"}</customFields>
+            <includeMdc>true</includeMdc>
+            <includeContext>true</includeContext>
+            <throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">
+                <maxDepthPerThrowable>30</maxDepthPerThrowable>
+                <rootCauseFirst>true</rootCauseFirst>
+            </throwableConverter>
         </encoder>
-        <!--kafka topic 需要与配置文件里面的topic一致 否则kafka会沉默并鄙视你-->
         <topic>love-baby-log</topic>
-        <keyingStrategy class="com.github.danielwegener.logback.kafka.keying.HostNameKeyingStrategy"/>
-        <deliveryStrategy class="com.github.danielwegener.logback.kafka.delivery.AsynchronousDeliveryStrategy"/>
+        <keyingStrategy class="com.github.danielwegener.logback.kafka.keying.HostNameKeyingStrategy" />
+        <deliveryStrategy class="com.github.danielwegener.logback.kafka.delivery.AsynchronousDeliveryStrategy" />
         <producerConfig>bootstrap.servers=172.17.221.46:9092</producerConfig>
+        <!-- don't wait for a broker to ack the reception of a batch.  -->
+        <producerConfig>acks=0</producerConfig>
+        <!-- wait up to 1000ms and collect log messages before sending them as a batch -->
+        <producerConfig>linger.ms=1000</producerConfig>
+        <!-- even if the producer buffer runs full, do not block the application but start to drop messages -->
+        <!--<producerConfig>max.block.ms=0</producerConfig>-->
+        <producerConfig>block.on.buffer.full=false</producerConfig>
+        <!-- kafka连接失败后，使用下面配置进行日志输出 -->
+        <appender-ref ref="ROLLING" />
     </appender>
 
-    <!--你可能还需要加点这个玩意儿-->
-    <logger name="Application_ERROR">
-        <appender-ref ref="KafkaAppender"/>
-    </logger>
 
-
-    <root name="com.consumer" level="info">
+    <root name="com.love.baby" level="info">
         <appender-ref ref="ROLLING"/>
         <appender-ref ref="ERROR"/>
-        <appender-ref ref="KafkaAppender"/>
+        <appender-ref ref="kafkaAppender"/>
     </root>
-
 
 </configuration>

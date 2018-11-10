@@ -70,6 +70,9 @@
         <appender-ref ref="ROLLING" />
     </appender>
 
+    <logger name="Application_ERROR">
+        <appender-ref ref="kafkaAppender"/>
+    </logger>
 
     <root name="com.love.baby" level="info">
         <appender-ref ref="ROLLING"/>

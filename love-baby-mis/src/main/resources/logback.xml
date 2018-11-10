@@ -43,9 +43,35 @@
     </appender>
     <logger name="org.mongodb.driver" level="OFF"/>
 
+
+    <!--输出到kafka-->
+    <appender name="KafkaAppender" class="com.github.danielwegener.logback.kafka.KafkaAppender">
+        <encoder class="com.github.danielwegener.logback.kafka.encoding.LayoutKafkaMessageEncoder">
+            <layout class="net.logstash.logback.layout.LogstashLayout">
+                <includeContext>false</includeContext>
+                <includeCallerData>true</includeCallerData>
+                <customFields>{"system":"test"}</customFields>
+                <fieldNames class="net.logstash.logback.fieldnames.ShortenedFieldNames"/>
+            </layout>
+            <charset>UTF-8</charset>
+        </encoder>
+        <!--kafka topic 需要与配置文件里面的topic一致 否则kafka会沉默并鄙视你-->
+        <topic>applog</topic>
+        <keyingStrategy class="com.github.danielwegener.logback.kafka.keying.HostNameKeyingStrategy"/>
+        <deliveryStrategy class="com.github.danielwegener.logback.kafka.delivery.AsynchronousDeliveryStrategy"/>
+        <producerConfig>bootstrap.servers=172.17.221.46:9092</producerConfig>
+    </appender>
+
+    <!--你可能还需要加点这个玩意儿-->
+    <logger name="Application_ERROR">
+        <appender-ref ref="KafkaAppender"/>
+    </logger>
+
+
     <root name="com.consumer" level="info">
         <appender-ref ref="ROLLING"/>
         <appender-ref ref="ERROR"/>
+        <appender-ref ref="KafkaAppender"/>
     </root>
 
 

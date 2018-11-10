@@ -56,7 +56,7 @@
             <charset>UTF-8</charset>
         </encoder>
         <!--kafka topic 需要与配置文件里面的topic一致 否则kafka会沉默并鄙视你-->
-        <topic>applog</topic>
+        <topic>love-baby-log</topic>
         <keyingStrategy class="com.github.danielwegener.logback.kafka.keying.HostNameKeyingStrategy"/>
         <deliveryStrategy class="com.github.danielwegener.logback.kafka.delivery.AsynchronousDeliveryStrategy"/>
         <producerConfig>bootstrap.servers=172.17.221.46:9092</producerConfig>

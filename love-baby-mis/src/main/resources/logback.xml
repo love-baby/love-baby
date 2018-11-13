@@ -46,15 +46,18 @@
 
     <!--输出到kafka-->
     <appender name="kafkaAppender" class="com.github.danielwegener.logback.kafka.KafkaAppender">
-        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder" >
-            <customFields>{"appname":"webdemo"}</customFields>
-            <includeMdc>true</includeMdc>
-            <includeContext>true</includeContext>
-            <throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">
-                <maxDepthPerThrowable>30</maxDepthPerThrowable>
-                <rootCauseFirst>true</rootCauseFirst>
-            </throwableConverter>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
+        <!--<encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder" >-->
+            <!--<customFields>{"appname":"webdemo"}</customFields>-->
+            <!--<includeMdc>true</includeMdc>-->
+            <!--<includeContext>true</includeContext>-->
+            <!--<throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">-->
+                <!--<maxDepthPerThrowable>30</maxDepthPerThrowable>-->
+                <!--<rootCauseFirst>true</rootCauseFirst>-->
+            <!--</throwableConverter>-->
+        <!--</encoder>-->
         <topic>love-baby-log</topic>
         <keyingStrategy class="com.github.danielwegener.logback.kafka.keying.HostNameKeyingStrategy" />
         <deliveryStrategy class="com.github.danielwegener.logback.kafka.delivery.AsynchronousDeliveryStrategy" />
@@ -70,6 +73,10 @@
         <appender-ref ref="ROLLING" />
     </appender>
 
+    <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="kafkaAppender" />
+    </appender>
+
     <logger name="Application_ERROR">
         <appender-ref ref="kafkaAppender"/>
     </logger>
@@ -77,7 +84,7 @@
     <root name="com.love.baby" level="info">
         <appender-ref ref="ROLLING"/>
         <appender-ref ref="ERROR"/>
-        <appender-ref ref="kafkaAppender"/>
+        <appender-ref ref="ASYNC"/>
     </root>
 
 </configuration>

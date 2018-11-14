@@ -28,7 +28,7 @@
         <dependency>
             <groupId>love-baby</groupId>
             <artifactId>love-baby-common</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>

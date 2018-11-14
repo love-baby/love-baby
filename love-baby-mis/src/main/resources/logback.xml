@@ -56,7 +56,7 @@
             <!--<requestHeaderFilter>-->
                 <!--<include>Content-Type</include>-->
             <!--</requestHeaderFilter>-->
-            <timeZone>UTC</timeZone>
+            <timeZone>CCT</timeZone>
             <!--<fieldNames>-->
                 <!--<fieldsRequestHeaders>@fields.request_headers</fieldsRequestHeaders>-->
                 <!--<fieldsResponseHeaders>@fields.response_headers</fieldsResponseHeaders>-->

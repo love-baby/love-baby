@@ -46,12 +46,12 @@
 
     <!--输出到kafka-->
     <appender name="kafkaAppender" class="com.github.danielwegener.logback.kafka.KafkaAppender">
-        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder">
+        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder" >
             <fieldNames>
                 <fieldsRequestHeaders>@fields.request_headers</fieldsRequestHeaders>
                 <fieldsResponseHeaders>@fields.response_headers</fieldsResponseHeaders>
             </fieldNames>
-            <!--<customFields>{"appname":${spring.application.name}}</customFields>-->
+            <customFields>{"appname":"love-baby-mis"}</customFields>
             <includeMdc>true</includeMdc>
             <includeContext>true</includeContext>
             <throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">
@@ -60,8 +60,8 @@
             </throwableConverter>
         </encoder>
         <topic>love-baby-log</topic>
-        <keyingStrategy class="com.github.danielwegener.logback.kafka.keying.HostNameKeyingStrategy"/>
-        <deliveryStrategy class="com.github.danielwegener.logback.kafka.delivery.AsynchronousDeliveryStrategy"/>
+        <keyingStrategy class="com.github.danielwegener.logback.kafka.keying.HostNameKeyingStrategy" />
+        <deliveryStrategy class="com.github.danielwegener.logback.kafka.delivery.AsynchronousDeliveryStrategy" />
         <producerConfig>bootstrap.servers=172.17.221.46:9092</producerConfig>
         <!-- don't wait for a broker to ack the reception of a batch.  -->
         <producerConfig>acks=0</producerConfig>
@@ -71,11 +71,11 @@
         <!--<producerConfig>max.block.ms=0</producerConfig>-->
         <producerConfig>block.on.buffer.full=false</producerConfig>
         <!-- kafka连接失败后，使用下面配置进行日志输出 -->
-        <appender-ref ref="ROLLING"/>
+        <appender-ref ref="ROLLING" />
     </appender>
 
     <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
-        <appender-ref ref="kafkaAppender"/>
+        <appender-ref ref="kafkaAppender" />
     </appender>
 
     <logger name="Application_ERROR">

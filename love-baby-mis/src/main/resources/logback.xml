@@ -49,10 +49,10 @@
         <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder" >
             <timestampPattern>yyyy-MM-dd'T'HH:mm:ss.SSS</timestampPattern>
             <writeVersionAsInteger>true</writeVersionAsInteger>
-            <fieldNames>
-                <requestHeaders>request_headers</requestHeaders>
-                <responseHeaders>response_headers</responseHeaders>
-            </fieldNames>
+            <!--<fieldNames>-->
+                <!--<requestHeaders>request_headers</requestHeaders>-->
+                <!--<responseHeaders>response_headers</responseHeaders>-->
+            <!--</fieldNames>-->
             <requestHeaderFilter>
                 <include>Content-Type</include>
             </requestHeaderFilter>

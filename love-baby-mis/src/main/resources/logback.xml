@@ -46,21 +46,18 @@
 
     <!--输出到kafka-->
     <appender name="kafkaAppender" class="com.github.danielwegener.logback.kafka.KafkaAppender">
-        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
-            <charset>utf8</charset>
-        </encoder>
         <!--<encoder>-->
             <!--<pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} %msg%n</pattern>-->
         <!--</encoder>-->
-        <!--<encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder" >-->
-            <!--<customFields>{"appname":"webdemo"}</customFields>-->
-            <!--<includeMdc>true</includeMdc>-->
-            <!--<includeContext>true</includeContext>-->
-            <!--<throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">-->
-                <!--<maxDepthPerThrowable>30</maxDepthPerThrowable>-->
-                <!--<rootCauseFirst>true</rootCauseFirst>-->
-            <!--</throwableConverter>-->
-        <!--</encoder>-->
+        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder" >
+            <customFields>{"appname":"love-baby-mis"}</customFields>
+            <includeMdc>true</includeMdc>
+            <includeContext>true</includeContext>
+            <throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">
+                <maxDepthPerThrowable>30</maxDepthPerThrowable>
+                <rootCauseFirst>true</rootCauseFirst>
+            </throwableConverter>
+        </encoder>
         <topic>love-baby-log</topic>
         <keyingStrategy class="com.github.danielwegener.logback.kafka.keying.HostNameKeyingStrategy" />
         <deliveryStrategy class="com.github.danielwegener.logback.kafka.delivery.AsynchronousDeliveryStrategy" />

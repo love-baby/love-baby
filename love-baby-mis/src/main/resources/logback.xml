@@ -56,7 +56,6 @@
             <requestHeaderFilter>
                 <include>Content-Type</include>
             </requestHeaderFilter>
-            <lowerCaseHeaderNames>true</lowerCaseHeaderNames>
             <timeZone>UTC</timeZone>
             <!--<fieldNames>-->
                 <!--<fieldsRequestHeaders>@fields.request_headers</fieldsRequestHeaders>-->

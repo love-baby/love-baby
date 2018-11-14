@@ -58,7 +58,6 @@
             </requestHeaderFilter>
             <lowerCaseHeaderNames>true</lowerCaseHeaderNames>
             <timeZone>UTC</timeZone>
-            <message>${remoteHost} - ${remoteUser} [${timestamp}] "${requestUrl}" ${statusCode} ${contentLength}</message>
             <!--<fieldNames>-->
                 <!--<fieldsRequestHeaders>@fields.request_headers</fieldsRequestHeaders>-->
                 <!--<fieldsResponseHeaders>@fields.response_headers</fieldsResponseHeaders>-->

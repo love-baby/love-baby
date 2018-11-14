@@ -47,10 +47,10 @@
     <!--输出到kafka-->
     <appender name="kafkaAppender" class="com.github.danielwegener.logback.kafka.KafkaAppender">
         <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder" >
-            <fieldNames>
-                <fieldsRequestHeaders>@fields.request_headers</fieldsRequestHeaders>
-                <fieldsResponseHeaders>@fields.response_headers</fieldsResponseHeaders>
-            </fieldNames>
+            <!--<fieldNames>-->
+                <!--<fieldsRequestHeaders>@fields.request_headers</fieldsRequestHeaders>-->
+                <!--<fieldsResponseHeaders>@fields.response_headers</fieldsResponseHeaders>-->
+            <!--</fieldNames>-->
             <customFields>{"appname":"love-baby-mis"}</customFields>
             <includeMdc>true</includeMdc>
             <includeContext>true</includeContext>

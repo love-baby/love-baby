@@ -47,10 +47,13 @@
     <!--输出到kafka-->
     <appender name="kafkaAppender" class="com.github.danielwegener.logback.kafka.KafkaAppender">
         <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder" >
+            <includeCallerData>true</includeCallerData>
             <customFields>{"appname":"love-baby-mis"}</customFields>
-            <timestampPattern>yyyy-MM-dd'T'HH:mm:ss.SSS</timestampPattern>
+            <timestampPattern>
+                <pattern>yyyy-MM-dd'T'HH:mm:ss.SSS</pattern>
+                <timeZone>UTC</timeZone>
+            </timestampPattern>
             <writeVersionAsInteger>true</writeVersionAsInteger>
-            <timeZone>UTC</timeZone>
             <includeMdc>true</includeMdc>
             <includeContext>true</includeContext>
             <throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">
@@ -76,10 +79,6 @@
     <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
         <appender-ref ref="kafkaAppender" />
     </appender>
-
-    <logger name="Application_ERROR">
-        <appender-ref ref="kafkaAppender"/>
-    </logger>
 
     <root name="com.love.baby" level="info">
         <appender-ref ref="ROLLING"/>

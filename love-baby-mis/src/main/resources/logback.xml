@@ -49,7 +49,7 @@
         <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder" >
             <includeCallerData>true</includeCallerData>
             <customFields>{"appname":"love-baby-mis"}</customFields>
-            <timeZone>CST</timeZone>
+            <timeZone>UTC</timeZone>
             <timestampPattern>yyyy-MM-dd'T'HH:mm:ss.SSS</timestampPattern>
             <writeVersionAsInteger>true</writeVersionAsInteger>
             <includeMdc>true</includeMdc>

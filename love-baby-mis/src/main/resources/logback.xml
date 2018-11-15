@@ -49,9 +49,9 @@
         <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder" >
             <includeCallerData>true</includeCallerData>
             <customFields>{"appname":"love-baby-mis"}</customFields>
+            <timeZone>UTC+8</timeZone>
             <timestampPattern>yyyy-MM-dd'T'HH:mm:ss.SSS</timestampPattern>
             <writeVersionAsInteger>true</writeVersionAsInteger>
-            <timeZone>UTC+8</timeZone>
             <includeMdc>true</includeMdc>
             <includeContext>true</includeContext>
             <throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">

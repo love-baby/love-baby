@@ -9,7 +9,7 @@ var mplayer_song = [[
         "name": "童话镇",
         "singer": "陈一发儿",
         "img": "https://images.love-baby.vip/20181010180902.png",
-        "src": "http://pgduggvpw.bkt.clouddn.com/%E9%99%88%E4%B8%80%E5%8F%91%E5%84%BF+-+%E7%AB%A5%E8%AF%9D%E9%95%87.flac",
+        "src": "https://images.love-baby.vip/a9f34c704fd5a2eb86bf619fa04b7b07.mp3",
         "lrc": "[ti:童话镇]\n[ar:陈一发儿]\n[al:童话镇]\n[by:]\n[offset:0]\n[00:00.00]童话镇\n" +
             "[00:05.00]演唱：陈一发\n" +
             "[00:10.00]作曲 : 暗杠\n" +

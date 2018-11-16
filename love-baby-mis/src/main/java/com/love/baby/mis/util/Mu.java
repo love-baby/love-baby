@@ -1,17 +1,12 @@
-//package com.love.baby.mis.util;
-//
-//import org.jaudiotagger.audio.AudioFile;
-//import org.jaudiotagger.audio.AudioFileIO;
-//import org.jaudiotagger.tag.FieldKey;
-//import org.jaudiotagger.tag.Tag;
-//
-//import java.io.File;
-//
-///**
-// * Created by liangbc on 2018/9/29.
-// */
-//public class Mu {
-//    public static void main(String[] args) {
+package com.love.baby.mis.util;
+
+import java.util.Random;
+
+/**
+ * Created by liangbc on 2018/9/29.
+ */
+public class Mu {
+    public static void main(String[] args) {
 //        try {
 //
 //
@@ -42,12 +37,16 @@
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
-//
-//
-//        //System.out.println(QiNiuUtil.getAntiLeechAccessUrlBasedOnTimestamp("http://music.love-baby.vip/a7b85c94309ab6388e4ebe4f9de1972b.mp3",6000));
-//    }
-//
-//
-//
-//
-//}
+
+
+        Random random = new Random();
+        for (int i = 0; i < 50; i++) {
+            System.out.println(random.nextInt(41));
+        }
+
+
+        //System.out.println(QiNiuUtil.getAntiLeechAccessUrlBasedOnTimestamp("http://music.love-baby.vip/a7b85c94309ab6388e4ebe4f9de1972b.mp3",6000));
+    }
+
+
+}

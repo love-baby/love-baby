@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -20,13 +21,12 @@ public class SearchParams {
     private String name;
     private String value;
 
-    public static Map findAllparams(SearchParams[] searchParams) {
-        Map<String, String> m = new HashMap();
+    public static Map findAllParams(SearchParams[] searchParams) {
+        Map<String, String> m = new LinkedHashMap<>();
         for (int i = 0; i < searchParams.length; i++) {
             SearchParams searchParam = searchParams[i];
             m.put(searchParam.getName(), searchParam.value);
         }
         return m;
     }
-
 }

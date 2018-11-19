@@ -48,7 +48,7 @@ public class UserController {
     public PageUtil listAll(@RequestHeader(value = "token") String token, @RequestBody SearchParams[] searchParams) {
         String uId = userSessionCommon.assertSessionAndGetUid(token);
         logger.info("获取所有用户 token = {},uId = {},searchParams = {}", token, uId, JSON.toJSONString(searchParams));
-        Map<String, String> map = SearchParams.findAllparams(searchParams);
+        Map<String, String> map = SearchParams.findAllParams(searchParams);
         logger.info("获取所有用户搜索参数  Map = {}", JSON.toJSONString(map));
 
         SearchParamsDto searchParamsDto = SearchParamsDto.builder()

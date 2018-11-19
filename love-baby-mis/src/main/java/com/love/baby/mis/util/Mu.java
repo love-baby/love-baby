@@ -1,6 +1,8 @@
 package com.love.baby.mis.util;
 
-import java.util.Random;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeConstants;
+
 
 /**
  * Created by liangbc on 2018/9/29.
@@ -38,12 +40,11 @@ public class Mu {
 //            e.printStackTrace();
 //        }
 
-
-        Random random = new Random();
-        for (int i = 0; i < 50; i++) {
-            System.out.println(random.nextInt(41));
-        }
-
+//
+//        DateTime today = DateTime.now();
+//        DateTime sameDayLastWeek = today.minusWeeks(0);
+//        DateTime monday = sameDayLastWeek.withDayOfWeek(DateTimeConstants.MONDAY);
+//        System.out.printf(monday.toLocalDate().toString());
 
         //System.out.println(QiNiuUtil.getAntiLeechAccessUrlBasedOnTimestamp("http://music.love-baby.vip/a7b85c94309ab6388e4ebe4f9de1972b.mp3",6000));
     }
